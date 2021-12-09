@@ -9,7 +9,8 @@ const Input = ({value, onChangeText, onSubmitEditing}) => {
         placeholderTextColor={theme.text}
         maxLength={50}
         keyboardAppearance="light"
-        value={value} onChangeText={onChangeText}
+        value={value} 
+        onChangeText={onChangeText}
         onSubmitEditing={onSubmitEditing}>
         </TextInput>
     );

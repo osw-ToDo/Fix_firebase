@@ -1,19 +1,33 @@
-import React from 'react';
-import { StyleSheet,StatusBar,SafeAreaView, Text, View, Keyboard ,Button,BackHandler } from 'react-native';
-import { viewStyles, textStyles,  iconStyles } from './styles';
-import EventInput from './EventInput';
+import React,{useContext, useState, useRef} from 'react';
+import { StatusBar,SafeAreaView, Text, View, Keyboard ,Alert } from 'react-native';
+import { viewStyles, textStyles } from './styles';
+import { ProgressContext } from './contexts';
 import { TouchableWithoutFeedback } from 'react-native';
 import {Input} from './components/signInput';
 import {images} from './images';
 // import {IconButton} from './components/IconButton';
 import TrafficSign from './components/J_trafficSign';
 import J_List from './components/J_List';
-import { NavigationContainer } from '@react-navigation/native';
 import { IconButton} from 'react-native-paper';
 import { goBack } from './J_index';
-const makeSign= ({ navigation, route }) => {
+import { createTodaySignText } from './utils/firebase';
 
- 
+const makeSign= ({ navigation }) => {
+  const { spinner } = useContext(ProgressContext);
+
+  const [TodaySignText, setTodaySignText] = useState('');
+  const descriptionRef = useRef();
+
+
+  const _handleCreateButtonPress = async () => {
+    try {
+      const id = await createTodaySignText({TodaySignText})
+      navigation.replace('TodaySign', { id, TodaySignText });
+      Alert.alert('sign success',e.message);
+    } catch (e) {
+      Alert.alert('Creation Error', e.message);
+    }
+  };
  
   return (
 
@@ -27,7 +41,15 @@ const makeSign= ({ navigation, route }) => {
           <View style={viewStyles.content}>
 
             <Text style={textStyles.title}>Today's Sign</Text>
-            <Input />
+            <Input 
+              value={TodaySignText}
+              onSubmitEditing={()=>{
+                setTodaySignText(TodaySignText.trim());
+                descriptionRef.current.focus();
+                _handleCreateButtonPress();
+              }}
+              
+            />
             <TrafficSign doneListNum={5} totalListNum={115} />
             <View style={viewStyles.test}><J_List /></View>
           </View>
@@ -39,7 +61,7 @@ const makeSign= ({ navigation, route }) => {
       title="Go to Jane's profile"
       onPress={() => navigation.navigate('showSign')}
     /> */}
-              <IconButton icon={images.done} onPress={() => navigation.navigate('showSign') }/>
+              <IconButton icon={images.done} onPress={_handleCreateButtonPress }/>
             </View>
           </View>
 

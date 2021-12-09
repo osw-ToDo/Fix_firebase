@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState , useRef} from 'react';
 import { Box, Dimensions, StyleSheet, Text, TextInput,Image,View} from 'react-native';
 import { theme } from "../theme";
 import { images } from '../images';
@@ -8,6 +8,9 @@ export const Input= () => {
   let time = new Date()
   let todayDate = time.getDate()
   let todayDay = time.getDay()
+  
+  const [TodaySignText, setTodaySignText] = useState('');
+  const descriptionRef = useRef();
 
   const week= ['SUN','MON','TUE','WED','THU','FRI','SAT']
   let dayOfWeek = week[todayDay]
@@ -20,7 +23,11 @@ export const Input= () => {
       <Text style = {inputStyles.dayOfWeek}>{dayOfWeek}</Text>
      </View>
 
-      <TextInput style = {inputStyles.textInput} multiline={true} >
+      <TextInput 
+              style = {inputStyles.textInput} 
+              multiline={true}
+              placeholder="write your mood"
+             >
       </TextInput>
       </View>
       </>
@@ -44,8 +51,8 @@ export const SignText= () => {
       <View  style ={inputStyles.underline}><Text style ={inputStyles.dayText}>{todayDate}</Text></View>
       <Text style = {inputStyles.dayOfWeek}>{dayOfWeek}</Text>
      </View>
-
-      <Text style = {inputStyles.textInput} multiline={true} >
+      <Text style = {inputStyles.textInput} multiline={true} value = {value} onChangeText={onChangeText}
+          onSubmitEditing={onSubmitEditing} >
       </Text>
       </View>
       </>

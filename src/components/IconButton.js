@@ -8,8 +8,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 export const IconButton= ({type, onPressOut}) => {
   
     return (
-        <Pressable onPress = {onPressOut} >
-               
+        <Pressable onPress = {onPressOut} >  
             <Image source={type} style={iconStyle.icon}/>
         </Pressable>
 

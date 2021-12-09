@@ -6,12 +6,26 @@ import {images} from '../images';
 import {IconButton} from '../components/IconButton';
 import Day from '../components/Date';
 import Category from '../components/Category';
+import { createTodo } from '../utils/firebase';
 
 
 //const [newTask, setNewTask]=useState('');
 /*const _handleTextChange = text =>{
     setNewTask(text);
 };*/
+const _handleCreateButtonPress = async () => {
+    const { spinner } = useContext(ProgressContext);
+    
+    try {
+      spinner.start();
+      const id = await createTodo({Start,End,Cate,ToDo,Flag});
+      navigation.replace('Todo', { id, ToDo});
+    } catch (e) {
+      Alert.alert('Creation Error', e.message);
+    } finally {
+      spinner.stop();
+    }
+  };
 
 const Task = () => {
     return(
@@ -34,7 +48,10 @@ const Task = () => {
                 </View>
                 <View style={taskStyles.column}>
                 <Text style={taskStyles.text}>Completed:</Text>
-                <IconButton type={images.uncompleted}/>
+                <IconButton 
+                    type={images.uncompleted}
+                    onPress = {_handleCreateButtonPress}
+                />
                 </View>
             </View>
     )
