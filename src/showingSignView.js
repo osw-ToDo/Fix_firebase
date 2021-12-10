@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet,StatusBar,SafeAreaView, Text, View, Keyboard  } from 'react-native';
+import { StyleSheet,StatusBar,SafeAreaView, Text, View, Keyboard ,Image } from 'react-native';
 import { viewStyles, textStyles,  iconStyles } from './styles';
 import EventInput from './EventInput';
 import { TouchableWithoutFeedback } from 'react-native';
@@ -13,7 +13,7 @@ import { goBack } from './J_index';
 
 const showSign= ({navigation}) => {
 
-
+picImages = [images.sPic1,images.sPic2,images.sPic3,images.sPic4,images.sPic5]
 
   return (
 
@@ -29,15 +29,16 @@ const showSign= ({navigation}) => {
       
       <Text style={textStyles.title}>Today's Sign</Text>
       <SignText/>
-
-      <TrafficSign doneListNum = {5} totalListNum = {115}/>
-     { //<View style={viewStyles.test}><J_List/></View>
-     }
+      <View style = {styles.trafficSignShow}>
+        <TrafficSign doneListNum = {5} totalListNum = {115}/>
+        <Image source={picImages[4]} style={styles.picRed}/>
+      </View>
+     
       </View>
  
      <View style = {viewStyles.footer}> 
      <View >
-       <IconButton  icon = {images.edit}onPress={() => navigation.navigate('makeSign')}/>
+       <IconButton  icon = {images.edit} onPress={() => navigation.navigate('makeSign')}/>
      </View> 
      </View> 
       
@@ -48,6 +49,48 @@ const showSign= ({navigation}) => {
   );
 }
 
+const styles = StyleSheet.create({
+  trafficSignShow: {
+    position: 'relative',
+   
+  },
+ 
+  picRed: {
+    position: 'absolute',
+    padding:10,
+    marginLeft:16,
+    marginTop:26,
+    tintColor: 'black',
+    width: 30,
+    height: 30,
+  
+    resizeMode: 'contain', 
+  },
+  picYellow: {
+    position: 'absolute',
+    padding:10,
+    marginLeft:56,
+    marginTop:26,
+    tintColor: 'black',
+    width: 30,
+    height: 30,
+  
+    resizeMode: 'contain', 
+  },
+  picGreen: {
+    position: 'absolute',
+    padding:10,
+    marginLeft:96,
+    marginTop:26,
+    tintColor: 'black',
+    width: 30,
+    height: 30,
+  
+    resizeMode: 'contain', 
+  },
+  
+  
+});
 
 export default showSign;
 
