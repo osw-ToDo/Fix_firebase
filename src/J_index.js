@@ -1,8 +1,22 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import makeSign from './makingSignView';
 import showSign from './showingSignView';
-import * as React from 'react';
+
+import createToDo from './CreateToDo';
+import modifyToDo from "./ModifyToDo";
+import toDo from './ToDo';
+import category from './Category';
+
+import montly  from './Montly';
+
+import Main from "./Main";
+import Weekly from "./Weekly";
+
+
 import { StyleSheet,StatusBar,SafeAreaView, Text, View, Keyboard ,Button,BackHandler } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { ThemeContext } from 'styled-components/native';
+import React, { useContext } from 'react';
 
 const Stack = createStackNavigator();
 
@@ -15,11 +29,34 @@ export function goBack({navigation}) {
 };
 
 function RootStack() {
-  return (
 
+  const theme = useContext(ThemeContext);
+  return (
+   
     <Stack.Navigator
-      initialRouteName="makeSign"
+      initialRouteName="main"
+
+      screenOptions={{
+        headerTitleAlign: 'center',
+        headerTintColor: theme.headerTintColor,
+        cardStyle: { backgroundColor: theme.background },
+        headerBackTitleVisible: false,
+      }}
     >
+
+      <Stack.Screen
+        name="main"
+        component={MainView}
+        options={{ headerShown: false }}
+      />
+      
+       <Stack.Screen
+        name="weekly"
+        component={WeeklyView}
+        options={{ headerShown: false }}
+      />
+    
+
       <Stack.Screen
         name="makeSign"
         component={makeSign}
@@ -30,30 +67,75 @@ function RootStack() {
         component={showSign}
         options={{ headerShown: false }}
       />
+
+       <Stack.Screen
+        name="montly"
+        component={montly}
+        options={{ headerShown: false }}
+      />
+
       <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{ title: 'Welcome' }}
-        />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
+        name="creatToDo"
+        component={createToDo}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="toDo"
+        component={toDo}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="modifyToDo"
+        component={modifyToDo}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="category"
+        component={category}
+        options={{ headerShown: false }}
+      />
+     
+     
+     
     </Stack.Navigator>
    
   );
 }
 
-
-//params example
-const HomeScreen = ({ navigation }) => {
+ function WeeklyView({navigation}) {
   return (
-    <Button
-      title="Go to Jane's profile"
-      onPress={() =>
-        navigation.navigate('Profile', { name: 'Jane' })
-      }
-    />
+    <View style={styles.container}>
+   
+      <Weekly navigation = {navigation}/>
+      <StatusBar style="auto" />
+    </View>
   );
-};
-const ProfileScreen = ({ navigation, route }) => {
-  return <Text>This is {route.params.name}'s profile</Text>;
-};
+}
+
+import { IconButton} from 'react-native-paper';
+function MainView({navigation}) {
+  return (
+    <View style={styles.container}>
+      <Main navigation = {navigation}/>
+       <StatusBar style="auto" />
+    </View>
+  );
+}
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#eee9e0",
+    // margin: 30,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
+
+
+
 export default RootStack;
