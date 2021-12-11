@@ -2,7 +2,7 @@ import React from 'react';
 import {StatusBar, View, SafeAreaView, Text, ScrollView} from 'react-native';
 import {viewStyles, textStyles } from './styles';
 import {images} from './images';
-import IconButton from './components/IconButton';
+import {IconButton} from './components/IconButton';
 import Task from './components/Task';
 
 

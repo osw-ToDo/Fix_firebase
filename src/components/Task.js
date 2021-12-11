@@ -6,6 +6,7 @@ import {images} from '../images';
 import {IconButton} from '../components/IconButton';
 import Day from '../components/Date';
 import Category from '../components/Category';
+import ToggleSwitch from 'toggle-switch-react-native';
 
 
 //const [newTask, setNewTask]=useState('');
@@ -34,7 +35,13 @@ const Task = () => {
                 </View>
                 <View style={taskStyles.column}>
                 <Text style={taskStyles.text}>Completed:</Text>
-                <IconButton type={images.uncompleted}/>
+                <ToggleSwitch
+                    isOn={false}
+                    onColor="#2Faf53"
+                    offColor="#ecf0f1"
+                    size="large"
+                    onToggle={isOn => console.log("changed to : ", isOn)}
+                    />
                 </View>
             </View>
     )

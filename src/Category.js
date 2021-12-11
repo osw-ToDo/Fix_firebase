@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {StatusBar, View, SafeAreaView, Text, ScrollView, StyleSheet} from 'react-native';
 import {viewStyles, textStyles } from './styles';
-import Input from './components/Input';
+import ToggleSwitch from 'toggle-switch-react-native';
 import {images} from './images';
 import {IconButton} from './components/IconButton';
 import Category from './components/Category';
@@ -16,8 +16,15 @@ export default function App() {
             <View style={viewStyles.card}>
             <ScrollView>
             <View style={CategoryStyles.container}>
-              <Text style={CategoryStyles.text2}>See Only Uncompleted To-dos:</Text>
-              <View style={CategoryStyles.box}><IconButton type={images.off} /></View>
+              <Text style={CategoryStyles.text2}>Only Uncompleted To-dos:</Text>
+              <View style={CategoryStyles.box}>
+                <ToggleSwitch
+                isOn={false}
+                onColor="green"
+                offColor="red"
+                size="large"
+                onToggle={isOn => console.log("changed to : ", isOn)}
+                /></View>
             </View>
               <View style={CategoryStyles.line} />
               <View style={CategoryStyles.container}>
@@ -26,7 +33,13 @@ export default function App() {
                 <View style={CategoryStyles.line} />
                 <Text style={textStyles.main}>To-dos: </Text>
             </ScrollView>
-            <View style={viewStyles.box}><IconButton type={images.add} /></View>
+            <View style={viewStyles.box}><ToggleSwitch
+                    isOn={false}
+                    onColor="#2Faf53"
+                    offColor="#ecf0f1"
+                    size="large"
+                    onToggle={isOn => console.log("changed to : ", isOn)}
+                    /></View>
             </View>
         </SafeAreaView>
     );
