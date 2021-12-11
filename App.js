@@ -1,3 +1,4 @@
-import App from './src/makingSignView';
+
+import App from './src/showingSignView';
 
 export default App;

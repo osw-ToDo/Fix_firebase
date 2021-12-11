@@ -3,8 +3,11 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import moment from "moment";
 import styled from "styled-components";
 import Icon from "react-native-vector-icons/Ionicons";
+import { goBack } from './J_index';
+import { IconButton } from "./components/IconButton";
+import { images } from "./images";
 
-export default function Weekly() {
+export default function Weekly({ navigation, route }) {
   const monthDate = moment().format("MM");
   const week = new Array(
     "SUN",
@@ -44,9 +47,11 @@ export default function Weekly() {
   return (
     <View>
       <NavigationView>
-        <Icon name="arrow-back-outline" size={30} color="black" />
+        <IconButton size={10} icon={images.back} onPress={ () => {goBack({navigation});}}/>
+        {/* <Icon name="arrow-back-outline" size={30} color="black" /> */}
       </NavigationView>
       <MainHeaderView>
+       <IconButton size={10} icon={images.back} onPress={ () => {goBack({navigation});}}/>
         <MainTitleTxt>{monthDate}</MainTitleTxt>
       </MainHeaderView>
       <BodyView>
