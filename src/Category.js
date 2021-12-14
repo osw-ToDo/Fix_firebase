@@ -3,14 +3,22 @@ import {StatusBar, View, SafeAreaView, Text, ScrollView, StyleSheet} from 'react
 import {viewStyles, textStyles } from './styles';
 import ToggleSwitch from 'toggle-switch-react-native';
 import {images} from './images';
-import {IconButton} from './components/IconButton';
+
 import Category from './components/Category';
+import { IconButton} from 'react-native-paper';
+import { goBack } from './J_index';
 
 
-export default function App() {
+
+export default function App({navigation}) {
     
     return (
         <SafeAreaView style={viewStyles.container}>
+             <View style={viewStyles.header}>
+            <IconButton icon={images.back} onPress={ () => {goBack({navigation});}}/>
+          </View>
+
+
             <StatusBar barStyle="light-content" style={textStyles.statusbar}/>
             <Text style={textStyles.title}>Category</Text>
             <View style={viewStyles.card}>

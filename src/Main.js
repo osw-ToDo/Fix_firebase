@@ -6,6 +6,9 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { IconButton} from 'react-native-paper';
 import {images} from './images';
 import {IconButton as IconBtn} from './components/IconButton';
+import { viewStyles } from "./styles";
+import MainStack from './navigations/MainStack';
+import { NavigationContainer } from '@react-navigation/native';
 
 export default function Main({ navigation }) {
   return (
@@ -14,7 +17,10 @@ export default function Main({ navigation }) {
 
       <HeaderTitleView>
         <HeaderTitleTxt>TODAY's LIST</HeaderTitleTxt>
+        <TouchableOpacity onPress={() => navigation.navigate('Profile') }>
+
         <HeaderImg style={{ marign: 100 }} source={require("../assets/images/mainSetting.png")} />
+        </TouchableOpacity>
       </HeaderTitleView>
       <BodyView>
         <BodySignDateImg source={require("../assets/images/mainSign.png")} />
@@ -37,7 +43,12 @@ export default function Main({ navigation }) {
       <BodyTxtView>
         {mainRows.map((row, idx) => {
           return (
+           
+        
             <View style={{ flex: 1 }} key={idx}>
+
+            
+            <TouchableOpacity   onPress={() => navigation.navigate('toDo') }> 
               <View style={{ padding: 15, borderBottomWidth: 1, borderColor: "black", flexDirection: "row" }}>
                 <View style={{ marginRight: 10 }}>
                   <Icon name="square-outline" size={30} color="gray" />
@@ -47,6 +58,9 @@ export default function Main({ navigation }) {
                   <Text>{row.mainRows[0].date}</Text>
                 </View>
               </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity   onPress={() => navigation.navigate('toDo') }> 
               <View style={{ padding: 15, borderBottomWidth: 1, borderColor: "black", flexDirection: "row" }}>
                 <View style={{ marginRight: 10 }}>
                   <Icon name="square-outline" size={30} color="gray" />
@@ -56,6 +70,7 @@ export default function Main({ navigation }) {
                   <Text>{row.mainRows[1].date}</Text>
                 </View>
               </View>
+              </TouchableOpacity>
             </View>
           );
         })}

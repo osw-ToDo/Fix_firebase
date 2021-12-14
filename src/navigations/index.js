@@ -12,12 +12,12 @@ const Navigation = () => {
 
   return (
     <NavigationContainer>
-      {user?.uid && user?.email ? <RootStack/>: <AuthStack />} 
+      {user?.uid && user?.email ? <RootStack/> : <AuthStack />} 
       {inProgress && <Spinner />}
     </NavigationContainer>
   );
 };
 
-//<MainStack /> 
+//<MainStack /> <RootStack/>
 
 export default Navigation;
