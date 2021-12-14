@@ -36,12 +36,12 @@ function RootStack() {
     <Stack.Navigator
       initialRouteName="main"
 
-      screenOptions={{
-        headerTitleAlign: 'center',
-        headerTintColor: theme.headerTintColor,
-        cardStyle: { backgroundColor: theme.background },
-        headerBackTitleVisible: false,
-      }}
+      // screenOptions={{
+      //   headerTitleAlign: 'center',
+      //   headerTintColor: theme.headerTintColor,
+      //   cardStyle: { backgroundColor: theme.background },
+      //   headerBackTitleVisible: false,
+      // }}
     >
 
       <Stack.Screen

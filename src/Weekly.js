@@ -1,9 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image,SafeAreaView, TouchableOpacity } from "react-native";
 import moment from "moment";
 import styled from "styled-components";
+import { viewStyles } from './styles';
 import Icon from "react-native-vector-icons/Ionicons";
 import { goBack } from './J_index';
+import { IconButton as IconBtn} from 'react-native-paper';
 import { IconButton } from "./components/IconButton";
 import { images } from "./images";
 
@@ -45,68 +47,90 @@ export default function Weekly({ navigation, route }) {
   const dayOfWeek8 = week[moment().day() + 7];
   
   return (
+
+    <>
+
     <View>
-      <NavigationView>
-        <IconButton size={10} icon={images.back} onPress={ () => {goBack({navigation});}}/>
-        {/* <Icon name="arrow-back-outline" size={30} color="black" /> */}
-      </NavigationView>
-      <MainHeaderView>
-       <IconButton size={10} icon={images.back} onPress={ () => {goBack({navigation});}}/>
-        <MainTitleTxt>{monthDate}</MainTitleTxt>
-      </MainHeaderView>
-      <BodyView>
-        <BodyMonthGroupView>
-          <MonthNum>{day}</MonthNum>
-          <MonthTxt>{dayOfWeek}</MonthTxt>
-        </BodyMonthGroupView>
-        <BodyMonthGroupView>
-          <MonthNum>{day2}</MonthNum>
-          <MonthTxt>{dayOfWeek2}</MonthTxt>
-        </BodyMonthGroupView>
-        <BodyMonthGroupView>
-          <MonthNum>{day3}</MonthNum>
-          <MonthTxt>{dayOfWeek3}</MonthTxt>
-          <StyledtrafficSing1Img source={require("../assets/images/trafficSign_1.png")} />
-        </BodyMonthGroupView>
-        <BodyMonthGroupView>
-          <MonthNum>{day4}</MonthNum>
-          <MonthTxt>{dayOfWeek4}</MonthTxt>
-          <StyledtrafficSing3Img source={require("../assets/images/trafficSign_3.png")} />
-          <StyledtrafficSing3_2Img source={require("../assets/images/trafficSign_3(2).png")} />
-        </BodyMonthGroupView>
-        <BodyMonthGroupView>
-          <MonthNum>{day5}</MonthNum>
-          <MonthTxt>{dayOfWeek5}</MonthTxt>
-          <StyledtrafficSing1_2Img source={require("../assets/images/trafficSign_1(2).png")} />
-        </BodyMonthGroupView>
-        <BodyMonthGroupView>
-          <MonthNum>{day6}</MonthNum>
-          <MonthTxt>{dayOfWeek6}</MonthTxt>
-        </BodyMonthGroupView>
-        <BodyMonthGroupView>
-          <MonthNum>{day7}</MonthNum>
-          <MonthTxt>{dayOfWeek7}</MonthTxt>
-        </BodyMonthGroupView>
-        <BodyMonthGroupView>
-          <MonthNum>{day8}</MonthNum>
-          <MonthTxt>{dayOfWeek8}</MonthTxt>
-        </BodyMonthGroupView>
-      </BodyView>
-      <FooterView>
-        <FooterPlusImg source={require("../assets/images/mainPlus.png")} />
-      </FooterView>
-    </View>
+        <NavigationView>
+          <IconBtn icon={images.back} onPress={() => { goBack({ navigation }); } } />
+        </NavigationView>
+
+        <MainHeaderView>
+          <MainTitleTxt>{monthDate}</MainTitleTxt>
+        </MainHeaderView>
+        <BodyView>
+          <BodyMonthGroupView>
+            <MonthNum>{day}</MonthNum>
+            <MonthTxt>{dayOfWeek}</MonthTxt>
+          </BodyMonthGroupView>
+          <BodyMonthGroupView>
+            <MonthNum>{day2}</MonthNum>
+            <MonthTxt>{dayOfWeek2}</MonthTxt>
+          </BodyMonthGroupView>
+          <BodyMonthGroupView>
+            <MonthNum>{day3}</MonthNum>
+            <MonthTxt>{dayOfWeek3}</MonthTxt>
+            <StyledtrafficSing1Img source={require("../assets/images/trafficSign_1.png")} />
+          </BodyMonthGroupView>
+          <BodyMonthGroupView>
+            <MonthNum>{day4}</MonthNum>
+            <MonthTxt>{dayOfWeek4}</MonthTxt>
+            <StyledtrafficSing3Img source={require("../assets/images/trafficSign_3.png")} />
+            <StyledtrafficSing3_2Img source={require("../assets/images/trafficSign_3(2).png")} />
+          </BodyMonthGroupView>
+          <BodyMonthGroupView>
+            <MonthNum>{day5}</MonthNum>
+            <MonthTxt>{dayOfWeek5}</MonthTxt>
+            <StyledtrafficSing1_2Img source={require("../assets/images/trafficSign_1(2).png")} />
+          </BodyMonthGroupView>
+          <BodyMonthGroupView>
+            <MonthNum>{day6}</MonthNum>
+            <MonthTxt>{dayOfWeek6}</MonthTxt>
+          </BodyMonthGroupView>
+          <BodyMonthGroupView>
+            <MonthNum>{day7}</MonthNum>
+            <MonthTxt>{dayOfWeek7}</MonthTxt>
+          </BodyMonthGroupView>
+          <BodyMonthGroupView>
+            <MonthNum>{day8}</MonthNum>
+            <MonthTxt>{dayOfWeek8}</MonthTxt>
+          </BodyMonthGroupView>
+        </BodyView>
+        <FooterView>
+          {/* <FooterPlusImg source={require("../assets/images/mainPlus.png")} /> */}
+          <TouchableOpacity style={FooterButtonImg1.icon} onPress={() => navigation.navigate('creatToDo')}>
+            <Image style={FooterButtonImg1.icon} source={require("../assets/images/mainPlus.png")} />
+          </TouchableOpacity>
+
+        </FooterView>
+      </View></>
   );
 }
 
 const styles = StyleSheet.create({});
 
+const FooterButtonImg1 = StyleSheet.create({
+  icon: {
+    margin:7,
+    shadowColor: '#303838',
+    shadowOffset: { width: 0, height: 5 },
+    shadowRadius: 10,
+    shadowOpacity: 0.35,
+    resizeMode : 'contain',
+   
+    width: 35,
+    height: 35,
+
+  },
+});
+
 
 const NavigationView = styled(View)`
   font-size: 24px;
-  width: 320px;
+  width: 100%;
   position: absolute;
-  margin-top: 50px;
+  margin-top: 0px;
+
 `;
 
 const MainHeaderView = styled(View)`
@@ -118,6 +142,7 @@ const MainHeaderView = styled(View)`
   width: 320px;
   padding: 5px;
   margin-top: 40px;
+
 `;
 
 const MainTitleTxt = styled(Text)`

@@ -183,8 +183,8 @@ const BodyMenuImg1 = StyleSheet.create({
  
     
     resizeMode : 'contain',
-    marginLeft:39,
-    width: 80,
+    marginLeft:40,
+    width: 79,
     height: 57, 
 
     //backgroundColor : 'black'
@@ -192,8 +192,6 @@ const BodyMenuImg1 = StyleSheet.create({
   },
   C: {
   
-  
-    
     resizeMode : 'contain',
     marginLeft:33,
     width: 93,
