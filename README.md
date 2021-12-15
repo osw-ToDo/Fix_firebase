@@ -19,7 +19,7 @@ The people who developed this app.
 
 ## ProtoType
 
-![KakaoTalk_20211006_200821601](https://user-images.githubusercontent.com/77730511/146195162-64cbcd0d-ff1e-42cd-aab2-c7e6ca0ca2a5.jpg){: width="50%" height="50%"}
+![KakaoTalk_20211006_200821601](https://user-images.githubusercontent.com/77730511/146195162-64cbcd0d-ff1e-42cd-aab2-c7e6ca0ca2a5.jpg){: width="100" height="100"}
 
 
 ## Track Our Schedule
