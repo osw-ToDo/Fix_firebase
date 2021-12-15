@@ -80,12 +80,14 @@ export const createTodo = async ({Start, End, Cate, ToDo, Flag})=>{
   return id;
 }
 
-export const createTodaySignText = async({TodaySignText})=>{
+export const createTodaySignText = async({TodaySignText,TrafficSign,picSign})=>{
   const newSignRef = DB.collection('TodaySign').doc();
   const id = newSignRef.id;
   const newSign = {
     id,
     TodaySignText,
+     // TrafficSign,
+    // picSign, 
     createdAt: Date.now(), 
   };
   await newSignRef.set(newSign);

@@ -16,6 +16,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { IconButton} from 'react-native-paper';
 import { goBack } from './J_index';
 import RadioButton from './components/J_radioButton';
+import { DB } from './utils/firebase';
 
 const PROP = [
 	{
@@ -62,7 +63,9 @@ const styles = StyleSheet.create({
 
 const makeSign= ({ navigation, route }) => {
 
-  // const [TodaySignText, setTodaySignText] = useState('');
+   const [TodaySignText, setTodaySignText] = useState('');
+   const [TrafficSignData, setTrafficSign] = useState('');
+   const [PicSign, setPicSign] = useState('');
   // const descriptionRef = useRef();
 
   // const { spinner } = useContext(ProgressContext);
@@ -76,8 +79,24 @@ const makeSign= ({ navigation, route }) => {
   //     Alert.alert('Creation Error', e.message);
   //   }
   // };
- 
+  // useEffect(() => {
+  //   DB.collection('TodaySign').doc(id).
+  //   setTodaySignText('a');
 
+  // },[]);
+
+
+
+  const SetText = (text) => {
+    console.log(text);
+   
+    setTodaySignText(text);
+  }
+  const SetPic = (picNum) => {
+    console.log(picNum);
+   
+    setPicSign(picNum);
+  }
   return (
 
 
@@ -90,13 +109,15 @@ const makeSign= ({ navigation, route }) => {
           <View style={viewStyles.content}>
 
             <Text style={textStyles.title}>Today's Sign</Text>
-            <Input navigation={navigation}/>
+            <Input navigation={navigation} setText = {SetText}/>
+                
+            
             
             {/* value = {TodaySignText} set ={setTodaySignText} */}
             <TrafficSign doneListNum={5} totalListNum={115} />
             <View style={styles.container}>
 
-            <RadioButton PROP={PROP} />
+            <RadioButton PROP={PROP} setPic ={SetPic} />
 
             </View>
             {/* <View style={viewStyles.test}><J_List /></View> */}
@@ -106,7 +127,9 @@ const makeSign= ({ navigation, route }) => {
           <View style={viewStyles.footer}>
             
               <IconButton icon={images.done} onPress={() =>{ 
-              navigation.navigate('showSign');}
+              navigation.navigate('showSign');
+              _handleCreateButtonPress({navigation , TodaySignText,TrafficSignData,PicSign});
+            }
              }/>
             
           </View>
@@ -117,6 +140,17 @@ const makeSign= ({ navigation, route }) => {
     
   );
 }
+
+
+const _handleCreateButtonPress = async ({navigation ,TodaySignText,TrafficSignData,PicSign}) => {
+  try {
+    const id = await createTodaySignText({TodaySignText,TrafficSignData,PicSign})
+    // navigation.replace('makeSign', { id, TodaySignText });
+    // Alert.alert('sign success',e.message);
+  } catch (e) {
+    Alert.alert('Creation Error', e.message);
+  }
+};
 
 
 

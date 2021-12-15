@@ -1,5 +1,5 @@
 
-import React ,{useRef,useContext,useState}from 'react';
+import React ,{useRef,useContext,useState, useEffect}from 'react';
 import { ProgressContext } from '../contexts';
 import { Alert } from 'react-native';
 import { createTodaySignText } from '../utils/firebase';
@@ -9,13 +9,22 @@ import { images } from '../images';
 import { Input as Inputfire,SignInput } from '../components';
 
 
+export const _handleCreateButtonPress = async () => {
+  try {
+    const id = await createTodaySignText({TodaySignText})
+    // navigation.replace('makeSign', { id, TodaySignText });
+    // Alert.alert('sign success',e.message);
+  } catch (e) {
+    Alert.alert('Creation Error', e.message);
+  }
+};
 
-export const Input= ({navigation}) => {//TodaySignText,setTodaySignText
+export const Input= ({navigation,setText}) => {//TodaySignText,setTodaySignText
   let time = new Date()
   let todayDate = time.getDate()
   let todayDay = time.getDay()
   
-  const [TodaySignText, setTodaySignText] = useState('');
+   const [TodaySignText, setTodaySignText] = useState('');
   const descriptionRef = useRef();
 
   const week= ['SUN','MON','TUE','WED','THU','FRI','SAT']
@@ -23,20 +32,13 @@ export const Input= ({navigation}) => {//TodaySignText,setTodaySignText
 
   const { spinner } = useContext(ProgressContext);
 
-  const _handleCreateButtonPress = async () => {
-    try {
-      const id = await createTodaySignText({TodaySignText})
-      // navigation.replace('makeSign', { id, TodaySignText });
-      // Alert.alert('sign success',e.message);
-    } catch (e) {
-      Alert.alert('Creation Error', e.message);
-    }
-  };
+
  
 
 //<TextInput value ="a" editable = {false} style={inputStyles.dayText} multiline={true}></TextInput>
   return (
     <>
+     
       <View style = {inputStyles.box}>
       <View style ={inputStyles.date}>
       <View  style ={inputStyles.underline}><Text style ={inputStyles.dayText}>{todayDate}</Text></View>
@@ -49,9 +51,12 @@ export const Input= ({navigation}) => {//TodaySignText,setTodaySignText
           onChangeText={text => setTodaySignText(text)}
           onSubmitEditing={() => {
             setTodaySignText(TodaySignText.trim());
+            setText(TodaySignText.trim());
             // _handleCreateButtonPress();
           }}
-          onBlur={() => setTodaySignText(TodaySignText.trim())}
+          onBlur={() => {setTodaySignText(TodaySignText.trim());
+            setText(TodaySignText.trim());
+          }}
           
           returnKeyType="done"
           maxLength={300}

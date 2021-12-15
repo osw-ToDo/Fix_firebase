@@ -8,9 +8,9 @@ export default class RadioButton extends Component {
     
 
 	render() {
-		const { PROP } = this.props;
+		const { PROP,setPic } = this.props;
 		const { value } = this.state;
-
+		
 		return (
 			<View style = {styles.listBox}>
 				{PROP.map(res => {
@@ -23,6 +23,8 @@ export default class RadioButton extends Component {
 									this.setState({
 										value: res.key,
 									});
+									setPic(value);
+									
 								}}>
                                     
                                 {value != res.key && <Image source={res.image} style={iconStyle.pic}/>}
