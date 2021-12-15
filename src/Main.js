@@ -25,10 +25,6 @@ export default function Main({ navigation }) {
       <BodyView>
         <BodySignDateImg source={require("../assets/images/mainSign.png")} />
         <BodyMenuView>
-          {/* <BodyMMenuImg source={require("../assets/images/Mbutton.png")} /> 
-          <BodyWMenuImg source={require("../assets/images/Wbutton.png")} /> 
-          <BodyCMenuImg source={require("../assets/images/Cbutton.png")} />  */}
-
           <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => navigation.navigate('montly') }>
           <Image style = {BodyMenuImg1.M}  source={require("../assets/images/Mbutton.png")}/>
           </TouchableOpacity>
@@ -76,11 +72,9 @@ export default function Main({ navigation }) {
         })}
       </BodyTxtView>
       <FooterView>
-        {/* <FooterButtonImg source={require("../assets/images/mainButton.png")} /> */}
        <TouchableOpacity style = {FooterButtonImg1.icon}  onPress={() => navigation.navigate('showSign') }>
           <Image style = {FooterButtonImg1.icon} source={require("../assets/images/mainButton.png")}/>
         </TouchableOpacity>
-        {/* <FooterPlusImg source={require("../assets/images/mainPlus.png")} /> */}
 
         <TouchableOpacity style = {FooterButtonImg1.icon}  onPress={() => navigation.navigate('creatToDo') }>
           <Image style = {FooterButtonImg1.icon} source={require("../assets/images/mainPlus.png")}/>
