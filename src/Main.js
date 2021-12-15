@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, Image,TouchableOpacity } from "react-native";
+import moment from "moment";
 import styled from "styled-components";
 import { mainRows } from "../rows";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -11,6 +12,10 @@ import MainStack from './navigations/MainStack';
 import { NavigationContainer } from '@react-navigation/native';
 
 export default function Main({ navigation }) {
+  const monthDate = moment().format("MM");
+  const date = new Date();
+  const day = moment(date).add("0", "d").format("DD");
+
   return (
     <View>
       
@@ -23,7 +28,9 @@ export default function Main({ navigation }) {
         </TouchableOpacity>
       </HeaderTitleView>
       <BodyView>
-        <BodySignDateImg source={require("../assets/images/mainSign.png")} />
+        <BodySignDateImg source={require("../assets/images/mainSign1.png")} />
+        <BodySignMonth>{monthDate}</BodySignMonth>
+        <BodySignDate>{day}</BodySignDate>
         <BodyMenuView>
           <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => navigation.navigate('montly') }>
           <Image style = {BodyMenuImg1.M}  source={require("../assets/images/Mbutton.png")}/>
@@ -123,6 +130,26 @@ const BodyTxtView = styled(View)`
 const BodySignDateImg = styled(Image)`
   width: 150px;
   height: 150px;
+`;
+
+const BodySignMonth = styled(Text)`
+  position: absolute
+  top:85
+  bottom:0
+  left:30
+  right:0
+  font-size: 50px;
+  justify-content: center;
+`;
+
+const BodySignDate = styled(Text)`
+ position: absolute
+  top:100
+  bottom:0
+  left:85
+  right:0
+  font-size: 50px;
+  justify-content: center;
 `;
 
 const BodyMenuImg = styled(Image)`
