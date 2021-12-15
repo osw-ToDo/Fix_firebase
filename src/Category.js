@@ -100,7 +100,8 @@ export default function App({navigation}) {
                 <Text style={textStyles.main}>To-dos: </Text>
             </ScrollView>
             <View style={viewStyles.box}>
-                <IconButton type={images.add} onPressOut= {() => navigation.navigate('creatToDo') }/>
+           
+                <IconButton icon={require("../assets/images/mainPlus.png")} onPress= {() => navigation.navigate('creatToDo') }/>
             </View>
         </View>
         </SafeAreaView>

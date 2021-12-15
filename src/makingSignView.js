@@ -90,7 +90,8 @@ const makeSign= ({ navigation, route }) => {
           <View style={viewStyles.content}>
 
             <Text style={textStyles.title}>Today's Sign</Text>
-            <Input navigation={navigation} />
+            <Input navigation={navigation}/>
+            
             {/* value = {TodaySignText} set ={setTodaySignText} */}
             <TrafficSign doneListNum={5} totalListNum={115} />
             <View style={styles.container}>

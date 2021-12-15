@@ -49,7 +49,7 @@ export const Input= ({navigation}) => {//TodaySignText,setTodaySignText
           onChangeText={text => setTodaySignText(text)}
           onSubmitEditing={() => {
             setTodaySignText(TodaySignText.trim());
-            _handleCreateButtonPress();
+            // _handleCreateButtonPress();
           }}
           onBlur={() => setTodaySignText(TodaySignText.trim())}
           
