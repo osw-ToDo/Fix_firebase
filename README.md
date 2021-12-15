@@ -17,6 +17,10 @@ The people who developed this app.
 |View|Montly|Sign|Todo|Main,Weekly|
 |Feature|FireBase|Navigation|making category|show all item|
 
+## ProtoType
+
+![KakaoTalk_20211006_200821601](https://user-images.githubusercontent.com/77730511/146195162-64cbcd0d-ff1e-42cd-aab2-c7e6ca0ca2a5.jpg)
+
 
 ## Track Our Schedule
 If you want to check our development schedule, please refer to the notice below.
