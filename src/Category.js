@@ -1,45 +1,101 @@
 import React, {useState} from 'react';
-import {StatusBar, View, SafeAreaView, Text, ScrollView, StyleSheet} from 'react-native';
-import {viewStyles, textStyles } from './styles';
+import {StatusBar, View, SafeAreaView, Text, ScrollView, Alert, StyleSheet, RefreshControl,Button} from 'react-native';
+import {viewStyles, textStyles, pickerSelectStyles} from './styles';
 import ToggleSwitch from 'toggle-switch-react-native';
-import {images} from './images';
-import {IconButton} from './components/IconButton';
-import Category from './components/Category';
+import { IconButton } from './components/IconButton';
+import { images } from './images';
+import RNPickerSelect from 'react-native-picker-select';
 
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+}
 
 export default function App() {
+    function add_category() {
+        Alert.prompt(
+              "Enter category",
+              "Enter your own new category",
+              [
+                {
+                  text: "Cancel",
+                  onPress: () => console.log("Cancel Pressed"),
+                  style: "cancel"
+                },
+                {
+                  text: "OK",
+                  onPress: new_category => console.log("new category: " + new_category )
+                  //new_category값 db전송 코드
+                }
+              ],
+              'plain-text',
+            );
+    }
+    const [text, setText] = useState("");
+    const placeholder = 'Select the Category';
+    const onChangeText = (value) => {
+        if (value == 'Add') {
+            add_category()
+        }
+        else
+            setText(value);
+    }
     
+    const [refreshing, setRefreshing] = React.useState(false);
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        wait(2000).then(() => setRefreshing(false));
+      }, []);
     return (
         <SafeAreaView style={viewStyles.container}>
             <StatusBar barStyle="light-content" style={textStyles.statusbar}/>
             <Text style={textStyles.title}>Category</Text>
             <View style={viewStyles.card}>
-            <ScrollView>
-            <View style={CategoryStyles.container}>
-              <Text style={CategoryStyles.text2}>Only Uncompleted To-dos:</Text>
-              <View style={CategoryStyles.box}>
-                <ToggleSwitch
-                isOn={false}
-                onColor="green"
-                offColor="red"
-                size="large"
-                onToggle={isOn => console.log("changed to : ", isOn)}
-                /></View>
-            </View>
-              <View style={CategoryStyles.line} />
-              <View style={CategoryStyles.container}>
-                  <Text style={CategoryStyles.text}>Select Cateory: </Text><Category />
+            <ScrollView 
+              refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
+            > 
+                <View style={CategoryStyles.container}>
+                <Text style={CategoryStyles.text2}>Only Uncompleted To-dos:</Text>
+                <View style={CategoryStyles.box}>
+                    <ToggleSwitch
+                    isOn={false}
+                    onColor="green"
+                    offColor="red"
+                    size="large"
+                    onToggle={isOn => console.log("changed to : ", isOn)}
+                    /></View>
+                </View>
+                <View style={CategoryStyles.line} />
+                <View style={CategoryStyles.container}>
+                    <Text style={CategoryStyles.text}>Select Cateory: </Text>
+                    <View style={pickerSelectStyles.container}>
+                    <View style={{ width: 170 }}>
+                        <RNPickerSelect
+                            textInputProps={{ underlineColorAndroid: 'transparent'}}
+                            placeholder={{
+                                label: placeholder,
+                            }}
+                            fixAndroidTouchableBug={true}
+                            value={text}
+                            onValueChange={value => onChangeText(value)}
+                            useNativeAndroidPickerStyle={false}
+                            items={[
+                                { label: 'School', value: 'School'},
+                                { label: 'Club', value: 'Club'},
+                                { label: 'Assignment', value: 'Assignment'},
+                                { label: 'Extra', value: 'Extra'},
+                                { label: '+ Add Category', value: 'Add' },
+                            ]}
+                            style={pickerSelectStyles}
+                        />
+                    </View>
+                    </View>
                 </View>
                 <View style={CategoryStyles.line} />
                 <Text style={textStyles.main}>To-dos: </Text>
             </ScrollView>
-            <View style={viewStyles.box}><ToggleSwitch
-                    isOn={false}
-                    onColor="#2Faf53"
-                    offColor="#ecf0f1"
-                    size="large"
-                    onToggle={isOn => console.log("changed to : ", isOn)}
-                    /></View>
+            <View style={viewStyles.box}>
+                <IconButton type={images.add} />
+            </View>
             </View>
         </SafeAreaView>
     );

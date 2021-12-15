@@ -6,6 +6,7 @@ import Edit from '../assets/outline_edit_black_48.png';
 import Add from '../assets/add.png';
 import Off from '../assets/off.png';
 import On from '../assets/on.png';
+import AddCategory from '../assets/add_category.png';
 
 import check from '../assets/done.png';
 import back from '../assets/back.png';
@@ -53,6 +54,7 @@ export const images = {
     add: Add,
     off: Off,
     on: On,    
+    addCategory: AddCategory,
     
 }
 

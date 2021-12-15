@@ -1,16 +1,16 @@
 import React, {useState} from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Alert } from 'react-native'
 import RNPickerSelect from 'react-native-picker-select';
 import { theme } from '../theme';
 
+
 export default function Category() {
+    
     const [text, setText] = useState("");
     const placeholder = 'Select the Category';
-    
     const onChangeText = (value) => {
-        //console.warn(value)
-        setText(value);
-    } 
+            setText(value);
+    }
          
     return (
         <View style={pickerSelectStyles.container}>
@@ -25,10 +25,11 @@ export default function Category() {
                 onValueChange={value => onChangeText(value)}
                 useNativeAndroidPickerStyle={false}
                 items={[
-                    { label: 'Category1', value: 'Category1'},
-                    { label: 'Category2', value: 'Category2'},
-                    { label: 'Category3', value: 'Category3'},
-                    { label: 'Category4', value: 'Category4'},
+                    { label: 'School', value: 'School'},
+                    { label: 'Club', value: 'Club'},
+                    { label: 'Assignment', value: 'Assignment'},
+                    { label: 'Extra', value: 'Extra'},
+                    
                 ]}
                 style={pickerSelectStyles}
             />

@@ -108,6 +108,69 @@ export const Montlystyles = StyleSheet.create({
         color: "gray",
     },
   });
-  
 
+export const taskStyles=StyleSheet.create({
+    container: {
+        margin:10,
+        marginLeft:0,
+        padding:5,
+        marginTop:20,
+       
+    },
+    column:{
+        flexDirection: 'row',
+        margin:10,
+        marginLeft:0,
+        padding:5,
+        marginTop:20,
+        
+        
+    },
+    text:{
+        flex:1,
+        fontSize:23,
+        fontWeight: '500',
+        color: theme.cate,
+        marginTop: 10,
+        marginLeft: 20,
+        width: 150,
+        textAlignVertical: 'center',
+    },
+});
+export const pickerSelectStyles = StyleSheet.create({
+    inputIOS: {
+        fontSize: 16,
+        color: '#9b111e',
+        height: 40, 
+        width: 170, 
+        textAlign:'center',
+        //backgroundColor: theme.itemBackground, 
+        borderWidth: 1, 
+        borderColor:theme.itemBackground,
+        borderRadius: 10,
+        padding: 10
+    },
+    inputAndroid: {
+        fontSize: 16,
+        color: '#9b111e',
+        height: 40, 
+        width: 170, 
+        textAlign:'center',
+        //backgroundColor: theme.itemBackground, 
+        borderWidth: 1, 
+        borderColor:theme.itemBackground,
+        borderRadius: 10,
+        padding: 10
+    },
+    
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        //backgroundColor: '#868e96',
+        marginRight: 0,
+        
+    },
+
+});
 
