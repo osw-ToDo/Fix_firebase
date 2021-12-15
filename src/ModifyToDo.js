@@ -2,24 +2,33 @@ import React from 'react';
 import {StatusBar, View, SafeAreaView, Text, ScrollView, Alert,Button} from 'react-native';
 import {viewStyles, textStyles, taskStyles } from './styles';
 import {images} from './images';
-import {IconButton} from './components/IconButton';
+//import {IconButton} from './components/IconButton';
 import Day from './components/Date';
 import Category from './components/Category';
 import ToggleSwitch from 'toggle-switch-react-native';
 import TodoInput from './components/TodoInput';
-import Task from './components/Task';
 import { IconButton as IconBtn} from 'react-native-paper';
 import { goBack } from './J_index';
 
 export default function ModifyToDo({navigation}) {
+    const press_mod_ok= () =>
+    {
+        console.log("Update has been completed.")
+        navigation.navigate('toDo')
+    }
+    const press_del_ok= () =>
+    {
+        console.log("Delete has been completed.")
+        navigation.navigate('main') 
+    }
     const mod_task = () => 
     Alert.alert(                   
      "Update this To-Do?",                   
      "update this To-Do from the original To-Do",                         
      [                              
        {
-         text: "OK",                              
-         onPress: () => console.log("Update has been completed.")&& navigation.navigate('toDo') 
+         text: "OK",                             
+         onPress: () => press_mod_ok()
          //DB업뎃 코드     
        },
        { text: "Cancel", style: "cancel", onPress: () => console.log("The update has been canceled.") }, 
@@ -34,13 +43,15 @@ export default function ModifyToDo({navigation}) {
      [                              
        {
          text: "OK",                              
-         onPress: () => console.log("Delete has been completed.")&& navigation.navigate('toDo') 
+         onPress: () => press_del_ok()
          //DB삭제 코드     
        },
        { text: "Cancel", style: "cancel", onPress: () => console.log("The deletion has been canceled.") }, 
      ],
      { cancelable: false }
     );
+    
+   
     /*const [newTask, setNewTask]=useState('');
     const [tasks, setTasks] = useState({
         '1': {id: '1', completed:false},
@@ -99,11 +110,9 @@ export default function ModifyToDo({navigation}) {
             </View>
             </ScrollView>
             <View style={viewStyles.box2}>
-                <IconBtn icon={images.delete}  onPressOut={()=>del_task()} />
-                <IconBtn icon={images.submit} onPressOut={()=>mod_task()} />
+                <IconBtn icon={images.delete} onPress={()=>del_task()} />
+                <IconBtn icon={images.submit} onPress={()=>mod_task()} />
             </View>
-                //<IconBtn icon={images.delete}  onPress={() => navigation.navigate('toDo') }/>
-                //<IconBtn icon={images.submit}  onPress={() => navigation.navigate('toDo') }/>
             </View>
         </SafeAreaView>
     );

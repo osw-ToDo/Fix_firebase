@@ -2,11 +2,12 @@ import React, {useState} from 'react';
 import {StatusBar, View, SafeAreaView, Text, ScrollView, Alert, StyleSheet, RefreshControl,Button} from 'react-native';
 import {viewStyles, textStyles, pickerSelectStyles} from './styles';
 import ToggleSwitch from 'toggle-switch-react-native';
-import { IconButton } from './components/IconButton';
+//import { IconButton } from './components/IconButton';
 import { images } from './images';
 import RNPickerSelect from 'react-native-picker-select';
 import { IconButton} from 'react-native-paper';
 import { goBack } from './J_index';
+
 
 
 const wait = (timeout) => {
@@ -50,12 +51,10 @@ export default function App({navigation}) {
       }, []);
     return (
         <SafeAreaView style={viewStyles.container}>
-             <View style={viewStyles.header}>
-            <IconButton icon={images.back} onPress={ () => {goBack({navigation});}}/>
-          </View>
-
-
             <StatusBar barStyle="light-content" style={textStyles.statusbar}/>
+            <View style={viewStyles.header}>
+            <IconButton icon={images.back} onPress={ () => {goBack({navigation});}}/>
+            </View>
             <Text style={textStyles.title}>Category</Text>
             <View style={viewStyles.card}>
             <ScrollView 
@@ -102,9 +101,9 @@ export default function App({navigation}) {
                 <Text style={textStyles.main}>To-dos: </Text>
             </ScrollView>
             <View style={viewStyles.box}>
-                <IconButton type={images.add} />
+                <IconButton type={images.add} onPressOut= {() => navigation.navigate('creatToDo') }/>
             </View>
-            </View>
+        </View>
         </SafeAreaView>
     );
 };
