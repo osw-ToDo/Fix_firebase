@@ -14,7 +14,7 @@ Liffic is a compound word of Life and Traffic. It is a TODO app in which you can
 The people who developed this app.
 ||윤효정|정다소|방현수|박지현|
 |:---:|:---:|:---:|:---:|:---:|
-|View|Montly|Sign|Todo|Main,Weekly|
+|View|Login,Montly|Signs|ToDos|Main,Weekly|
 |Feature|FireBase|Navigation|making category|show all item|
 
 ## ProtoType
