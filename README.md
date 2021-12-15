@@ -25,7 +25,7 @@ The people who developed this app.
 ## Track Our Schedule
 If you want to check our development schedule, please refer to the notice below.
 
-Team 5. : https://www.notion.so/2021-2-OSW-Todo-f2179ae600b54de58c0e8bff3cee4129
+Team 5. : 
 
 ## Reference
 [storage | React Native Firebase]
