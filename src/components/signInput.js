@@ -1,5 +1,8 @@
 
-import React from 'react';
+import React ,{useRef,useContext,useState}from 'react';
+import { ProgressContext } from '../contexts';
+import { Alert } from 'react-native';
+import { createTodaySignText } from '../utils/firebase';
 import { Box, Dimensions, StyleSheet, Text, TextInput,Image,View} from 'react-native';
 import { theme } from "../theme";
 import { images } from '../images';
@@ -8,9 +11,26 @@ export const Input= () => {
   let time = new Date()
   let todayDate = time.getDate()
   let todayDay = time.getDay()
+  
+  const [TodaySignText, setTodaySignText] = useState('');
+  const descriptionRef = useRef();
 
   const week= ['SUN','MON','TUE','WED','THU','FRI','SAT']
   let dayOfWeek = week[todayDay]
+
+  const { spinner } = useContext(ProgressContext);
+
+  const _handleCreateButtonPress = async () => {
+    try {
+      const id = await createTodaySignText({TodaySignText})
+      navigation.replace('TodaySign', { id, TodaySignText });
+      Alert.alert('sign success',e.message);
+    } catch (e) {
+      Alert.alert('Creation Error', e.message);
+    }
+  };
+ 
+
 //<TextInput value ="a" editable = {false} style={inputStyles.dayText} multiline={true}></TextInput>
   return (
     <>
@@ -20,14 +40,20 @@ export const Input= () => {
       <Text style = {inputStyles.dayOfWeek}>{dayOfWeek}</Text>
      </View>
 
-      <TextInput style = {inputStyles.textInput} multiline={true} >
+      <TextInput  value={TodaySignText}
+              onSubmitEditing={()=>{
+                setTodaySignText(TodaySignText.trim());
+                descriptionRef.current.focus();
+                _handleCreateButtonPress();
+              }}
+              
+              style = {inputStyles.textInput} multiline={true} >
       </TextInput>
       </View>
       </>
    
   );
 };
-
 
 export const SignText= () => {
   let time = new Date()

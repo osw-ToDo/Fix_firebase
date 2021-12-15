@@ -57,9 +57,6 @@ const styles = StyleSheet.create({
 });
 
 const makeSign= ({ navigation, route }) => {
-
- 
- 
   return (
 
 

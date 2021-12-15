@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import {StatusBar, View, SafeAreaView, Text, ScrollView, Alert, StyleSheet, RefreshControl,Button} from 'react-native';
 import {viewStyles, textStyles, pickerSelectStyles} from './styles';
 import ToggleSwitch from 'toggle-switch-react-native';
-import { IconButton } from './components/IconButton';
+
 import { images } from './images';
 import RNPickerSelect from 'react-native-picker-select';
-import { IconButton} from 'react-native-paper';
+import { IconButton } from 'react-native-paper';
 import { goBack } from './J_index';
 
 
