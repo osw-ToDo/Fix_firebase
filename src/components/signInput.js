@@ -19,9 +19,6 @@ export const Input= () => {
 
   const { spinner } = useContext(ProgressContext);
 
-  const [TodaySignText, setTodaySignText] = useState('');
-  const descriptionRef = useRef();
-
 
   const _handleCreateButtonPress = async () => {
     try {
