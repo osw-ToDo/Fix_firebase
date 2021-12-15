@@ -40,6 +40,8 @@ const Login = ({ navigation }) => {
 
   useEffect(() => {
     setDisabled(!(email && password && !errorMessage));
+    setEmail('testuser1@gmail.com');
+    setPassword('testuser1');
   }, [email, password, errorMessage]);
 
   const _handleEmailChange = email => {

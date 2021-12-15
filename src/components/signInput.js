@@ -6,8 +6,11 @@ import { createTodaySignText } from '../utils/firebase';
 import { Box, Dimensions, StyleSheet, Text, TextInput,Image,View} from 'react-native';
 import { theme } from "../theme";
 import { images } from '../images';
+import { Input as Inputfire,SignInput } from '../components';
 
-export const Input= () => {
+
+
+export const Input= ({navigation}) => {//TodaySignText,setTodaySignText
   let time = new Date()
   let todayDate = time.getDate()
   let todayDay = time.getDay()
@@ -23,8 +26,8 @@ export const Input= () => {
   const _handleCreateButtonPress = async () => {
     try {
       const id = await createTodaySignText({TodaySignText})
-      navigation.replace('TodaySign', { id, TodaySignText });
-      Alert.alert('sign success',e.message);
+      // navigation.replace('makeSign', { id, TodaySignText });
+      // Alert.alert('sign success',e.message);
     } catch (e) {
       Alert.alert('Creation Error', e.message);
     }
@@ -39,16 +42,35 @@ export const Input= () => {
       <View  style ={inputStyles.underline}><Text style ={inputStyles.dayText}>{todayDate}</Text></View>
       <Text style = {inputStyles.dayOfWeek}>{dayOfWeek}</Text>
      </View>
-
-      <TextInput  value={TodaySignText}
-              onSubmitEditing={()=>{
-                setTodaySignText(TodaySignText.trim());
-                descriptionRef.current.focus();
+      <SignInput
+          ref={descriptionRef}
+        
+          value={TodaySignText}
+          onChangeText={text => setTodaySignText(text)}
+          onSubmitEditing={() => {
+            setTodaySignText(TodaySignText.trim());
+            _handleCreateButtonPress();
+          }}
+          onBlur={() => setTodaySignText(TodaySignText.trim())}
+          
+          returnKeyType="done"
+          maxLength={300}
+          style = {inputStyles.textInput} multiline={true}
+        />
+      {/* <TextInput  value={TodaySignText}
+              // onSubmitEditing={()=>{
+              //   setTodaySignText(TodaySignText.trim());
+               
+              //   // _handleCreateButtonPress();
+              // }}
+              onChangeText={()=>{setTodaySignText(TodaySignText.trim());
                 _handleCreateButtonPress();
               }}
               
               style = {inputStyles.textInput} multiline={true} >
-      </TextInput>
+      </TextInput> */}
+
+     
       </View>
       </>
    

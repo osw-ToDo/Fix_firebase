@@ -1,4 +1,8 @@
-import React from 'react';
+
+import React ,{useRef,useContext,useState}from 'react';
+import { ProgressContext } from './contexts';
+import { Alert } from 'react-native';
+import { createTodaySignText } from './utils/firebase';
 import { StyleSheet,StatusBar,SafeAreaView, Text, View, Keyboard ,Button,BackHandler } from 'react-native';
 import { viewStyles, textStyles,  iconStyles } from './styles';
 import EventInput from './EventInput';
@@ -57,6 +61,23 @@ const styles = StyleSheet.create({
 });
 
 const makeSign= ({ navigation, route }) => {
+
+  // const [TodaySignText, setTodaySignText] = useState('');
+  // const descriptionRef = useRef();
+
+  // const { spinner } = useContext(ProgressContext);
+
+  // const _handleCreateButtonPress = async () => {
+  //   try {
+  //     const id = await createTodaySignText({TodaySignText})
+  //     navigation.replace('makeSign', { id, TodaySignText });
+  //      Alert.alert('sign success',e.message);
+  //   } catch (e) {
+  //     Alert.alert('Creation Error', e.message);
+  //   }
+  // };
+ 
+
   return (
 
 
@@ -69,7 +90,8 @@ const makeSign= ({ navigation, route }) => {
           <View style={viewStyles.content}>
 
             <Text style={textStyles.title}>Today's Sign</Text>
-            <Input />
+            <Input navigation={navigation} />
+            {/* value = {TodaySignText} set ={setTodaySignText} */}
             <TrafficSign doneListNum={5} totalListNum={115} />
             <View style={styles.container}>
 
@@ -82,7 +104,9 @@ const makeSign= ({ navigation, route }) => {
           
           <View style={viewStyles.footer}>
             
-              <IconButton icon={images.done} onPress={() => navigation.navigate('showSign') }/>
+              <IconButton icon={images.done} onPress={() =>{ 
+              navigation.navigate('showSign');}
+             }/>
             
           </View>
 
