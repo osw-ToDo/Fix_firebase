@@ -7,17 +7,20 @@ import Day from './components/Date';
 import RNPickerSelect from 'react-native-picker-select';
 import ToggleSwitch from 'toggle-switch-react-native';
 import TodoInput from './components/TodoInput';
+import { IconButton as IconBtn} from 'react-native-paper';
+import { goBack } from './J_index';
 
 
-export default function CreateToDo() {
+export default function CreateToDo({navigation}) {
     const add_task = () => 
     Alert.alert(                   
      "Add this To-Do?",                   
      "add this To-Do to your To-Do list",                         
      [                              
        {
-         text: "OK",                              
-         onPress: () => console.log("Add has been completed."),
+         text: "OK",
+         onPress: () => navigation.navigate('main')                             
+        && console.log("Add has been completed."),
          //DB삽입 코드     
        },
        { text: "Cancel", style: "cancel", onPress: () => console.log("The addition has been canceled.") }, 
@@ -29,6 +32,7 @@ export default function CreateToDo() {
     const onChangeText = (value) => {
             setText(value);
     }
+
     /*const [newTask, setNewTask]=useState('');
     const [tasks, setTasks] = useState({
         '1': {id: '1', completed:false},
@@ -50,7 +54,12 @@ export default function CreateToDo() {
     return (
         <SafeAreaView style={viewStyles.container}>
             <StatusBar barStyle="light-content" style={textStyles.statusbar}/>
+            <View style={viewStyles.header}>
+            <IconBtn icon={images.back} onPress={ () => {goBack({navigation});}}/>
+          </View>
+          
             <Text style={textStyles.title}>Create To-do List</Text>
+            
             <View style={viewStyles.card}>
             <ScrollView>
             <View>
@@ -103,8 +112,10 @@ export default function CreateToDo() {
                 </View>
             </View>
             </ScrollView>
-            <View style={viewStyles.box}><IconButton type={images.submit} onPressOut={()=>add_task()} /></View>
+            <View style={viewStyles.box}><IconBtn icon={images.done} onPressOut={()=>add_task()} /></View>
+           // <IconBtn icon={images.done} onPress={() => navigation.navigate('main') }/>
             </View>
         </SafeAreaView>
     );
-};
+}; 
+

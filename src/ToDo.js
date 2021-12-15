@@ -5,9 +5,11 @@ import {images} from './images';
 import {IconButton} from './components/IconButton';
 import ToggleSwitch from 'toggle-switch-react-native';
 import { theme } from './theme';
+import { IconButton as IconBtn} from 'react-native-paper';
+import { goBack } from './J_index';
 
 
-export default function App() {
+export default function App({navigation}) {
 
     /*const [newTask, setNewTask]=useState('');
     const [tasks, setTasks] = useState({
@@ -30,6 +32,9 @@ export default function App() {
     return (
         <SafeAreaView style={viewStyles.container}>
             <StatusBar barStyle="light-content" style={textStyles.statusbar}/>
+            <View style={viewStyles.header}>
+            <IconBtn icon={images.back} onPress={ () => {goBack({navigation});}}/>
+          </View>
             <Text style={textStyles.title}>My To-do List</Text>
             <View style={viewStyles.card}>
             <ScrollView>
@@ -66,7 +71,9 @@ export default function App() {
                 </View>
             </View>
             </ScrollView>
-            <View style={viewStyles.box}><IconButton type={images.edit}  /></View>
+            <View style={viewStyles.box}>
+            <IconBtn icon={images.edit}  onPress={() => navigation.navigate('modifyToDo') }/>
+            </View>
             </View>
         </SafeAreaView>
     );

@@ -31,7 +31,7 @@ export const viewStyles=StyleSheet.create({
         height:50,
         backgroundColor: theme.background,
         
-        //backgroundColor: '#ff9a9a',
+        // backgroundColor: '#ff9a9a',
       },
       content: {
        // flex: 1,

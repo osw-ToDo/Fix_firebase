@@ -7,17 +7,15 @@ import MainStack from './MainStack';
 import RootStack from '../J_index.js';
 
 const Navigation = () => {
-  const { inProgress } = useContext(ProgressContext);
-  const { user } = useContext(UserContext);
 
   return (
     <NavigationContainer>
-      {user?.uid && user?.email ? <RootStack/> : <AuthStack />} 
-      {inProgress && <Spinner />}
+     <RootStack/>
+      
     </NavigationContainer>
   );
 };
 
-//<MainStack /> <RootStack/>
+
 
 export default Navigation;

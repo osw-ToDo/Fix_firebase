@@ -7,9 +7,11 @@ import Day from './components/Date';
 import Category from './components/Category';
 import ToggleSwitch from 'toggle-switch-react-native';
 import TodoInput from './components/TodoInput';
+import Task from './components/Task';
+import { IconButton as IconBtn} from 'react-native-paper';
+import { goBack } from './J_index';
 
-
-export default function ModifyToDo() {
+export default function ModifyToDo({navigation}) {
     const mod_task = () => 
     Alert.alert(                   
      "Update this To-Do?",                   
@@ -17,7 +19,7 @@ export default function ModifyToDo() {
      [                              
        {
          text: "OK",                              
-         onPress: () => console.log("Update has been completed."),
+         onPress: () => console.log("Update has been completed.")&& navigation.navigate('toDo') 
          //DB업뎃 코드     
        },
        { text: "Cancel", style: "cancel", onPress: () => console.log("The update has been canceled.") }, 
@@ -32,15 +34,13 @@ export default function ModifyToDo() {
      [                              
        {
          text: "OK",                              
-         onPress: () => console.log("Delete has been completed."),
+         onPress: () => console.log("Delete has been completed.")&& navigation.navigate('toDo') 
          //DB삭제 코드     
        },
        { text: "Cancel", style: "cancel", onPress: () => console.log("The deletion has been canceled.") }, 
      ],
      { cancelable: false }
     );
-    
-   
     /*const [newTask, setNewTask]=useState('');
     const [tasks, setTasks] = useState({
         '1': {id: '1', completed:false},
@@ -62,6 +62,9 @@ export default function ModifyToDo() {
     return (
         <SafeAreaView style={viewStyles.container}>
             <StatusBar barStyle="light-content" style={textStyles.statusbar}/>
+            <View style={viewStyles.header}>
+            <IconBtn icon={images.back} onPress={ () => {goBack({navigation});}}/>
+          </View>
             <Text style={textStyles.title}>Modify To-do List</Text>
             <View style={viewStyles.card}>
             <ScrollView>
@@ -96,9 +99,11 @@ export default function ModifyToDo() {
             </View>
             </ScrollView>
             <View style={viewStyles.box2}>
-                <IconButton type={images.delete} onPressOut={()=>del_task()} />
-                <IconButton type={images.submit} onPressOut={()=>mod_task()} />
+                <IconBtn icon={images.delete}  onPressOut={()=>del_task()} />
+                <IconBtn icon={images.submit} onPressOut={()=>mod_task()} />
             </View>
+                //<IconBtn icon={images.delete}  onPress={() => navigation.navigate('toDo') }/>
+                //<IconBtn icon={images.submit}  onPress={() => navigation.navigate('toDo') }/>
             </View>
         </SafeAreaView>
     );

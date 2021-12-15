@@ -84,9 +84,9 @@ const makeSign= ({ navigation, route }) => {
           </TouchableWithoutFeedback>
           
           <View style={viewStyles.footer}>
-            <View>
+            
               <IconButton icon={images.done} onPress={() => navigation.navigate('showSign') }/>
-            </View>
+            
           </View>
 
         </SafeAreaView>

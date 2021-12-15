@@ -1,9 +1,14 @@
 import React, { useContext, useState } from 'react';
+import { View } from 'react-native';
 import styled, { ThemeContext } from 'styled-components/native';
 import { Button, Image, Input } from '../components';
 import { logout, getCurrentUser, updateUserPhoto } from '../utils/firebase';
 import { UserContext, ProgressContext } from '../contexts';
 import { Alert } from 'react-native';
+import { IconButton} from 'react-native-paper';
+import { goBack } from '../J_index';
+import { images } from '../images';
+import { viewStyles, textStyles,  iconStyles } from '../styles';
 
 const Container = styled.View`
   flex: 1;
@@ -13,7 +18,7 @@ const Container = styled.View`
   padding: 0 20px;
 `;
 
-const Profile = () => {
+const Profile = ({navigation}) => {
   const { dispatch } = useContext(UserContext);
   const { spinner } = useContext(ProgressContext);
   const theme = useContext(ThemeContext);
@@ -46,21 +51,25 @@ const Profile = () => {
   };
 
   return (
+
+    <><View style={viewStyles.header}>
+      <IconButton icon={images.back} onPress={() => { goBack({ navigation }); } } />
+    </View>
     <Container>
-      <Image
-        url={photoUrl}
-        onChangeImage={_handlePhotoChange}
-        showButton
-        rounded
-      />
-      <Input label="Name" value={user.name} disabled />
-      <Input label="Email" value={user.email} disabled />
-      <Button
-        title="logout"
-        onPress={_handleLogoutButtonPress}
-        containerStyle={{ marginTop: 30, backgroundColor: theme.buttonLogout }}
-      />
-    </Container>
+
+
+        <Image
+          url={photoUrl}
+          onChangeImage={_handlePhotoChange}
+          showButton
+          rounded />
+        <Input label="Name" value={user.name} disabled />
+        <Input label="Email" value={user.email} disabled />
+        <Button
+          title="logout"
+          onPress={_handleLogoutButtonPress}
+          containerStyle={{ marginTop: 30, backgroundColor: theme.buttonLogout }} />
+      </Container></>
   );
 };
 

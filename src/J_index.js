@@ -12,6 +12,7 @@ import montly  from './Montly';
 import Main from "./Main";
 import Weekly from "./Weekly";
 
+import { Profile } from './screens';
 
 import { StyleSheet,StatusBar,SafeAreaView, Text, View, Keyboard ,Button,BackHandler } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -36,12 +37,12 @@ function RootStack() {
     <Stack.Navigator
       initialRouteName="main"
 
-      screenOptions={{
-        headerTitleAlign: 'center',
-        headerTintColor: theme.headerTintColor,
-        cardStyle: { backgroundColor: theme.background },
-        headerBackTitleVisible: false,
-      }}
+      // screenOptions={{
+      //   headerTitleAlign: 'center',
+      //   headerTintColor: theme.headerTintColor,
+      //   cardStyle: { backgroundColor: theme.background },
+      //   headerBackTitleVisible: false,
+      // }}
     >
 
       <Stack.Screen
@@ -97,7 +98,13 @@ function RootStack() {
         component={category}
         options={{ headerShown: false }}
       />
-     
+      
+      <Stack.Screen
+         name="Profile"
+         component={Profile}
+        options={{ headerShown: false }}
+      />
+    
      
      
     </Stack.Navigator>
