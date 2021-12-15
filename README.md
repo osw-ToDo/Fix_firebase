@@ -6,34 +6,32 @@
 ## Introduce
     "Color your life, Liffic!"
 
-    Liffic is a compound word of Life and Traffic. It is a TODO app in which you can express your feelings in pictograms with short articles after completing your daily tasks, and the color of the traffic light is determined by what you complete.
+Liffic is a compound word of Life and Traffic. It is a TODO app in which you can express your feelings in pictograms with short articles after completing your daily tasks, and the color of the traffic light is determined by what you complete.
 
     Color your sedentary daily life in the COVID-19 era.
 
 ## Our Team
-
-    The people who developed this app.
-
-
+The people who developed this app.
 ## Track Our Schedule
-    If you want to check our development schedule, please refer to the notice below.
-    Team 5. : https://www.notion.so/2021-2-OSW-Todo-f2179ae600b54de58c0e8bff3cee4129
+If you want to check our development schedule, please refer to the notice below.
+
+Team 5. : https://www.notion.so/2021-2-OSW-Todo-f2179ae600b54de58c0e8bff3cee4129
 
 ## Reference
-    [storage | React Native Firebase]
+[storage | React Native Firebase]
     https://rnfirebase.io/reference/storage
     
-    [Firebase Documentation]
+[Firebase Documentation]
     https://firebase.google.com/docs/database/admin/save-data?hl=ko
     
-    [React Native]
+[React Native]
     https://reactnative.dev/docs/textinput
 
-    [처음 배우는 리액트 네이티브]
+[처음 배우는 리액트 네이티브]
     https://github.com/Alchemist85K/my-first-react-native
 
 ## Pacakge
 
-    Libraries that we added while creating this app.
+Libraries that we added while creating this app.
 
 
