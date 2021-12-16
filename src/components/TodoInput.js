@@ -1,17 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 import { theme } from '../theme';
 
-const Input = ({value, onChangeText, onSubmitEditing}) => {
+const Input = ({set,value, onChangeText, onSubmitEditing}) => {
+
+    const [toDoText,setToDoText] = useState('');
+
     return(
         <TextInput style={inputStyle.textInput}
         placeholder="Enter your To-do!"
         placeholderTextColor={theme.text}
         maxLength={50}
         keyboardAppearance="light"
-        value={value} onChangeText={onChangeText}
-        onSubmitEditing={onSubmitEditing}>
+        value={toDoText} onChangeText={text => setToDoText(text)}
+        onSubmitEditing={() => {
+            setToDoText(toDoText.trim());
+            set(toDoText.trim());
+            // _handleCreateButtonPress();
+          }}
+          onBlur={() => {setToDoText(toDoText.trim());
+            set(toDoText.trim());
+          }}
+          >
         </TextInput>
+
+
     );
 
 };

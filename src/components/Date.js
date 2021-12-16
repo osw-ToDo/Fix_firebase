@@ -31,7 +31,7 @@ String.prototype.zf = function(len){return "0".string(len - this.length) + this;
 Number.prototype.zf = function(len){return this.toString().zf(len);};
 
 
-export default function Day() {
+export default function Day({set}) {
             const placeholder = "Select the Date";
 
             const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -48,6 +48,7 @@ export default function Day() {
             const handleConfirm = (date) => {
                 //console.warn("Seleted Date: ", date.format("yyyy/MM/dd"));
                 hideDatePicker();
+                set(date);
                 onChangeText(date.format("yyyy/MM/dd/E"))
             };
 
