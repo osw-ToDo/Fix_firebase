@@ -82,7 +82,7 @@ export const Input= ({navigation,setText}) => {//TodaySignText,setTodaySignText
   );
 };
 
-export const SignText= () => {
+export const SignText= ({value}) => {
   let time = new Date()
   let todayDate = time.getDate()
   let todayDay = time.getDay()
@@ -99,6 +99,7 @@ export const SignText= () => {
      </View>
 
       <Text style = {inputStyles.textInput} multiline={true} >
+        {value}
       </Text>
       </View>
       </>

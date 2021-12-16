@@ -6,21 +6,27 @@ import { TouchableWithoutFeedback } from 'react-native';
 import {Input,SignText} from './components/signInput';
 import {images} from './images';
 // import {IconButton} from './components/IconButton';
-import TrafficSign from './components/J_trafficSign';
+import TrafficSign,{ShowTrafficSign} from './components/J_trafficSign';
 import J_List from './components/J_List';
 import { IconButton} from 'react-native-paper';
 import { goBack } from './J_index';
 
 
-const SetTraffic = (trafficNum) => {
-  console.log(trafficNum);
- 
-  setPicSign(trafficNum);
-}
 
-const showSign= ({navigation}) => {
+const showSign= ({navigation,route}) => {
+  
+  // if(route != undefined){
+  // 
+  // }
 
-picImages = [images.sPic1,images.sPic2,images.sPic3,images.sPic4,images.sPic5]
+  const {id, text, tSign , pSign } = route.params;
+
+  let picImages = [images.sPic1,images.sPic2,images.sPic3,images.sPic4,images.sPic5]
+  
+  //  let trafficSign = parseInt(tSign);
+  //  let picSign = parseInt(pSign);
+
+  // console.log("showSign "+id+" "+pSign+" "+text);
 
   return (
 
@@ -35,10 +41,15 @@ picImages = [images.sPic1,images.sPic2,images.sPic3,images.sPic4,images.sPic5]
       <View style = {viewStyles.content}> 
       
       <Text style={textStyles.title}>Today's Sign</Text>
-      <SignText/>
+      <SignText value={text}/>
       <View style = {styles.trafficSignShow}>
-        {/* <TrafficSign setTraffic={SetTraffic} /> */}
-        <Image source={picImages[4]} style={styles.picRed}/>
+
+        <ShowTrafficSign trafficSign={tSign} />
+
+        {tSign==0&&<Image source={picImages[pSign]} style={styles.picRed}/>}
+        {tSign==1&&<Image source={picImages[pSign]} style={styles.picYellow}/>}
+        {tSign==2&&<Image source={picImages[pSign]} style={styles.picGreen}/>}
+
       </View>
      
       </View>

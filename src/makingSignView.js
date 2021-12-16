@@ -132,7 +132,7 @@ const makeSign= ({ navigation, route }) => {
           <View style={viewStyles.footer}>
             
               <IconButton icon={images.done} onPress={() =>{ 
-              navigation.navigate('showSign');
+          
               _handleCreateButtonPress({navigation , TodaySignText,TrafficSignData,PicSign});
             }
              }/>
@@ -153,6 +153,7 @@ const _handleCreateButtonPress = async ({navigation ,TodaySignText,TrafficSignDa
 
     // console.log('pic : %d %s ',PicSign,TrafficSignData)
     const id = await createTodaySignText({TodaySignText,TrafficSignData,PicSign})
+    navigation.replace('showSign', { navigation, id: id, text : TodaySignText, tSign : TrafficSignData, pSign :PicSign});
     // navigation.replace('makeSign', { id, TodaySignText });
     // Alert.alert('sign success',e.message);
   } catch (e) {

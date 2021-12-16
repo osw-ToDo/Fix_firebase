@@ -12,6 +12,29 @@ const TrafficSign = ({setTraffic}) => {
   );
 };
 
+
+export const ShowTrafficSign = ({trafficSign}) => {
+
+  let image;
+
+  if (trafficSign==2){
+  
+     image =  images.greenSign
+   } else if (trafficSign==1){
+    
+    image = images.yellowSign
+   } else {
+   
+    image =  images.redSign
+   }
+
+  return (
+        <Image source = {image} style = {trafficStyle.icon} />
+  );
+};
+
+
+
 function PrintTrafficSign({setTraffic}){
     
 
