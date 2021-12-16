@@ -83,7 +83,7 @@ export const createTodo = async ({Start, End, Cate, ToDo})=>{//, Flag Flag,
 
 export const createTodaySignText = async({TodaySignText,TrafficSignData,PicSign})=>{
   const date = new Date();
-  const doDate = (date.getDate()).toString();
+  const doDate = (date.getFullYear()).toString()+'_'+(date.getDate()).toString();
   const newSignRef = DB.collection('TodaySign').doc(doDate);
   const id = newSignRef.id;
   const newSign = {
