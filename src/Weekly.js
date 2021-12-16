@@ -96,12 +96,11 @@ export default function Weekly({ navigation, route }) {
             <MonthTxt>{dayOfWeek8}</MonthTxt>
           </BodyMonthGroupView>
         </BodyView>
+        
         <FooterView>
-          {/* <FooterPlusImg source={require("../assets/images/mainPlus.png")} /> */}
           <TouchableOpacity style={FooterButtonImg1.icon} onPress={() => navigation.navigate('creatToDo')}>
             <Image style={FooterButtonImg1.icon} source={require("../assets/images/mainPlus.png")} />
           </TouchableOpacity>
-
         </FooterView>
       </View></>
   );

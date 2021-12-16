@@ -1,5 +1,6 @@
 import * as firebase from 'firebase';
 import 'firebase/firestore';
+import { number, string } from 'prop-types';
 import config from '../../firebase.json';
 
 const app = firebase.initializeApp(config);
@@ -65,7 +66,7 @@ export const updateUserPhoto = async photoUrl => {
 
 export const DB = firebase.firestore();
 
-export const createTodo = async ({Start, End, Cate, ToDo, Flag})=>{
+export const createTodo = async ({Start, End, Cate, ToDo})=>{//, Flag Flag,
   const newTodoRef = DB.collection('Todo').doc();
   const id = newTodoRef.id;
   const newTodo = {
@@ -74,23 +75,34 @@ export const createTodo = async ({Start, End, Cate, ToDo, Flag})=>{
     End,
     Cate,
     ToDo,
-    Flag,
+   
   };
   await newTodoRef.set(newTodo);
   return id;
 }
 
-export const createTodaySignText = async({TodaySignText})=>{
-  const newSignRef = DB.collection('TodaySign').doc();
+export const createTodaySignText = async({TodaySignText,TrafficSignData,PicSign})=>{
+
+  const doDate = Date.prototype.getDate().toString();
+  const newSignRef = DB.collection('TodaySign').doc(doDate);
   const id = newSignRef.id;
   const newSign = {
     id,
     TodaySignText,
+    TrafficSignData,
+    PicSign , 
     createdAt: Date.now(), 
   };
+ // TrafficSign : "1",
+  // console.log("create"+TrafficSign+ "|"+picSign);
+  
   await newSignRef.set(newSign);
   return id;
 }
+
+
+
+
 
 export const createChannel = async ({ title, description }) => {
   const newChannelRef = DB.collection('channels').doc();

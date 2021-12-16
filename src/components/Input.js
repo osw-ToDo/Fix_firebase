@@ -1,12 +1,20 @@
 import React, { useState, forwardRef } from 'react';
 import styled from 'styled-components/native';
 import PropTypes from 'prop-types';
-
+import { inputStyles } from './signInput';
 const Container = styled.View`
   flex-direction: column;
   width: 100%;
   margin: 10px 0;
 `;
+
+const SignContainer = styled.View`
+  flex-direction: column;
+  width: 100%;
+  margin: 10px 0;
+  backgroundColor: black;
+`;
+
 const Label = styled.Text`
   font-size: 14px;
   font-weight: 600;
@@ -25,6 +33,25 @@ const StyledTextInput = styled.TextInput.attrs(({ theme }) => ({
     ${({ theme, isFocused }) => (isFocused ? theme.text : theme.inputBorder)};
   border-radius: 4px;
 `;
+
+const SignStyledTextInput = styled.TextInput.attrs(({ theme }) => ({
+  placeholderTextColor: theme.inputPlaceholder,
+}))`
+  background-color:  ${({ theme, editable }) =>
+  editable ? theme.background : theme.inputDisabledBackground};
+  color: ${({ theme }) => theme.text};
+  padding: 0px 10px;
+  font-size: 25px;
+  border: 0px solid
+    ${({ theme, isFocused }) => (isFocused ? theme.text : theme.inputBorder)};
+  border-radius: 0px;
+  line-height: 32; 
+  height: 280;
+  text-align-vertical: top;
+
+`;
+
+
 
 const Input = forwardRef(
   (
@@ -67,6 +94,7 @@ const Input = forwardRef(
           textContentType="none" // iOS only
           underlineColorAndroid="transparent" // Android only
           editable={!disabled}
+          multiline={true}
         />
       </Container>
     );
@@ -93,3 +121,51 @@ Input.propTypes = {
 };
 
 export default Input;
+
+
+export const SignInput = forwardRef(
+  (
+    {
+      label,
+      value,
+      onChangeText,
+      onSubmitEditing,
+      onBlur,
+      placeholder,
+      isPassword,
+      returnKeyType,
+      maxLength,
+      disabled,
+    },
+    ref
+  ) => {
+    const [isFocused, setIsFocused] = useState(false);
+
+    return (
+      <SignContainer>
+        <SignStyledTextInput
+          ref={ref}
+          isFocused={isFocused}
+          value={value}
+          onChangeText={onChangeText}
+          onSubmitEditing={onSubmitEditing}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => {
+            setIsFocused(false);
+            onBlur();
+          }}
+          placeholder={placeholder}
+          secureTextEntry={isPassword}
+          returnKeyType={returnKeyType}
+          maxLength={maxLength}
+          autoCapitalize="none"
+          autoCorrect={false}
+          textContentType="none" // iOS only
+          underlineColorAndroid="transparent" // Android only
+          editable={!disabled}
+          multiline={true}
+        />
+      </SignContainer>
+    );
+  }
+);

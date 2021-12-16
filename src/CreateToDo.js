@@ -7,12 +7,14 @@ import Category from './components/Category';
 import TodoInput from './components/TodoInput';
 import { IconButton as IconBtn} from 'react-native-paper';
 import { goBack } from './J_index';
+import { createTodo } from './utils/firebase';
 
 
 export default function CreateToDo({navigation}) {
     const press_add_ok= () =>
     {
         console.log("The addition has been completed.")
+        _handleCreateToDoPress({navigation,startDay,endDay,cate,toDo});
         goBack({navigation})
     }
     const add_task = () => 
@@ -29,10 +31,47 @@ export default function CreateToDo({navigation}) {
      ],
      { cancelable: false }
     );
+    const [text, setText] = useState("");
+    const [startDay,setStartDay] = useState("");
+    const [endDay,setEndDay] = useState("");
+    const [cate,setCate] = useState("");
+    const [toDo,setToDo] = useState("");
+    
+    const placeholder = 'Select the Category';
+    const onChangeText = (value) => {
+            setText(value);
+    }
+    /*const [newTask, setNewTask]=useState('');
+    const [tasks, setTasks] = useState({
+        '1': {id: '1', completed:false},
+    });
 
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => 
     setIsEnabled(previousState => !previousState);
+
+    const _handleTextChange = text =>{
+        setNewTask(text);
+    };*/
+
+    const SetStart = (text) => {
+        console.log(text);
+        setStartDay(text);
+      }
+
+      const SetEnd = (text) => {
+        console.log(text);
+        setEndDay(text);
+      }
+      const SetCate = (text) => {
+        console.log(text);
+        setCate(text);
+      }
+      
+      const SetToDo= (text) => {
+        console.log(text);
+        setToDo(text);
+      }
 
     return (
         <SafeAreaView style={viewStyles.container}>
@@ -46,11 +85,11 @@ export default function CreateToDo({navigation}) {
             <View>
                 <View style={taskStyles.column}>
                 <Text style={taskStyles.text}>Start-Date:</Text>
-                <Day/>
+                <Day set= {SetStart}/>
                 </View>
                 <View style={taskStyles.column}>
                 <Text style={taskStyles.text}>Due-Date:</Text>
-                <Day/>
+                <Day set={SetEnd}/>
                 </View>
                 <View style={taskStyles.column}>
                 <Text style={taskStyles.text}>Category:</Text>
@@ -58,7 +97,7 @@ export default function CreateToDo({navigation}) {
                 </View>
                 <View style={taskStyles.container}>
                 <Text style={taskStyles.text}>To-do:</Text>
-                <TodoInput/>
+                <TodoInput set={SetToDo}/>
                 </View>
                 <View style={taskStyles.column}>
                 <Text style={taskStyles.text}>Completed:</Text>
@@ -78,3 +117,19 @@ export default function CreateToDo({navigation}) {
         </SafeAreaView>
     );
 };
+
+
+const _handleCreateToDoPress = async ({navigation ,startDay,endDay,toDo,cate}) => {
+
+    try {
+        
+      console.log(startDay);
+      const id = await createTodo({Start:startDay,End:endDay,Cate:cate,ToDo:toDo})
+      //navigation.replace('showSign', { navigation, id: id, text : TodaySignText, tSign : TrafficSignData, pSign :PicSign});
+      // navigation.replace('makeSign', { id, TodaySignText });
+      // Alert.alert('sign success',e.message);
+    } catch (e) {
+      Alert.alert('Creation Error', e.message);
+    }
+  };
+  

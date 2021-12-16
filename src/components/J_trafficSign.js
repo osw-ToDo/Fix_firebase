@@ -5,23 +5,50 @@ import { theme } from "../theme";
 import PropTypes from 'prop-types';
 import { images } from '../images';
 
-const TrafficSign = ({doneListNum ,totalListNum }) => {
+const TrafficSign = ({setTraffic}) => {
 
   return (
-        <Image source = {PrintTrafficSign(doneListNum,totalListNum)} style = {trafficStyle.icon} />
+        <Image source = {PrintTrafficSign({setTraffic})} style = {trafficStyle.icon} />
   );
 };
 
-function PrintTrafficSign({doneListNum  ,totalListNum}){
+
+export const ShowTrafficSign = ({trafficSign}) => {
+
+  let image;
+
+  if (trafficSign==2){
+  
+     image =  images.greenSign
+   } else if (trafficSign==1){
     
+    image = images.yellowSign
+   } else {
+   
+    image =  images.redSign
+   }
+
+  return (
+        <Image source = {image} style = {trafficStyle.icon} />
+  );
+};
+
+
+
+function PrintTrafficSign({setTraffic}){
+    
+
    let donePercent = 0
   // donePercent = doneListNum*100/totalListNum 
-    console.log('donePercent : %d %d %d',donePercent,doneListNum,totalListNum)
+    // console.log('donePercent : %d %d %d',donePercent,doneListNum,totalListNum)
     if (donePercent>=70){
+     setTraffic("2");
       return  images.greenSign
     } else if (donePercent>=50){
+     setTraffic("1");
       return images.yellowSign
     } else {
+     setTraffic("0");
       return images.redSign
     }
 

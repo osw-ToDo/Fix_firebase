@@ -1,18 +1,30 @@
 
-import React ,{useRef,useContext,useState}from 'react';
+import React ,{useRef,useContext,useState, useEffect}from 'react';
 import { ProgressContext } from '../contexts';
 import { Alert } from 'react-native';
 import { createTodaySignText } from '../utils/firebase';
 import { Box, Dimensions, StyleSheet, Text, TextInput,Image,View} from 'react-native';
 import { theme } from "../theme";
 import { images } from '../images';
+import { Input as Inputfire,SignInput } from '../components';
 
-export const Input= () => {
+
+export const _handleCreateButtonPress = async () => {
+  try {
+    const id = await createTodaySignText({TodaySignText})
+    // navigation.replace('makeSign', { id, TodaySignText });
+    // Alert.alert('sign success',e.message);
+  } catch (e) {
+    Alert.alert('Creation Error', e.message);
+  }
+};
+
+export const Input= ({navigation,setText}) => {//TodaySignText,setTodaySignText
   let time = new Date()
   let todayDate = time.getDate()
   let todayDay = time.getDay()
   
-  const [TodaySignText, setTodaySignText] = useState('');
+   const [TodaySignText, setTodaySignText] = useState('');
   const descriptionRef = useRef();
 
   const week= ['SUN','MON','TUE','WED','THU','FRI','SAT']
@@ -20,42 +32,57 @@ export const Input= () => {
 
   const { spinner } = useContext(ProgressContext);
 
-  const _handleCreateButtonPress = async () => {
-    try {
-      const id = await createTodaySignText({TodaySignText})
-      navigation.replace('TodaySign', { id, TodaySignText });
-      Alert.alert('sign success',e.message);
-    } catch (e) {
-      Alert.alert('Creation Error', e.message);
-    }
-  };
+
  
 
 //<TextInput value ="a" editable = {false} style={inputStyles.dayText} multiline={true}></TextInput>
   return (
     <>
+     
       <View style = {inputStyles.box}>
       <View style ={inputStyles.date}>
       <View  style ={inputStyles.underline}><Text style ={inputStyles.dayText}>{todayDate}</Text></View>
       <Text style = {inputStyles.dayOfWeek}>{dayOfWeek}</Text>
      </View>
-
-      <TextInput  value={TodaySignText}
-              onSubmitEditing={()=>{
-                setTodaySignText(TodaySignText.trim());
-                descriptionRef.current.focus();
+      <SignInput
+          ref={descriptionRef}
+        
+          value={TodaySignText}
+          onChangeText={text => setTodaySignText(text)}
+          onSubmitEditing={() => {
+            setTodaySignText(TodaySignText.trim());
+            setText(TodaySignText.trim());
+            // _handleCreateButtonPress();
+          }}
+          onBlur={() => {setTodaySignText(TodaySignText.trim());
+            setText(TodaySignText.trim());
+          }}
+          
+          returnKeyType="done"
+          maxLength={300}
+          style = {inputStyles.textInput} multiline={true}
+        />
+      {/* <TextInput  value={TodaySignText}
+              // onSubmitEditing={()=>{
+              //   setTodaySignText(TodaySignText.trim());
+               
+              //   // _handleCreateButtonPress();
+              // }}
+              onChangeText={()=>{setTodaySignText(TodaySignText.trim());
                 _handleCreateButtonPress();
               }}
               
               style = {inputStyles.textInput} multiline={true} >
-      </TextInput>
+      </TextInput> */}
+
+     
       </View>
       </>
    
   );
 };
 
-export const SignText= () => {
+export const SignText= ({value}) => {
   let time = new Date()
   let todayDate = time.getDate()
   let todayDay = time.getDay()
@@ -72,6 +99,7 @@ export const SignText= () => {
      </View>
 
       <Text style = {inputStyles.textInput} multiline={true} >
+        {value}
       </Text>
       </View>
       </>

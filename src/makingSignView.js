@@ -1,4 +1,8 @@
-import React from 'react';
+
+import React ,{useRef,useContext,useState}from 'react';
+import { ProgressContext } from './contexts';
+import { Alert } from 'react-native';
+import { createTodaySignText } from './utils/firebase';
 import { StyleSheet,StatusBar,SafeAreaView, Text, View, Keyboard ,Button,BackHandler } from 'react-native';
 import { viewStyles, textStyles,  iconStyles } from './styles';
 import EventInput from './EventInput';
@@ -12,34 +16,35 @@ import { NavigationContainer } from '@react-navigation/native';
 import { IconButton} from 'react-native-paper';
 import { goBack } from './J_index';
 import RadioButton from './components/J_radioButton';
+import { DB } from './utils/firebase';
 
 const PROP = [
 	{
-		key: '1',
+		key: '0',
 		text: 'pic1',
     image: images.pic1,
     selimage: images.sPic1
 	},
   {
-		key: '2',
+		key: '1',
 		text: 'pic2',
     image: images.pic2,
     selimage: images.sPic2
 	},
   {
-		key: '3',
+		key: '2',
 		text: 'pic3',
     image: images.pic3,
     selimage: images.sPic3
 	},
   {
-		key: '4',
+		key: '3',
 		text: 'pic4',
     image: images.pic4,
     selimage: images.sPic4
 	},
   {
-		key: '5',
+		key: '4',
 		text: 'pic5',
     image: images.pic5,
     selimage: images.sPic5
@@ -57,6 +62,46 @@ const styles = StyleSheet.create({
 });
 
 const makeSign= ({ navigation, route }) => {
+
+   const [TodaySignText, setTodaySignText] = useState('');
+   const [TrafficSignData, setTrafficSign] = useState('');
+   const [PicSign, setPicSign] = useState('');
+  // const descriptionRef = useRef();
+
+  // const { spinner } = useContext(ProgressContext);
+
+  // const _handleCreateButtonPress = async () => {
+  //   try {
+  //     const id = await createTodaySignText({TodaySignText})
+  //     navigation.replace('makeSign', { id, TodaySignText });
+  //      Alert.alert('sign success',e.message);
+  //   } catch (e) {
+  //     Alert.alert('Creation Error', e.message);
+  //   }
+  // };
+  // useEffect(() => {
+  //   DB.collection('TodaySign').doc(id).
+  //   setTodaySignText('a');
+
+  // },[]);
+
+
+
+  const SetText = (text) => {
+    console.log(text);
+   
+    setTodaySignText(text);
+  }
+  const SetPic = (picNum) => {
+    console.log(picNum);
+   
+    setPicSign(picNum);
+  }
+  const SetTraffic = (trafficNum) => {
+    console.log(trafficNum);
+   
+    setTrafficSign(trafficNum);
+  }
   return (
 
 
@@ -69,11 +114,15 @@ const makeSign= ({ navigation, route }) => {
           <View style={viewStyles.content}>
 
             <Text style={textStyles.title}>Today's Sign</Text>
-            <Input />
-            <TrafficSign doneListNum={5} totalListNum={115} />
+            <Input navigation={navigation} setText = {SetText}/>
+                
+            
+            
+            {/* value = {TodaySignText} set ={setTodaySignText} */}
+            <TrafficSign setTraffic={SetTraffic} />
             <View style={styles.container}>
 
-            <RadioButton PROP={PROP} />
+            <RadioButton PROP={PROP} setPic ={SetPic} />
 
             </View>
             {/* <View style={viewStyles.test}><J_List /></View> */}
@@ -82,7 +131,11 @@ const makeSign= ({ navigation, route }) => {
           
           <View style={viewStyles.footer}>
             
-              <IconButton icon={images.done} onPress={() => navigation.navigate('showSign') }/>
+              <IconButton icon={images.done} onPress={() =>{ 
+          
+              _handleCreateButtonPress({navigation , TodaySignText,TrafficSignData,PicSign});
+            }
+             }/>
             
           </View>
 
@@ -92,6 +145,21 @@ const makeSign= ({ navigation, route }) => {
     
   );
 }
+
+
+const _handleCreateButtonPress = async ({navigation ,TodaySignText,TrafficSignData,PicSign}) => {
+  console.log(TrafficSignData+ "|"+PicSign);
+  try {
+
+    // console.log('pic : %d %s ',PicSign,TrafficSignData)
+    const id = await createTodaySignText({TodaySignText,TrafficSignData,PicSign})
+    navigation.replace('showSign', { navigation, id: id, text : TodaySignText, tSign : TrafficSignData, pSign :PicSign});
+    // navigation.replace('makeSign', { id, TodaySignText });
+    // Alert.alert('sign success',e.message);
+  } catch (e) {
+    Alert.alert('Creation Error', e.message);
+  }
+};
 
 
 
