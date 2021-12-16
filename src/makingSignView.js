@@ -20,31 +20,31 @@ import { DB } from './utils/firebase';
 
 const PROP = [
 	{
-		key: '1',
+		key: '0',
 		text: 'pic1',
     image: images.pic1,
     selimage: images.sPic1
 	},
   {
-		key: '2',
+		key: '1',
 		text: 'pic2',
     image: images.pic2,
     selimage: images.sPic2
 	},
   {
-		key: '3',
+		key: '2',
 		text: 'pic3',
     image: images.pic3,
     selimage: images.sPic3
 	},
   {
-		key: '4',
+		key: '3',
 		text: 'pic4',
     image: images.pic4,
     selimage: images.sPic4
 	},
   {
-		key: '5',
+		key: '4',
 		text: 'pic5',
     image: images.pic5,
     selimage: images.sPic5
@@ -97,6 +97,11 @@ const makeSign= ({ navigation, route }) => {
    
     setPicSign(picNum);
   }
+  const SetTraffic = (trafficNum) => {
+    console.log(trafficNum);
+   
+    setTrafficSign(trafficNum);
+  }
   return (
 
 
@@ -114,7 +119,7 @@ const makeSign= ({ navigation, route }) => {
             
             
             {/* value = {TodaySignText} set ={setTodaySignText} */}
-            <TrafficSign doneListNum={5} totalListNum={115} />
+            <TrafficSign setTraffic={SetTraffic} />
             <View style={styles.container}>
 
             <RadioButton PROP={PROP} setPic ={SetPic} />
@@ -143,7 +148,10 @@ const makeSign= ({ navigation, route }) => {
 
 
 const _handleCreateButtonPress = async ({navigation ,TodaySignText,TrafficSignData,PicSign}) => {
+  console.log(TrafficSignData+ "|"+PicSign);
   try {
+
+    // console.log('pic : %d %s ',PicSign,TrafficSignData)
     const id = await createTodaySignText({TodaySignText,TrafficSignData,PicSign})
     // navigation.replace('makeSign', { id, TodaySignText });
     // Alert.alert('sign success',e.message);

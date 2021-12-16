@@ -10,7 +10,7 @@ export default class RadioButton extends Component {
 	render() {
 		const { PROP,setPic } = this.props;
 		const { value } = this.state;
-		
+		setPic(value);
 		return (
 			<View style = {styles.listBox}>
 				{PROP.map(res => {

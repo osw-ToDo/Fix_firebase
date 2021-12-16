@@ -1,5 +1,6 @@
 import * as firebase from 'firebase';
 import 'firebase/firestore';
+import { number, string } from 'prop-types';
 import config from '../../firebase.json';
 
 const app = firebase.initializeApp(config);
@@ -80,16 +81,19 @@ export const createTodo = async ({Start, End, Cate, ToDo, Flag})=>{
   return id;
 }
 
-export const createTodaySignText = async({TodaySignText,TrafficSign,picSign})=>{
+export const createTodaySignText = async({TodaySignText,TrafficSignData,PicSign})=>{
   const newSignRef = DB.collection('TodaySign').doc();
   const id = newSignRef.id;
   const newSign = {
     id,
-    TodaySignText,
-     // TrafficSign,
-    // picSign, 
+    TodaySignText ,
+    TrafficSignData,
+    PicSign , 
     createdAt: Date.now(), 
   };
+ // TrafficSign : "1",
+  // console.log("create"+TrafficSign+ "|"+picSign);
+  
   await newSignRef.set(newSign);
   return id;
 }

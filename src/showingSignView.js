@@ -11,6 +11,13 @@ import J_List from './components/J_List';
 import { IconButton} from 'react-native-paper';
 import { goBack } from './J_index';
 
+
+const SetTraffic = (trafficNum) => {
+  console.log(trafficNum);
+ 
+  setPicSign(trafficNum);
+}
+
 const showSign= ({navigation}) => {
 
 picImages = [images.sPic1,images.sPic2,images.sPic3,images.sPic4,images.sPic5]
@@ -30,7 +37,7 @@ picImages = [images.sPic1,images.sPic2,images.sPic3,images.sPic4,images.sPic5]
       <Text style={textStyles.title}>Today's Sign</Text>
       <SignText/>
       <View style = {styles.trafficSignShow}>
-        <TrafficSign doneListNum = {5} totalListNum = {115}/>
+        {/* <TrafficSign setTraffic={SetTraffic} /> */}
         <Image source={picImages[4]} style={styles.picRed}/>
       </View>
      
