@@ -4,7 +4,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import { theme } from '../theme';
 
 
-export default function Category() {
+export default function Category({set}) {
     
     const [text, setText] = useState("");
     const placeholder = 'Select the Category';
@@ -23,6 +23,7 @@ export default function Category() {
                 fixAndroidTouchableBug={true}
                 value={text}
                 onValueChange={value => onChangeText(value)}
+                onClose={set(text)}
                 useNativeAndroidPickerStyle={false}
                 items={[
                     { label: 'School', value: 'School'},
@@ -33,6 +34,7 @@ export default function Category() {
                 ]}
                 style={pickerSelectStyles}
             />
+
         </View>
         </View>
   );

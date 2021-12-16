@@ -87,11 +87,13 @@ export const createTodaySignText = async({TodaySignText,TrafficSignData,PicSign}
   const newSignRef = DB.collection('TodaySign').doc(doDate);
   const id = newSignRef.id;
   const newSign = {
+    
     id,
     TodaySignText,
     TrafficSignData,
     PicSign , 
     createdAt: Date.now(), 
+
   };
  // TrafficSign : "1",
   // console.log("create"+TrafficSign+ "|"+picSign);

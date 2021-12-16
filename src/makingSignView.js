@@ -150,9 +150,9 @@ const makeSign= ({ navigation, route }) => {
 const _handleCreateButtonPress = async ({navigation ,TodaySignText,TrafficSignData,PicSign}) => {
   console.log(TrafficSignData+ "|"+PicSign);
   try {
-
+    // const dateName = Date.prototype.getDate().toString();
     // console.log('pic : %d %s ',PicSign,TrafficSignData)
-    const id = await createTodaySignText({TodaySignText,TrafficSignData,PicSign})
+    const id = await createTodaySignText({TodaySignText,TrafficSignData,PicSign})//name:dateName,
     navigation.replace('showSign', { navigation, id: id, text : TodaySignText, tSign : TrafficSignData, pSign :PicSign});
     // navigation.replace('makeSign', { id, TodaySignText });
     // Alert.alert('sign success',e.message);

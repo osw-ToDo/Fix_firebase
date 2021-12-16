@@ -41,18 +41,18 @@ export default function CreateToDo({navigation}) {
     const onChangeText = (value) => {
             setText(value);
     }
-    /*const [newTask, setNewTask]=useState('');
-    const [tasks, setTasks] = useState({
-        '1': {id: '1', completed:false},
-    });
+    // const [newTask, setNewTask]=useState('');
+    // const [tasks, setTasks] = useState({
+    //     '1': {id: '1', completed:false},
+    // });
 
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => 
     setIsEnabled(previousState => !previousState);
 
-    const _handleTextChange = text =>{
-        setNewTask(text);
-    };*/
+    // const _handleTextChange = text =>{
+    //     setNewTask(text);
+    // };
 
     const SetStart = (text) => {
         console.log(text);
@@ -93,7 +93,7 @@ export default function CreateToDo({navigation}) {
                 </View>
                 <View style={taskStyles.column}>
                 <Text style={taskStyles.text}>Category:</Text>
-                <Category/>
+                <Category set={SetCate}/>
                 </View>
                 <View style={taskStyles.container}>
                 <Text style={taskStyles.text}>To-do:</Text>
