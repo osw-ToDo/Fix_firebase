@@ -66,8 +66,10 @@ export const updateUserPhoto = async photoUrl => {
 
 export const DB = firebase.firestore();
 
-export const createTodo = async ({Start, End, Cate, ToDo})=>{//, Flag Flag,
-  const newTodoRef = DB.collection('Todo').doc();
+export const createTodo = async ({Start, End, Cate, ToDo, Flag })=>{//, Flag Flag,
+  const date = new Date();
+  const doDate = (date.getFullYear()).toString()+'_'+(date.getMonth()).toString()+'_'+(date.getDate()).toString();
+  const newTodoRef = DB.collection('Todo').doc(doDate);
   const id = newTodoRef.id;
   const newTodo = {
     id,
@@ -75,7 +77,7 @@ export const createTodo = async ({Start, End, Cate, ToDo})=>{//, Flag Flag,
     End,
     Cate,
     ToDo,
-   
+    Flag,
   };
   await newTodoRef.set(newTodo);
   return id;
@@ -83,7 +85,7 @@ export const createTodo = async ({Start, End, Cate, ToDo})=>{//, Flag Flag,
 
 export const createTodaySignText = async({TodaySignText,TrafficSignData,PicSign})=>{
   const date = new Date();
-  const doDate = (date.getFullYear()).toString()+'_'+(date.getDate()).toString();
+  const doDate =(date.getFullYear()).toString()+'_'+(date.getMonth()).toString()+'_'+(date.getDate()).toString();
   const newSignRef = DB.collection('TodaySign').doc(doDate);
   const id = newSignRef.id;
   const newSign = {

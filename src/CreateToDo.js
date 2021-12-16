@@ -14,7 +14,7 @@ export default function CreateToDo({navigation}) {
     const press_add_ok= () =>
     {
         console.log("The addition has been completed.")
-        _handleCreateToDoPress({navigation,startDay,endDay,cate,toDo});
+        _handleCreateToDoPress({navigation,startDay,endDay,cate,toDo,Flag:isEnabled});
         goBack({navigation})
     }
     const add_task = () => 
@@ -119,12 +119,12 @@ export default function CreateToDo({navigation}) {
 };
 
 
-const _handleCreateToDoPress = async ({navigation ,startDay,endDay,toDo,cate}) => {
+const _handleCreateToDoPress = async ({navigation ,startDay,endDay,toDo,cate,Flag}) => {
 
     try {
         
       console.log(startDay);
-      const id = await createTodo({Start:startDay,End:endDay,Cate:cate,ToDo:toDo})
+      const id = await createTodo({Start:startDay,End:endDay,Cate:cate,ToDo:toDo,Flag})
       //navigation.replace('showSign', { navigation, id: id, text : TodaySignText, tSign : TrafficSignData, pSign :PicSign});
       // navigation.replace('makeSign', { id, TodaySignText });
       // Alert.alert('sign success',e.message);
