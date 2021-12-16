@@ -104,6 +104,23 @@ export const createTodaySignText = async({TodaySignText,TrafficSignData,PicSign}
   return id;
 }
 
+export const createCategory = async({label,value})=>{
+  const date = new Date();
+  const doDate =(date.getFullYear()).toString()+'_'+(date.getMonth()).toString()+'_'+(date.getDate()).toString();
+  const newSignRef = DB.collection('Category').doc();
+  const id = newSignRef.id;
+  const newSign = {
+    
+    id,
+    label,
+    value,
+  };
+
+  
+  await newSignRef.set(newSign);
+  return id;
+}
+
 
 
 
