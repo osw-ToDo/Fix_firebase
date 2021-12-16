@@ -1,9 +1,7 @@
 import React, {useState} from 'react';
-import {StatusBar, View, SafeAreaView, Text, ScrollView, StyleSheet, Alert } from 'react-native';
-import {viewStyles, textStyles } from './styles';
+import {StatusBar, Switch, View, SafeAreaView, Text, ScrollView, StyleSheet, Alert } from 'react-native';
+import {viewStyles, textStyles,ToggleStyles } from './styles';
 import {images} from './images';
-import {IconButton} from './components/IconButton';
-import ToggleSwitch from 'toggle-switch-react-native';
 import { theme } from './theme';
 import { IconButton as IconBtn} from 'react-native-paper';
 import { goBack } from './J_index';
@@ -11,24 +9,12 @@ import { goBack } from './J_index';
 
 export default function App({navigation}) {
 
-    /*const [newTask, setNewTask]=useState('');
-    const [tasks, setTasks] = useState({
-        '1': {id: '1', completed:false},
-    });
+    const isEnabled = false;
+    //위 코드에서 db에서 값 불러와 isEnabled에 저장
+    //const [isEnabled, setIsEnabled] = useState(false);
+    //const toggleSwitch = () => 
+    //setIsEnabled(previousState => !previousState);
 
-    const _addTask=()=> {
-        alert('Add: ${newTask}');
-        const ID=Date.now().toString();
-        const newTaskObject={
-            [ID]: {id: ID, completed:false},
-        };
-        setNewTask('');
-        setNewTask({...tasks, ...newTaskObject});
-    }
-
-    const _handleTextChange = text =>{
-        setNewTask(text);
-    };*/
     return (
         <SafeAreaView style={viewStyles.container}>
             <StatusBar barStyle="light-content" style={textStyles.statusbar}/>
@@ -61,13 +47,15 @@ export default function App({navigation}) {
                 </View>
                 <View style={taskStyles.column}>
                 <Text style={taskStyles.text}>Completed:</Text>
-                <ToggleSwitch
-                    isOn={false}
-                    onColor="#2Faf53"
-                    offColor="#ecf0f1"
-                    size="large"
-                    onToggle={isOn => console.log("changed to : ", isOn)}
+                 <View style={ToggleStyles.container}>
+                    <Switch
+                    trackColor={{ false: "#808080", true: "#2Faf53" }}
+                    ios_backgroundColor="#808080"
+                    //onValueChange={toggleSwitch} //수정 > todoview는 only view
+                    value={isEnabled} //db에서 값 받아오기
+                    disabled={true}
                     />
+                </View>
                 </View>
             </View>
             </ScrollView>

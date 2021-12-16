@@ -1,12 +1,10 @@
 import React, {useState} from 'react';
-import {StatusBar, View, SafeAreaView, Text, ScrollView, Alert, StyleSheet, RefreshControl,Button} from 'react-native';
-import {viewStyles, textStyles, pickerSelectStyles} from './styles';
-import ToggleSwitch from 'toggle-switch-react-native';
+import {StatusBar, Switch, View, SafeAreaView, Text, ScrollView, Alert, StyleSheet, RefreshControl,Button} from 'react-native';
+import {viewStyles, textStyles, pickerSelectStyles, ToggleStyles} from './styles';
 import { images } from './images';
 import RNPickerSelect from 'react-native-picker-select';
 import { IconButton } from 'react-native-paper';
 import { goBack } from './J_index';
-
 
 
 const wait = (timeout) => {
@@ -42,12 +40,16 @@ export default function App({navigation}) {
         else
             setText(value);
     }
-    
+    const [isEnabled, setIsEnabled] = useState(false);
+    const toggleSwitch = () => 
+    setIsEnabled(previousState => !previousState);
+
     const [refreshing, setRefreshing] = React.useState(false);
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
         wait(2000).then(() => setRefreshing(false));
       }, []);
+
     return (
         <SafeAreaView style={viewStyles.container}>
             <StatusBar barStyle="light-content" style={textStyles.statusbar}/>
@@ -62,13 +64,15 @@ export default function App({navigation}) {
                 <View style={CategoryStyles.container}>
                 <Text style={CategoryStyles.text2}>Only Uncompleted To-dos:</Text>
                 <View style={CategoryStyles.box}>
-                    <ToggleSwitch
-                    isOn={false}
-                    onColor="green"
-                    offColor="red"
-                    size="large"
-                    onToggle={isOn => console.log("changed to : ", isOn)}
-                    /></View>
+                <View style={ToggleStyles.container2}>
+                    <Switch
+                    trackColor={{ false: "#808080", true: "#2Faf53" }}
+                    ios_backgroundColor="#808080"
+                    onValueChange={toggleSwitch}
+                    value={isEnabled}
+                    />
+                </View>
+                </View>
                 </View>
                 <View style={CategoryStyles.line} />
                 <View style={CategoryStyles.container}>
@@ -144,12 +148,12 @@ const CategoryStyles = StyleSheet.create({
         fontWeight: '500',
         color: '#000000',
         alignItems: 'flex-start',
-        marginTop:13,
+        marginTop:5,
         marginLeft: 20,
         marginBottom:0,
     },
     box:{
-        marginLeft:25,
+        marginLeft:50,
 
     }
 

@@ -23,6 +23,10 @@ export const viewStyles=StyleSheet.create({
         marginLeft:240,
         flexDirection: 'row',
     },
+    toggle_box: {
+        marginLeft:100,
+        flexDirection: 'row',
+    },
     
 
     header: {
@@ -173,4 +177,19 @@ export const pickerSelectStyles = StyleSheet.create({
     },
 
 });
-
+export const ToggleStyles = StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop:7,
+      marginLeft:70,
+      
+    },
+    container2: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        
+      }
+  });
