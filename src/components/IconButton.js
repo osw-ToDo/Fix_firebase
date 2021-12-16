@@ -9,7 +9,6 @@ export const IconButton= ({type, onPressOut}) => {
   
     return (
         <Pressable onPress = {onPressOut} >
-               
             <Image source={type} style={iconStyle.icon}/>
         </Pressable>
 

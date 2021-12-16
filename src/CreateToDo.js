@@ -1,11 +1,9 @@
 import React,{useState} from 'react';
-import {StatusBar, View, SafeAreaView, Text, ScrollView,Alert} from 'react-native';
-import {viewStyles, textStyles, taskStyles } from './styles';
+import {StatusBar, Switch, View, SafeAreaView, Text, ScrollView,Alert} from 'react-native';
+import {viewStyles, textStyles, taskStyles,ToggleStyles } from './styles';
 import {images} from './images';
-//import {IconButton} from './components/IconButton';
 import Day from './components/Date';
 import Category from './components/Category';
-import ToggleSwitch from 'toggle-switch-react-native';
 import TodoInput from './components/TodoInput';
 import { IconButton as IconBtn} from 'react-native-paper';
 import { goBack } from './J_index';
@@ -48,15 +46,9 @@ export default function CreateToDo({navigation}) {
         '1': {id: '1', completed:false},
     });
 
-    const _addTask=()=> {
-        alert('Add: ${newTask}');
-        const ID=Date.now().toString();
-        const newTaskObject={
-            [ID]: {id: ID, completed:false},
-        };
-        setNewTask('');
-        setNewTask({...tasks, ...newTaskObject});
-    }
+    const [isEnabled, setIsEnabled] = useState(false);
+    const toggleSwitch = () => 
+    setIsEnabled(previousState => !previousState);
 
     const _handleTextChange = text =>{
         setNewTask(text);
@@ -109,13 +101,14 @@ export default function CreateToDo({navigation}) {
                 </View>
                 <View style={taskStyles.column}>
                 <Text style={taskStyles.text}>Completed:</Text>
-                <ToggleSwitch
-                    isOn={false}
-                    onColor="#2Faf53"
-                    offColor="#ecf0f1"
-                    size="large"
-                    onToggle={isOn => console.log("changed to : ", isOn)}
+                <View style={ToggleStyles.container}>
+                    <Switch
+                    trackColor={{ false: "#808080", true: "#2Faf53" }}
+                    ios_backgroundColor="#808080"
+                    onValueChange={toggleSwitch}
+                    value={isEnabled}
                     />
+                </View>
                 </View>
             </View>
             </ScrollView>
