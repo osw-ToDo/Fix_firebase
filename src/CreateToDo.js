@@ -14,7 +14,8 @@ export default function CreateToDo({navigation}) {
     const press_add_ok= () =>
     {
         console.log("The addition has been completed.")
-        _handleCreateToDoPress({navigation,startDay,endDay,cate,toDo,Flag:isEnabled});
+        _handleCreateToDoPress({navigation,startDay,endDay,cate,toDo,Flag:isEnabled});//DB삽입 코드  
+        Alert.alert("Add a new To-Do!");
         goBack({navigation})
     }
     const add_task = () => 
@@ -25,7 +26,7 @@ export default function CreateToDo({navigation}) {
        {
          text: "OK",                              
          onPress: () => press_add_ok()
-         //DB삽입 코드     
+            
        },
        { text: "Cancel", style: "cancel", onPress: () => console.log("The addition has been canceled.") }, 
      ],
@@ -36,23 +37,10 @@ export default function CreateToDo({navigation}) {
     const [endDay,setEndDay] = useState("");
     const [cate,setCate] = useState("");
     const [toDo,setToDo] = useState("");
-    
-    const placeholder = 'Select the Category';
-    const onChangeText = (value) => {
-            setText(value);
-    }
-    // const [newTask, setNewTask]=useState('');
-    // const [tasks, setTasks] = useState({
-    //     '1': {id: '1', completed:false},
-    // });
 
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => 
     setIsEnabled(previousState => !previousState);
-
-    // const _handleTextChange = text =>{
-    //     setNewTask(text);
-    // };
 
     const SetStart = (text) => {
         console.log(text);
