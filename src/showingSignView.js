@@ -16,13 +16,18 @@ const showSign= ({navigation, route}) => {
 
   //여기를 아예 파베로 바꾸고
   const [data,setData] = useState('');
- 
+  const date = route.params;
+
   useEffect(()=>{
    
-    getTodaySignRef().then(function(doc){
+    console.log('showSign param |',date);
+   
+    getTodaySignRef(date).then(function(doc){
       if(!doc.exists){
         console.log('No such document!');
-        navigation.replace('makeSign');
+        
+        //if(route !='montly')
+       // navigation.replace('makeSign',{date:date});
       } else {
         console.log('Document data:', doc.data() );
         setData(doc.data());
@@ -49,7 +54,7 @@ const showSign= ({navigation, route}) => {
       <View style = {viewStyles.content}> 
       
       <Text style={textStyles.title}>Today's Sign</Text>
-      <SignText value={text}/>
+      <SignText value={text} date = {date}/>
       <View style = {styles.trafficSignShow}>
 
         <ShowTrafficSign trafficSign={tSign} />
@@ -64,7 +69,7 @@ const showSign= ({navigation, route}) => {
  
      <View style = {viewStyles.footer}> 
      <View >
-       <IconButton  icon = {images.edit} onPress={() => navigation.navigate('makeSign')}/>
+       <IconButton  icon = {images.edit} onPress={() => navigation.navigate('makeSign',{date:date})}/>
      </View> 
      </View> 
       

@@ -82,8 +82,8 @@ export const Input= ({navigation,setText}) => {//TodaySignText,setTodaySignText
   );
 };
 
-export const SignText= ({value}) => {
-  let time = new Date()
+export const SignText= ({value, date}) => {
+  let time = new Date(date.date);
   let todayDate = time.getDate()
   let todayDay = time.getDay()
 
