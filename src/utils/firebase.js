@@ -83,6 +83,7 @@ export const createTodo = async ({Start, End, Cate, ToDo, Flag })=>{//, Flag Fla
   return id;
 }
 
+
 export const createTodaySignText = async({TodaySignText,TrafficSignData,PicSign})=>{
   const date = new Date();
   const doDate =(date.getFullYear()).toString()+'_'+(date.getMonth()).toString()+'_'+(date.getDate()).toString();
@@ -105,19 +106,13 @@ export const createTodaySignText = async({TodaySignText,TrafficSignData,PicSign}
 }
 
 export const createCategory = async({label,value})=>{
-  const date = new Date();
-  const doDate =(date.getFullYear()).toString()+'_'+(date.getMonth()).toString()+'_'+(date.getDate()).toString();
-  const newSignRef = DB.collection('Category').doc();
-  const id = newSignRef.id;
-  const newSign = {
-    
-    id,
+  const newCateRef = DB.collection('Cate').doc();
+  const newCate = {
     label,
     value,
   };
-
   
-  await newSignRef.set(newSign);
+  await newCateRef.set(newCate);
   return id;
 }
 
