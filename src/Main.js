@@ -15,7 +15,8 @@ export default function Main({ navigation }) {
   const monthDate = moment().format("MM");
   const date = new Date();
   const day = moment(date).add("0", "d").format("DD");
-
+  const doDate =(date.getFullYear()).toString()+'-'+(date.getMonth()).toString()+'-'+(date.getDate()).toString();
+  console.log((date.getMonth()).toString());
   return (
     <View>
       
@@ -79,7 +80,8 @@ export default function Main({ navigation }) {
         })}
       </BodyTxtView>
       <FooterView>
-       <TouchableOpacity style = {FooterButtonImg1.icon}  onPress={() => navigation.navigate('makeSign') }>
+        
+       <TouchableOpacity style = {FooterButtonImg1.icon}  onPress={() => navigation.navigate('makeSign',{date: doDate}) }>
           <Image style = {FooterButtonImg1.icon} source={require("../assets/images/mainButton.png")}/>
         </TouchableOpacity>
 

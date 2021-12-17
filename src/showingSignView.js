@@ -1,5 +1,5 @@
-import React,{useState} from 'react';
-import { StyleSheet,StatusBar,SafeAreaView, Text, View, Keyboard ,Image, SnapshotViewIOSBase } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { StyleSheet,StatusBar,SafeAreaView, Text, View, Keyboard ,Image } from 'react-native';
 import { viewStyles, textStyles} from './styles';
 import { TouchableWithoutFeedback } from 'react-native';
 import {SignText} from './components/signInput';
@@ -8,14 +8,11 @@ import {images} from './images';
 import {ShowTrafficSign} from './components/J_trafficSign';
 import { IconButton} from 'react-native-paper';
 import { goBack } from './J_index';
-import {DB} from './utils/firebase'
+import {DB,getTodaySignRef} from './utils/firebase'
 
 //루트 없어지고
 const showSign= ({navigation, route}) => {
   
-  // if(route != undefined){
-  // 
-  // }
 
   const [id, setID] = useState([]);
   const [text, setText] = useState([]);
@@ -23,31 +20,30 @@ const showSign= ({navigation, route}) => {
   const [pSign, setPsign] = useState([]);
 
   //여기를 아예 파베로 바꾸고
+  const [data,setData] = useState('');
+  const date = route.params;
 
-    const date = new Date();
-    const doDate =(date.getFullYear()).toString()+'_'+(date.getMonth()).toString()+'_'+(date.getDate()).toString();
-    const signRef = DB.collection('TodaySign').doc(doDate);
-    const doc = signRef.get();
-    doc.then(function(doc){
+  useEffect(()=>{
+   
+    console.log('showSign param |',date);
+   
+    getTodaySignRef(date).then(function(doc){
       if(!doc.exists){
         console.log('No such document!');
+        
+        //if(route !='montly')
+       // navigation.replace('makeSign',{date:date});
       } else {
-        console.log('Document data:', doc.data());
-        id = setID(doc.data().id);
-        console.log('id:',id);
-        return obj;
+        console.log('Document data:', doc.data() );
+        setData(doc.data());
       }
     });
+  },[])
 
-
-  /**const {id, text, tSign , pSign } = route.params;**/
-
+  const { text, tSign , pSign } = {text:data.TodaySignText,tSign:data.TrafficSignData,pSign:data.PicSign};
 
   let picImages = [images.sPic1,images.sPic2,images.sPic3,images.sPic4,images.sPic5]
   
-  //  let trafficSign = parseInt(tSign);
-  //  let picSign = parseInt(pSign);
-
   // console.log("showSign "+id+" "+pSign+" "+text);
 
   return (
@@ -62,7 +58,7 @@ const showSign= ({navigation, route}) => {
       <View style = {viewStyles.content}> 
       
       <Text style={textStyles.title}>Today's Sign</Text>
-      <SignText value={text}/>
+      <SignText value={text} date = {date}/>
       <View style = {styles.trafficSignShow}>
 
         <ShowTrafficSign trafficSign={tSign} />
@@ -77,7 +73,7 @@ const showSign= ({navigation, route}) => {
  
      <View style = {viewStyles.footer}> 
      <View >
-       <IconButton  icon = {images.edit} onPress={() => navigation.navigate('makeSign')}/>
+       <IconButton  icon = {images.edit} onPress={() => navigation.navigate('makeSign',{date:date})}/>
      </View> 
      </View> 
       

@@ -20,10 +20,13 @@ LocaleConfig.locales['ko'] = {
 LocaleConfig.defaultLocale = 'ko';
 
 class Montly extends Component {
+  
+  
 
   render() {
     
     const navigation = this.props.navigation 
+   
      return (
      <><View style={viewStyles.header}>
        <IconButton icon={images.back} onPress={() => { goBack({ navigation }); } } />
@@ -42,8 +45,10 @@ class Montly extends Component {
                  ToastAndroid.SHORT,
                  ToastAndroid.CENTER
                );
-
-               navigation.navigate('showSign');
+               const dayObj = day
+             //  const date =day.year+'-'+day.month+'-'+dayObj.day;
+             const date = day.dateString;
+               navigation.navigate('showSign',{date:date});
              } }
              monthFormat={'yyyy, MM월'}
              onMonthChange={(month) => { console.log('month changed', month); } }

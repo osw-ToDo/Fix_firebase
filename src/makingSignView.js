@@ -66,6 +66,10 @@ const makeSign= ({ navigation, route }) => {
    const [TodaySignText, setTodaySignText] = useState('');
    const [TrafficSignData, setTrafficSign] = useState('');
    const [PicSign, setPicSign] = useState('');
+   const date = route.params.date;
+
+   //const doDate =(date.getFullYear()).toString()+'_'+(date.getMonth()).toString()+'_'+(date.getDate()).toString();
+
   // const descriptionRef = useRef();
 
   // const { spinner } = useContext(ProgressContext);
@@ -115,9 +119,6 @@ const makeSign= ({ navigation, route }) => {
 
             <Text style={textStyles.title}>Today's Sign</Text>
             <Input navigation={navigation} setText = {SetText}/>
-                
-            
-            
             {/* value = {TodaySignText} set ={setTodaySignText} */}
             <TrafficSign setTraffic={SetTraffic} />
             <View style={styles.container}>
@@ -133,7 +134,7 @@ const makeSign= ({ navigation, route }) => {
             
               <IconButton icon={images.done} onPress={() =>{ 
           
-              _handleCreateButtonPress({navigation , TodaySignText,TrafficSignData,PicSign});
+              _handleCreateButtonPress({navigation , dateObj:date,TodaySignText,TrafficSignData,PicSign});
             }
              }/>
             
@@ -147,13 +148,16 @@ const makeSign= ({ navigation, route }) => {
 }
 
 
-const _handleCreateButtonPress = async ({navigation ,TodaySignText,TrafficSignData,PicSign}) => {
+const _handleCreateButtonPress = async ({navigation ,dateObj,TodaySignText,TrafficSignData,PicSign}) => {
+
   console.log(TrafficSignData+ "|"+PicSign);
   try {
     // const dateName = Date.prototype.getDate().toString();
-    // console.log('pic : %d %s ',PicSign,TrafficSignData)
-    const id = await createTodaySignText({TodaySignText,TrafficSignData,PicSign})//name:dateName,
-    navigation.replace('showSign', { navigation, id: id, text : TodaySignText, tSign : TrafficSignData, pSign :PicSign});
+     console.log('pic : %d %s ',PicSign,TrafficSignData)
+     console.log("DATE", dateObj,"MAKEsIGN")
+     const doDate = dateObj.date;
+     const id = await createTodaySignText({TodaySignText,TrafficSignData,PicSign})//name:dateName,
+    navigation.replace('showSign', {date :dateObj});
     // navigation.replace('makeSign', { id, TodaySignText });
     // Alert.alert('sign success',e.message);
   } catch (e) {

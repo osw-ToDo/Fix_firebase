@@ -68,7 +68,7 @@ export const DB = firebase.firestore();
 
 export const createTodo = async ({Start, End, Cate, ToDo, Flag })=>{//, Flag Flag,
   const date = new Date();
-  const doDate = (date.getFullYear()).toString()+'_'+(date.getMonth()).toString()+'_'+(date.getDate()).toString();
+  const doDate = (date.getFullYear()).toString()+'-'+(date.getMonth()).toString()+'-'+(date.getDate()).toString();
   const newTodoRef = DB.collection('Todo').doc(doDate);
   const id = newTodoRef.id;
   const newTodo = {
@@ -86,7 +86,7 @@ export const createTodo = async ({Start, End, Cate, ToDo, Flag })=>{//, Flag Fla
 
 export const createTodaySignText = async({TodaySignText,TrafficSignData,PicSign})=>{
   const date = new Date();
-  const doDate =(date.getFullYear()).toString()+'_'+(date.getMonth()).toString()+'_'+(date.getDate()).toString();
+  const doDate =(date.getFullYear()).toString()+'-'+(date.getMonth()).toString()+'-'+(date.getDate()).toString();
   const newSignRef = DB.collection('TodaySign').doc(doDate);
   const id = newSignRef.id;
   const newSign = {
@@ -143,3 +143,37 @@ export const createMessage = async ({ channelId, message }) => {
       createdAt: Date.now(),
     });
 };
+
+
+export function getTodaySign(){
+  const date = new Date();
+  const doDate =(date.getFullYear()).toString()+'-'+(date.getMonth()).toString()+'-'+(date.getDate()).toString();
+  const signRef = DB.collection('TodaySign').doc(doDate);
+  const doc = signRef.get();
+
+
+  doc.then(function(doc){
+    if(!doc.exists){
+      console.log('No such document!');
+    } else {
+      console.log('doc Document data:', doc.data() );
+     return doc.data()
+    }
+  });
+
+
+}
+
+
+
+export function getTodaySignRef({date}){
+
+  // const date = new Date();
+ // const doDate =(date.getFullYear()).toString()+'_'+(date.getMonth()).toString()+'_'+(date.getDate()).toString();
+  const signRef = DB.collection('TodaySign').doc(date);
+  const doc = signRef.get();
+ 
+  return doc;
+
+
+}

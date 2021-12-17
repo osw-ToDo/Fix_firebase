@@ -27,7 +27,7 @@ const cacheFonts = fonts => {
 const App = () => {
 
   const date = new Date();
-  const doDate =(date.getFullYear()).toString()+'_'+(date.getMonth()).toString()+'_'+(date.getDate()).toString();
+  const doDate =(date.getFullYear()).toString()+'-'+(date.getMonth()).toString()+'-'+(date.getDate()).toString();
   const signRef = DB.collection('TodaySign').doc(doDate);
   const doc = signRef.get();
   doc.then(function(doc){
