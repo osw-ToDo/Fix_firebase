@@ -79,7 +79,7 @@ export default function Main({ navigation }) {
         })}
       </BodyTxtView>
       <FooterView>
-       <TouchableOpacity style = {FooterButtonImg1.icon}  onPress={() => navigation.navigate('makeSign') }>
+       <TouchableOpacity style = {FooterButtonImg1.icon}  onPress={() => navigation.navigate('showSign') }>
           <Image style = {FooterButtonImg1.icon} source={require("../assets/images/mainButton.png")}/>
         </TouchableOpacity>
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet,StatusBar,SafeAreaView, Text, View, Keyboard ,Image } from 'react-native';
 import { viewStyles, textStyles} from './styles';
 import { TouchableWithoutFeedback } from 'react-native';
@@ -8,34 +8,32 @@ import {images} from './images';
 import {ShowTrafficSign} from './components/J_trafficSign';
 import { IconButton} from 'react-native-paper';
 import { goBack } from './J_index';
-import {DB} from './utils/firebase'
+import {DB,getTodaySignRef} from './utils/firebase'
 
 //루트 없어지고
 const showSign= ({navigation, route}) => {
   
-  // if(route != undefined){
-  // 
-  // }
 
   //여기를 아예 파베로 바꾸고
-  const date = new Date();
-  const doDate =(date.getFullYear()).toString()+'_'+(date.getMonth()).toString()+'_'+(date.getDate()).toString();
-  const signRef = DB.collection('TodaySign').doc(doDate);
-  console.log(signRef.get());
-  const doc = signRef.get();
-  if(!doc.exists){
-    console.log('No such document!');
-  } else {
-    console.log('Document data:', doc.data());
-  }
+  const [data,setData] = useState('');
+ 
+  useEffect(()=>{
+   
+    getTodaySignRef().then(function(doc){
+      if(!doc.exists){
+        console.log('No such document!');
+        navigation.replace('makeSign');
+      } else {
+        console.log('Document data:', doc.data() );
+        setData(doc.data());
+      }
+    });
+  },[])
 
-  const {id, text, tSign , pSign } = route.params;
+  const { text, tSign , pSign } = {text:data.TodaySignText,tSign:data.TrafficSignData,pSign:data.PicSign};
 
   let picImages = [images.sPic1,images.sPic2,images.sPic3,images.sPic4,images.sPic5]
   
-  //  let trafficSign = parseInt(tSign);
-  //  let picSign = parseInt(pSign);
-
   // console.log("showSign "+id+" "+pSign+" "+text);
 
   return (

@@ -143,3 +143,36 @@ export const createMessage = async ({ channelId, message }) => {
       createdAt: Date.now(),
     });
 };
+
+
+export function getTodaySign(){
+  const date = new Date();
+  const doDate =(date.getFullYear()).toString()+'_'+(date.getMonth()).toString()+'_'+(date.getDate()).toString();
+  const signRef = DB.collection('TodaySign').doc(doDate);
+  const doc = signRef.get();
+
+
+  doc.then(function(doc){
+    if(!doc.exists){
+      console.log('No such document!');
+    } else {
+      console.log('doc Document data:', doc.data() );
+     return doc.data()
+    }
+  });
+
+
+}
+
+
+
+export function getTodaySignRef(){
+  const date = new Date();
+  const doDate =(date.getFullYear()).toString()+'_'+(date.getMonth()).toString()+'_'+(date.getDate()).toString();
+  const signRef = DB.collection('TodaySign').doc(doDate);
+  const doc = signRef.get();
+ 
+  return doc;
+
+
+}
