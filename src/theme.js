@@ -14,7 +14,12 @@ export const theme = {
     cate: '#343a40',
     text: 'black',  // 화이트-> black (다소)
     done: '#616161',
+    
     errorText: colors.red,
+    listBorder: colors.grey_0,
+    listTime: colors.grey_1,
+    listDescription: colors.grey_1,
+    listIcon: colors.black,
 
   // Image Component
   imageBackground: colors.grey_0,

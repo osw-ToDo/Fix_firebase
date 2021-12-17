@@ -2,12 +2,15 @@ import React from "react";
 import { StyleSheet, Text, View, Image,SafeAreaView, TouchableOpacity } from "react-native";
 import moment from "moment";
 import styled from "styled-components";
-import { viewStyles } from './styles';
-import Icon from "react-native-vector-icons/Ionicons";
 import { goBack } from './J_index';
 import { IconButton as IconBtn} from 'react-native-paper';
-import { IconButton } from "./components/IconButton";
 import { images } from "./images";
+
+/* private DetabaseReference mDatabase;
+mDatabase = FirebaseDatabase.getInstance().getReference();
+
+databaseReference.child("todo").push().setValue('enddate'); */
+
 
 export default function Weekly({ navigation, route }) {
   const monthDate = moment().format("MM");

@@ -1,36 +1,69 @@
-import React from "react";
-import { StyleSheet, Text, View, Image,TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import moment from "moment";
 import styled from "styled-components";
-import { mainRows } from "../rows";
-import Icon from "react-native-vector-icons/Ionicons";
-import { IconButton} from 'react-native-paper';
-import {images} from './images';
-import {IconButton as IconBtn} from './components/IconButton';
-import { viewStyles } from "./styles";
-import MainStack from './navigations/MainStack';
-import { NavigationContainer } from '@react-navigation/native';
+import "firebase/firestore";
+import { FlatList, TextInput } from "react-native-gesture-handler";
+import { List } from 'react-native-paper';
 
-export default function Main({ navigation }) {
+export function Main({ navigation }) {
   const monthDate = moment().format("MM");
   const date = new Date();
   const day = moment(date).add("0", "d").format("DD");
 
+  const [ todo, setTodo ] = useState('');
+  const [ loading, setLoading ] = useState(true);
+  const [ todos, setTodos ] = useState([]);
+
+  const ref = firestore().collection('todos');
+
+    async function addTodo(){
+        await ref.add({
+            title: todo,
+            complete: false,
+        });
+    }
+
+    useEffect(()=> {
+        return ref.onSnapshot((querySnapshot) => {
+            const list = [];
+            querySnapshot.forEach(doc => {
+                const { title, complete } = doc.date();
+                list.push({
+                    id: doc.id,
+                    title,
+                    complete,
+                });
+            });
+
+            setTodos(list);
+
+            if (loading){
+                setLoading(false);
+            }
+        });
+    }, []);
+
+    if(loading) {
+        return null;
+    }
+
+    //UI
+
   return (
     <View>
-      
-
       <HeaderTitleView>
         <HeaderTitleTxt>TODAY's LIST</HeaderTitleTxt>
         <TouchableOpacity onPress={() => navigation.navigate('Profile') }>
-
         <HeaderImg style={{ marign: 100 }} source={require("../assets/images/mainSetting.png")} />
         </TouchableOpacity>
       </HeaderTitleView>
       <BodyView>
+        <BodySignView>
         <BodySignDateImg source={require("../assets/images/mainSign1.png")} />
         <BodySignMonth>{monthDate}</BodySignMonth>
         <BodySignDate>{day}</BodySignDate>
+        </BodySignView>
         <BodyMenuView>
           <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => navigation.navigate('montly') }>
           <Image style = {BodyMenuImg1.M}  source={require("../assets/images/Mbutton.png")}/>
@@ -42,42 +75,26 @@ export default function Main({ navigation }) {
           <Image style = {BodyMenuImg1.C} source={require("../assets/images/Cbutton.png")}/>
           </TouchableOpacity>
         </BodyMenuView>
-      </BodyView>
+    </BodyView>*/
+
+      {/*수정*/}
+
       <BodyTxtView>
-        {mainRows.map((row, idx) => {
-          return (
-           
-        
-            <View style={{ flex: 1 }} key={idx}>
-
-            
+    
             <TouchableOpacity   onPress={() => navigation.navigate('toDo') }> 
-              <View style={{ padding: 15, borderBottomWidth: 1, borderColor: "black", flexDirection: "row" }}>
-                <View style={{ marginRight: 10 }}>
-                  <Icon name="square-outline" size={30} color="gray" />
-                </View>
-                <View>
-                  <Text>{row.mainRows[0].title}</Text>
-                  <Text>{row.mainRows[0].date}</Text>
-                </View>
-              </View>
+            <FlatList
+            style={{flex: 1}}
+            data={todos}
+            keyExtractor={(item)=> item.id}
+            renderItem={({ item })=> <Todo {...item} />}
+            />
+
+            <TextInput label={'New Todo'} value={todo} onChangeText={setTodo} />
+            <Button onPress={() => addTodo()}>Add TODO</Button>
             </TouchableOpacity>
-
-            <TouchableOpacity   onPress={() => navigation.navigate('toDo') }> 
-              <View style={{ padding: 15, borderBottomWidth: 1, borderColor: "black", flexDirection: "row" }}>
-                <View style={{ marginRight: 10 }}>
-                  <Icon name="square-outline" size={30} color="gray" />
-                </View>
-                <View>
-                  <Text>{row.mainRows[1].title}</Text>
-                  <Text>{row.mainRows[1].date}</Text>
-                </View>
-              </View>
-              </TouchableOpacity>
-            </View>
-          );
-        })}
+          
       </BodyTxtView>
+
       <FooterView>
        <TouchableOpacity style = {FooterButtonImg1.icon}  onPress={() => navigation.navigate('showSign') }>
           <Image style = {FooterButtonImg1.icon} source={require("../assets/images/mainButton.png")}/>
@@ -90,7 +107,8 @@ export default function Main({ navigation }) {
       </FooterView>
     </View>
   );
-}
+};
+
 
 const HeaderTitleView = styled(View)`
   flex:1
@@ -121,11 +139,46 @@ const BodyView = styled(View)`
   border-bottom-width: 1px;
 `;
 
+{/*수정*/}
 const BodyTxtView = styled(View)`
   flex: 1;
   flex-direction: row;
   justify-content: flex-start;
 `;
+
+const Container = styled.View`
+  flex: 1;
+  background-color: ${({ theme }) => theme.background};
+`;
+const ItemContainer = styled.TouchableOpacity`
+  flex-direction: row;
+  align-items: center;
+  border-bottom-width: 1px;
+  border-color: ${({ theme }) => theme.listBorder};
+  padding: 15px 20px;
+`;
+
+const ItemTextContainer = styled.View`
+  flex: 1;
+  flex-direction: column;
+`;
+const ItemTitle = styled.Text`
+  font-size: 20px;
+  font-weight: 600;
+`;
+const ItemDescription = styled.Text`
+  font-size: 16px;
+  margin-top: 5px;
+  color: ${({ theme }) => theme.listDescription};
+`;
+const ItemTime = styled.Text`
+  font-size: 12px;
+  color: ${({ theme }) => theme.listTime};
+`;
+
+const BodySignView = styled(View)` 
+  //일단 위에 처리하고 다시 스타일 맞추기
+`
 
 const BodySignDateImg = styled(Image)`
   width: 150px;
@@ -269,4 +322,4 @@ const BodyCMenuImg = styled(View)`
   font-weight: 700;
 `;
 
-const styles = StyleSheet.create({});
+//const styles = StyleSheet.create({});
