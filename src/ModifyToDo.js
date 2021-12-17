@@ -106,7 +106,7 @@ export default function ModifyToDo({navigation}) {
                 </View>
                 <View style={taskStyles.column}>
                 <Text style={taskStyles.text}>Category:</Text>
-                <Category/>
+                <Category set ={SetCate}/>
                 </View>
                 <View style={taskStyles.container}>
                 <Text style={taskStyles.text}>To-do:</Text>
