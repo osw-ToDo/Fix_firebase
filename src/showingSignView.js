@@ -14,11 +14,6 @@ import {DB,getTodaySignRef} from './utils/firebase'
 const showSign= ({navigation, route}) => {
   
 
-  const [id, setID] = useState([]);
-  const [text, setText] = useState([]);
-  const [tSign, setTsign] = useState([]);
-  const [pSign, setPsign] = useState([]);
-
   //여기를 아예 파베로 바꾸고
   const [data,setData] = useState('');
   const date = route.params;
