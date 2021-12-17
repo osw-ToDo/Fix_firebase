@@ -48,10 +48,18 @@ export const viewStyles=StyleSheet.create({
       // backgroundColor: '#d6ca1a',
       },
       footer: {
-        width:'100%',
-        height:'10%',
-        alignItems: 'flex-end',
-        paddingBottom:50,
+        //width:'100%',
+       //height:'10%',
+       marginLeft:320,
+        flexDirection: 'row',
+        // alignItems: 'flex-end',
+        // justifyContent: 'flex-end',
+        // paddingBottom:50,
+        // paddingRight:10,
+//         flex: 1;
+//   flex-direction: row;
+//   justify-content: flex-end;
+//   align-items: center;
         // backgroundColor: '#1ad657',
       },
       test: {
