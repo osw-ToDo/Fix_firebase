@@ -15,8 +15,8 @@ export default function Main({ navigation }) {
   const monthDate = moment().format("MM");
   const date = new Date();
   const day = moment(date).add("0", "d").format("DD");
-  const doDate =(date.getFullYear()).toString()+'-'+(date.getMonth()).toString()+'-'+(date.getDate()).toString();
-  console.log((date.getMonth()).toString());
+  const doDate =(date.getFullYear()).toString()+'-'+monthDate+'-'+(date.getDate()).toString();
+  console.log((date.getMonth()).toString(),monthDate);
   return (
     <View>
       

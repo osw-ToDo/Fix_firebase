@@ -19,8 +19,8 @@ export const _handleCreateButtonPress = async () => {
   }
 };
 
-export const Input= ({navigation,setText}) => {//TodaySignText,setTodaySignText
-  let time = new Date()
+export const Input= ({navigation,setText,Day}) => {//TodaySignText,setTodaySignText
+  let time = new Date(Day.date)
   let todayDate = time.getDate()
   let todayDay = time.getDay()
   
@@ -82,8 +82,9 @@ export const Input= ({navigation,setText}) => {//TodaySignText,setTodaySignText
   );
 };
 
-export const SignText= ({value, date}) => {
-  let time = new Date(date.date);
+export const SignText= ({value, Day}) => {
+  console.log(Day.date);
+  let time = new Date(Day.date);
   let todayDate = time.getDate()
   let todayDay = time.getDay()
 

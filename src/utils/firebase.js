@@ -84,10 +84,10 @@ export const createTodo = async ({Start, End, Cate, ToDo, Flag })=>{//, Flag Fla
 }
 
 
-export const createTodaySignText = async({TodaySignText,TrafficSignData,PicSign})=>{
-  const date = new Date();
-  const doDate =(date.getFullYear()).toString()+'-'+(date.getMonth()).toString()+'-'+(date.getDate()).toString();
-  const newSignRef = DB.collection('TodaySign').doc(doDate);
+export const createTodaySignText = async({date,TodaySignText,TrafficSignData,PicSign})=>{
+  //const date = new Date();
+  //const doDate =(date.getFullYear()).toString()+'-'+(date.getMonth()).toString()+'-'+(date.getDate()).toString();
+  const newSignRef = DB.collection('TodaySign').doc(date);
   const id = newSignRef.id;
   const newSign = {
     

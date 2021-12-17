@@ -16,7 +16,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { IconButton} from 'react-native-paper';
 import { goBack } from './J_index';
 import RadioButton from './components/J_radioButton';
-import { DB } from './utils/firebase';
+import { DB,getTodaySignRef } from './utils/firebase';
 
 const PROP = [
 	{
@@ -66,8 +66,26 @@ const makeSign= ({ navigation, route }) => {
    const [TodaySignText, setTodaySignText] = useState('');
    const [TrafficSignData, setTrafficSign] = useState('');
    const [PicSign, setPicSign] = useState('');
-   const date = route.params.date;
+   const [data,setData] = useState('');
+   const date = route.params;
 
+  //  useEffect(()=>{
+   
+  //   console.log('showSign param |',date);
+   
+  //   getTodaySignRef(date).then(function(doc){
+  //     if(!doc.exists){
+  //       console.log('No such document!');
+  //       //if(route !='montly')
+  //      // navigation.replace('makeSign',{date:date});
+  //     } else {
+  //       console.log('Document data:', doc.data() );
+  //       setData(doc.data());
+  //     }
+  //   });
+  // },[])
+
+  // const { text, tSign , pSign } = {text:data.TodaySignText,tSign:data.TrafficSignData,pSign:data.PicSign};
    //const doDate =(date.getFullYear()).toString()+'_'+(date.getMonth()).toString()+'_'+(date.getDate()).toString();
 
   // const descriptionRef = useRef();
@@ -118,7 +136,7 @@ const makeSign= ({ navigation, route }) => {
           <View style={viewStyles.content}>
 
             <Text style={textStyles.title}>Today's Sign</Text>
-            <Input navigation={navigation} setText = {SetText}/>
+            <Input navigation={navigation} setText = {SetText}  Day = {date}/>
             {/* value = {TodaySignText} set ={setTodaySignText} */}
             <TrafficSign setTraffic={SetTraffic} />
             <View style={styles.container}>
@@ -154,10 +172,9 @@ const _handleCreateButtonPress = async ({navigation ,dateObj,TodaySignText,Traff
   try {
     // const dateName = Date.prototype.getDate().toString();
      console.log('pic : %d %s ',PicSign,TrafficSignData)
-     console.log("DATE", dateObj,"MAKEsIGN")
-     const doDate = dateObj.date;
-     const id = await createTodaySignText({TodaySignText,TrafficSignData,PicSign})//name:dateName,
-    navigation.replace('showSign', {date :dateObj});
+     console.log("make Sign DATE", dateObj,"")
+     const id = await createTodaySignText({date :dateObj.date,TodaySignText,TrafficSignData,PicSign})//name:dateName,
+    navigation.replace('showSign', dateObj);
     // navigation.replace('makeSign', { id, TodaySignText });
     // Alert.alert('sign success',e.message);
   } catch (e) {

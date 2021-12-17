@@ -8,7 +8,7 @@ import {images} from './images';
 import { IconButton} from 'react-native-paper';
 import { goBack } from './J_index';
 import { useNavigation } from '@react-navigation/native';
-
+import {DB,getTodaySignRef} from './utils/firebase'
 
 LocaleConfig.locales['ko'] = {
   monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
@@ -48,7 +48,9 @@ class Montly extends Component {
                const dayObj = day
              //  const date =day.year+'-'+day.month+'-'+dayObj.day;
              const date = day.dateString;
-               navigation.navigate('showSign',{date:date});
+             
+                navigation.navigate('showSign',{date:date});
+              
              } }
              monthFormat={'yyyy, MM월'}
              onMonthChange={(month) => { console.log('month changed', month); } }

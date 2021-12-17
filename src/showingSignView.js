@@ -53,7 +53,7 @@ const showSign= ({navigation, route}) => {
       <View style = {viewStyles.content}> 
       
       <Text style={textStyles.title}>Today's Sign</Text>
-      <SignText value={text} date = {date}/>
+      <SignText value={text} Day = {date}/>
       <View style = {styles.trafficSignShow}>
 
         <ShowTrafficSign trafficSign={tSign} />
@@ -68,7 +68,7 @@ const showSign= ({navigation, route}) => {
  
      <View style = {viewStyles.footer}> 
      <View >
-       <IconButton  icon = {images.edit} onPress={() => navigation.navigate('makeSign',{date:date})}/>
+       <IconButton  icon = {images.edit} onPress={() => navigation.replace('makeSign',date)}/>
      </View> 
      </View> 
       
