@@ -49,9 +49,15 @@ export const viewStyles=StyleSheet.create({
       },
       footer: {
         width:'100%',
-        height:'10%',
+       //height:'10%',
         alignItems: 'flex-end',
+        justifyContent: 'flex-end',
         paddingBottom:50,
+
+//         flex: 1;
+//   flex-direction: row;
+//   justify-content: flex-end;
+//   align-items: center;
         // backgroundColor: '#1ad657',
       },
       test: {
