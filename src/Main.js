@@ -6,7 +6,7 @@ import "firebase/firestore";
 import { FlatList, TextInput } from "react-native-gesture-handler";
 import { List } from 'react-native-paper';
 
-export function Main({ navigation }) {
+export default function Main({ navigation }) {
   const monthDate = moment().format("MM");
   const date = new Date();
   const day = moment(date).add("0", "d").format("DD");
