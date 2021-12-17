@@ -9,6 +9,8 @@ import Navigation from './navigations';
 import { images } from './utils/images';
 import { ProgressProvider, UserProvider } from './contexts';
 
+import {DB} from './utils/firebase';
+
 const cacheImages = images => {
   return images.map(image => {
     if (typeof image === 'string') {
@@ -23,6 +25,21 @@ const cacheFonts = fonts => {
 };
 
 const App = () => {
+
+  const date = new Date();
+  const doDate =(date.getFullYear()).toString()+'_'+(date.getMonth()).toString()+'_'+(date.getDate()).toString();
+  const signRef = DB.collection('TodaySign').doc(doDate);
+  const doc = signRef.get();
+  doc.then(function(doc){
+    if(!doc.exists){
+      console.log('No such document!');
+    } else {
+      console.log('Document data:', doc.data());
+    }
+  });
+  
+
+
   const [isReady, setIsReady] = useState(false);
 
   const _loadAssets = async () => {

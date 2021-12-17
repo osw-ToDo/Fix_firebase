@@ -1,23 +1,33 @@
 import React from 'react';
 import { StyleSheet,StatusBar,SafeAreaView, Text, View, Keyboard ,Image } from 'react-native';
-import { viewStyles, textStyles,  iconStyles } from './styles';
-import EventInput from './EventInput';
+import { viewStyles, textStyles} from './styles';
 import { TouchableWithoutFeedback } from 'react-native';
-import {Input,SignText} from './components/signInput';
+import {SignText} from './components/signInput';
 import {images} from './images';
 // import {IconButton} from './components/IconButton';
-import TrafficSign,{ShowTrafficSign} from './components/J_trafficSign';
-import J_List from './components/J_List';
+import {ShowTrafficSign} from './components/J_trafficSign';
 import { IconButton} from 'react-native-paper';
 import { goBack } from './J_index';
+import {DB} from './utils/firebase'
 
-
-
-const showSign= ({navigation,route}) => {
+//루트 없어지고
+const showSign= ({navigation, route}) => {
   
   // if(route != undefined){
   // 
   // }
+
+  //여기를 아예 파베로 바꾸고
+  const date = new Date();
+  const doDate =(date.getFullYear()).toString()+'_'+(date.getMonth()).toString()+'_'+(date.getDate()).toString();
+  const signRef = DB.collection('TodaySign').doc(doDate);
+  console.log(signRef.get());
+  const doc = signRef.get();
+  if(!doc.exists){
+    console.log('No such document!');
+  } else {
+    console.log('Document data:', doc.data());
+  }
 
   const {id, text, tSign , pSign } = route.params;
 
