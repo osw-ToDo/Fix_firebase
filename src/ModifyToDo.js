@@ -2,10 +2,8 @@ import React, {useState} from 'react';
 import {StatusBar, Switch, View, SafeAreaView, Text, ScrollView, Alert,Button} from 'react-native';
 import {viewStyles, textStyles, taskStyles,ToggleStyles } from './styles';
 import {images} from './images';
-//import {IconButton} from './components/IconButton';
 import Day from './components/Date';
 import Category from './components/Category';
-import ToggleSwitch from 'toggle-switch-react-native';
 import TodoInput from './components/TodoInput';
 import { IconButton as IconBtn} from 'react-native-paper';
 import { goBack } from './J_index';
@@ -14,11 +12,13 @@ export default function ModifyToDo({navigation}) {
     const press_mod_ok= () =>
     {
         console.log("Update has been completed.")
+        //DB업뎃 코드  
         navigation.navigate('toDo')
     }
     const press_del_ok= () =>
     {
         console.log("Delete has been completed.")
+        //DB삭제 코드
         navigation.navigate('main') 
     }
     const mod_task = () => 
@@ -29,7 +29,7 @@ export default function ModifyToDo({navigation}) {
        {
          text: "OK",                             
          onPress: () => press_mod_ok()
-         //DB업뎃 코드     
+            
        },
        { text: "Cancel", style: "cancel", onPress: () => console.log("The update has been canceled.") }, 
      ],
@@ -44,7 +44,7 @@ export default function ModifyToDo({navigation}) {
        {
          text: "OK",                              
          onPress: () => press_del_ok()
-         //DB삭제 코드     
+              
        },
        { text: "Cancel", style: "cancel", onPress: () => console.log("The deletion has been canceled.") }, 
      ],
@@ -54,6 +54,37 @@ export default function ModifyToDo({navigation}) {
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => 
     setIsEnabled(previousState => !previousState);
+
+    const [text, setText] = useState("");
+    const [startDay,setStartDay] = useState("");
+    const [endDay,setEndDay] = useState("");
+    const [cate,setCate] = useState("");
+    const [toDo,setToDo] = useState("");
+    
+    const placeholder = 'Select the Category';
+    const onChangeText = (value) => {
+            setText(value);
+    }
+
+    const SetStart = (text) => {
+      console.log(text);
+      setStartDay(text);
+    }
+
+    const SetEnd = (text) => {
+      console.log(text);
+      setEndDay(text);
+    }
+    const SetCate = (text) => {
+      console.log(text);
+      setCate(text);
+    }
+    
+    const SetToDo= (text) => {
+      console.log(text);
+      setToDo(text);
+    }
+
 
     return (
         <SafeAreaView style={viewStyles.container}>
@@ -67,11 +98,11 @@ export default function ModifyToDo({navigation}) {
             <View>
                 <View style={taskStyles.column}>
                 <Text style={taskStyles.text}>Start-Date:</Text>
-                <Day/>
+                <Day set= {SetStart}/>
                 </View>
                 <View style={taskStyles.column}>
                 <Text style={taskStyles.text}>Due-Date:</Text>
-                <Day/>
+                <Day set={SetEnd}/>
                 </View>
                 <View style={taskStyles.column}>
                 <Text style={taskStyles.text}>Category:</Text>
@@ -79,7 +110,7 @@ export default function ModifyToDo({navigation}) {
                 </View>
                 <View style={taskStyles.container}>
                 <Text style={taskStyles.text}>To-do:</Text>
-                <TodoInput/>
+                <TodoInput set={SetToDo}/>
                 </View>
                 <View style={taskStyles.column}>
                 <Text style={taskStyles.text}>Completed:</Text>

@@ -5,14 +5,38 @@ import { images } from './images';
 import RNPickerSelect from 'react-native-picker-select';
 import { IconButton } from 'react-native-paper';
 import { goBack } from './J_index';
-
+import { createCategory } from './utils/firebase';
 
 const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
 }
     
 export default function App({navigation}) {
-    function add_category() {
+    const press_add_ok= (new_category) =>
+    {
+        if(new_category){
+            console.log("new category: " + new_category )
+            _handleCreateCatePress({navigation,new_category}); 
+            Alert.alert(
+                "A new category: ",
+                new_category, 
+                );  
+            navigation.navigate('category')
+        }
+        else   
+            Alert.alert(
+                "CAUTION",
+                "Enter a non-space category!",
+                [
+                    {
+                        text:"OK",
+                        onPress:() => add_category()
+                    }
+                ]
+            );
+        }
+    function add_category()  {
+
         Alert.prompt(
               "Enter category",
               "Enter your own new category",
@@ -23,14 +47,15 @@ export default function App({navigation}) {
                   style: "cancel"
                 },
                 {
-                  text: "OK",
-                  onPress: new_category => console.log("new category: " + new_category )
+                  text: "Submit",
+                  onPress: (new_category) => press_add_ok(new_category)
                   //new_category값 db전송 코드
                 }
               ],
               'plain-text',
             );
     }
+
     const [text, setText] = useState("");
     const placeholder = 'Select the Category';
     const onChangeText = (value) => {
@@ -159,3 +184,15 @@ const CategoryStyles = StyleSheet.create({
     }
 
 });
+
+
+const _handleCreateCatePress = async ({navigation ,new_category}) => {
+    try {
+      console.log(new_category);
+      const id = await createCategory({label:new_category, value:new_category})
+      
+    } catch (e) {
+      Alert.alert('Creation Error', e.message);
+    }
+  };
+  
