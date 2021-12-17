@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import {StatusBar, Switch, View, SafeAreaView, Text, ScrollView, Alert, StyleSheet, RefreshControl,Button} from 'react-native';
+import {StatusBar, Switch, View, SafeAreaView, Text, ScrollView, Alert, StyleSheet, RefreshControl,Button, SnapshotViewIOSBase} from 'react-native';
 import {viewStyles, textStyles, pickerSelectStyles, ToggleStyles} from './styles';
 import { images } from './images';
 import RNPickerSelect from 'react-native-picker-select';
 import { IconButton } from 'react-native-paper';
 import { goBack } from './J_index';
+import {DB} from './utils/firebase';
 
 
 const wait = (timeout) => {
@@ -49,6 +50,14 @@ export default function App({navigation}) {
         setRefreshing(true);
         wait(2000).then(() => setRefreshing(false));
       }, []);
+
+      const cateRef = DB.collection('Cate');
+      const list = cateRef.get().then((snapshot)=>{
+        snapshot.forEach((doc) =>{
+            console.log("loglog")
+            console.log(doc.id, '=>', doc.data());});
+      });
+     
 
     return (
         <SafeAreaView style={viewStyles.container}>

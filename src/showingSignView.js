@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet,StatusBar,SafeAreaView, Text, View, Keyboard ,Image } from 'react-native';
+import React,{useState} from 'react';
+import { StyleSheet,StatusBar,SafeAreaView, Text, View, Keyboard ,Image, SnapshotViewIOSBase } from 'react-native';
 import { viewStyles, textStyles} from './styles';
 import { TouchableWithoutFeedback } from 'react-native';
 import {SignText} from './components/signInput';
@@ -17,19 +17,31 @@ const showSign= ({navigation, route}) => {
   // 
   // }
 
-  //여기를 아예 파베로 바꾸고
-  const date = new Date();
-  const doDate =(date.getFullYear()).toString()+'_'+(date.getMonth()).toString()+'_'+(date.getDate()).toString();
-  const signRef = DB.collection('TodaySign').doc(doDate);
-  console.log(signRef.get());
-  const doc = signRef.get();
-  if(!doc.exists){
-    console.log('No such document!');
-  } else {
-    console.log('Document data:', doc.data());
-  }
+  const [id, setID] = useState([]);
+  const [text, setText] = useState([]);
+  const [tSign, setTsign] = useState([]);
+  const [pSign, setPsign] = useState([]);
 
-  const {id, text, tSign , pSign } = route.params;
+  //여기를 아예 파베로 바꾸고
+
+    const date = new Date();
+    const doDate =(date.getFullYear()).toString()+'_'+(date.getMonth()).toString()+'_'+(date.getDate()).toString();
+    const signRef = DB.collection('TodaySign').doc(doDate);
+    const doc = signRef.get();
+    doc.then(function(doc){
+      if(!doc.exists){
+        console.log('No such document!');
+      } else {
+        console.log('Document data:', doc.data());
+        id = setID(doc.data().id);
+        console.log('id:',id);
+        return obj;
+      }
+    });
+
+
+  /**const {id, text, tSign , pSign } = route.params;**/
+
 
   let picImages = [images.sPic1,images.sPic2,images.sPic3,images.sPic4,images.sPic5]
   
@@ -39,7 +51,6 @@ const showSign= ({navigation, route}) => {
   // console.log("showSign "+id+" "+pSign+" "+text);
 
   return (
-
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
    
     <SafeAreaView style={viewStyles.container}>
@@ -74,7 +85,7 @@ const showSign= ({navigation, route}) => {
     </TouchableWithoutFeedback>
 
     
-  );
+    );
 }
 
 const styles = StyleSheet.create({
