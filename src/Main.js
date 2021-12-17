@@ -187,9 +187,9 @@ const BodySignDateImg = styled(Image)`
 
 const BodySignMonth = styled(Text)`
   position: absolute
-  top:85
+  top:35
   bottom:0
-  left:30
+  left:20
   right:0
   font-size: 50px;
   justify-content: center;
@@ -197,9 +197,9 @@ const BodySignMonth = styled(Text)`
 
 const BodySignDate = styled(Text)`
  position: absolute
-  top:100
+  top:50
   bottom:0
-  left:85
+  left:75
   right:0
   font-size: 50px;
   justify-content: center;
