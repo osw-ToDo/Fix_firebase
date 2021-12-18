@@ -1,9 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { View, StyleSheet, Text} from 'react-native';
 import {theme } from '../theme';
 import TodoInput from '../components/TodoInput';
-import {images} from '../images';
-import {IconButton} from '../components/IconButton';
 import Day from '../components/Date';
 import Category from '../components/Category';
 import ToggleSwitch from 'toggle-switch-react-native';

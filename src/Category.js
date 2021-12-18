@@ -78,23 +78,13 @@ export default function App({navigation}) {
                 {
                   text: "Submit",
                   onPress: (new_category) => press_add_ok(new_category)
+                  //new_category값 db전송 코드
                 }
               ],
               'plain-text',
             );
     }
-    function view_completed(){
-        if(isEnabled==true){
-            //Flag=='false'만
-            
-        }
-        else{
-            //전체
-        }
-    }
-    function view_category(value){
-        
-    }
+
     const [text, setText] = useState("");
     const placeholder = 'Select the Category';
     const onChangeText = (value) => {
@@ -103,13 +93,10 @@ export default function App({navigation}) {
         }
         else
             setText(value);
-            view_category(value)
     }
-    
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => 
     setIsEnabled(previousState => !previousState);
-    view_completed()
 
     const [refreshing, setRefreshing] = React.useState(false);
     const onRefresh = React.useCallback(() => {
@@ -159,6 +146,7 @@ export default function App({navigation}) {
     })*/
 
 
+
     return (
         <SafeAreaView style={viewStyles.container}>
             <StatusBar barStyle="light-content" style={textStyles.statusbar}/>
@@ -179,7 +167,6 @@ export default function App({navigation}) {
                     ios_backgroundColor="#808080"
                     onValueChange={toggleSwitch}
                     value={isEnabled}
-                    
                     />
                 </View>
                 </View>
@@ -199,7 +186,6 @@ export default function App({navigation}) {
                             onValueChange={value => onChangeText(value)}
                             useNativeAndroidPickerStyle={false}
                             items={[
-                                
                                 { label: 'School', value: 'School'},
                                 { label: 'Club', value: 'Club'},
                                 { label: 'Assignment', value: 'Assignment'},
@@ -213,7 +199,6 @@ export default function App({navigation}) {
                 </View>
                 <View style={CategoryStyles.line} />
                 <Text style={textStyles.main}>To-dos: </Text>
-                    
             </ScrollView>
             <View style={viewStyles.box}>
            

@@ -1,8 +1,6 @@
 
 import React from 'react';
-import { Pressable, StyleSheet, View, Image} from 'react-native';
-import { theme } from "../theme";
-import PropTypes from 'prop-types';
+import { StyleSheet, Image} from 'react-native';
 import { images } from '../images';
 
 const TrafficSign = ({setTraffic}) => {

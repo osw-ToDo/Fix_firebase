@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {AppRegistry,Image,FlatList,StyleSheet,Text,View} from 'react-native';
+import {Image,FlatList,View} from 'react-native';
 import picListData from '../J_picListData';
-import IconButton from './IconButton';
 import { PicButton } from './IconButton';
 
 class FlatListItem extends Component{

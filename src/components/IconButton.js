@@ -1,9 +1,7 @@
 import React from 'react';
-import { Pressable, StyleSheet, View, Image, ColorPropType, useState} from 'react-native';
-import { theme } from "../theme";
+import { Pressable, StyleSheet, Image} from 'react-native';
 import PropTypes from 'prop-types';
 import { images } from '../images';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 export const IconButton= ({type, onPressOut}) => {
   
