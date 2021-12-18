@@ -20,14 +20,18 @@ export default function Main({ navigation }) {
   const doDate =(date.getFullYear()).toString()+'-'+monthDate+'-'+(date.getDate()).toString();
   console.log((date.getMonth()).toString(),monthDate);
   var markedData = {};
-  useEffect(()=>{
-    const signRef = DB.collection('TodaySign');
+  var todoData = {};
 
+  useEffect(()=>{
+    
+    
+    const signRef = DB.collection('TodaySign');
+    const todoRef = DB.collection('Todo');
    
     signRef.get().then((snapshot)=>{
        snapshot.forEach((doc) =>{
          
-         console.log(doc.id, '=>', doc.data().TrafficSignData);
+        // console.log(doc.id, '=>', doc.data().TrafficSignData);
         
          var key;
          var value;
@@ -45,11 +49,34 @@ export default function Main({ navigation }) {
            break;
         }
         markedData[key]  =  value;
-        });
-       // console.log(markedData);
-      
-    });
+    });});
 
+
+    todoRef.get().then((snapshot)=>{
+      snapshot.forEach((doc) =>{
+        
+       // console.log(doc.id, '=>', doc.data().Start);
+       
+        var key;
+        var value;
+        key = doc.id
+        value = doc.data();
+        console.log("start", doc.data().End);
+
+        if( doc.data().Start.seconds<= date.getTime()&& // 일이 시작됐고
+         doc.data().End.seconds*1000> date.getTime() // 아직 안 끝났으며
+        && doc.data().Flag == false
+        ){//&&doc.data().End.getTime()>=date.getTime()
+          todoData[key] = value;
+        //  console.log("if",doc.data());
+        }
+       // console.log(todoData,doc.data());
+      // console.log(doc.data());
+       });
+       console.log("TODODATA ",todoData);
+   // console.log(markedData);
+  });
+  console.log("today", date.getTime());
   });
   
   return (
