@@ -167,6 +167,38 @@ const BodyTxtView = styled(View)`
   justify-content: flex-start;
 `;
 
+const BodySign = styled(View)`
+  position: relative,
+  flex: 1,
+`;
+
+const BodySign1 = StyleSheet.create({
+  main : 
+  {position: 'relative',
+  flex: 1,
+  },
+  date: 
+  {position: 'absolute',
+  top:40,
+  bottom:0,
+  left:12,
+  right:0,
+  fontSize: 50,
+  paddingLeft:10,
+ 
+  },
+  day: 
+  {position: 'absolute',
+  top:40,
+  bottom:0,
+  left:45,
+  right:0,
+  fontSize: 50,
+  paddingLeft:30
+  }
+
+})
+
 const BodySignDateImg = styled(Image)`
   width: 150px;
   height: 150px;
