@@ -6,17 +6,38 @@ import RNPickerSelect from 'react-native-picker-select';
 import { IconButton } from 'react-native-paper';
 import { goBack } from './J_index';
 import { DB, createCategory } from './utils/firebase';
+import { Todo_List } from "./components/J_List";
 
 const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
 }
 
+
 export default function App({navigation}) {
     var categoryDB= {};
+    var todoData = {};
     const [cateData, setcateData] = useState('');
 
     useEffect(()=>{
         const cateRef = DB.collection('Cate'); 
+        const todoRef = DB.collection('Todo');
+        todoRef.get().then((snapshot)=>{
+            snapshot.forEach((doc) =>{
+             
+              var key;
+              var value;
+              key = doc.id
+              value = doc.data();
+      
+              if(
+              doc.data().Flag == false){
+                todoData[key] =value;
+              }
+             });
+             console.log("TODODATA" ,todoData);
+      });
+      
+      console.log("today");
 
         cateRef.get().then((snapshot)=>{
             snapshot.forEach((doc) =>{
@@ -141,10 +162,7 @@ export default function App({navigation}) {
                             onValueChange={value => onChangeText(value)}
                             useNativeAndroidPickerStyle={false}
                             items={listArray}
-                            /*{[
-                                
-                                { label: '+ Add Category', value: 'Add' },
-                            ]}*/
+                            
                             style={pickerSelectStyles}
                         />
                     </View>
@@ -161,7 +179,7 @@ export default function App({navigation}) {
                     />
                 </View>
                 <Text style={textStyles.main2}>To-dos: </Text>
-               
+                <Todo_List navigation ={navigation} data = {todoData}/>
             </ScrollView>
             <View style={viewStyles.box}>
            
