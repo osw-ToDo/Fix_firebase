@@ -151,8 +151,8 @@ export const createMessage = async ({ channelId, message }) => {
     });
 };
 
-export function getTodoRef({todo}){ 
-  const TodoRef = DB.collection('Todo').doc(todo);
+export function getTodoRef({간지나게숨쉬기}){ 
+  const TodoRef = DB.collection('Todo').doc(간지나게숨쉬기);
   const doc = TodoRef.get();
 
   return doc;
@@ -191,72 +191,75 @@ export function getTodaySignRef({date}){
 }
 
 
-const TodoRef = DB.collection('Todo')    
+// const TodoRef = DB.collection('Todo')    
 
-//0. 모든 카테고리 불러오기
-TodoRef.get().then((snapshot)=>{
-  snapshot.forEach((doc)=>{
-      console.log("0. get all items:", doc.data());
-  });
-})
+// //0. 모든 카테고리 불러오기
+// TodoRef.get().then((snapshot)=>{
+//   snapshot.forEach((doc)=>{
+//       console.log("0. get all items:", doc.data());
+//   });
+// })
 
-//1. 미완료/완료된 일만 뜨기
-TodoRef.where('Flag','==','false').orderBy('End','asc').get().then((snapshot)=>{
-  snapshot.forEach((doc)=>{
-      console.log("1. where flagFalse ordeBy End asc:", doc.data());
-  });
-})
+// //1. 미완료/완료된 일만 뜨기
+// TodoRef.where('Flag','==','false').orderBy('End','asc').get().then((snapshot)=>{
+//   snapshot.forEach((doc)=>{
+//       console.log("1. where flagFalse ordeBy End asc:", doc.data());
+//   });
+// })
 
-//2. 투두 수정 (해당 투두 id 받기)
-TodoRef.doc('aiE9w5JrWr35YgrMIrmr').update({
-  Cate: 'Club',
-  End:1607110465663,
-  Flag: false,
-  Start:1607110465663,
-  ToDo:'update todo test'
-})
+// //2. 카테고리 별 투두 반환(한 카테고리 내) - 종료 일자 빠른 순
+// TodoRef.where('Cate','==','School').orderBy('End','asc').get().then((snapshot)=>{
+//   snapshot.forEach((doc)=>{
+//       console.log("3. by cate End:", doc.data());
+//   });
+// })
+
+// //3. 카테고리 별 투두 반환(한 카테고리 내) - 생성 일자 순
+// TodoRef.where('Cate','==','School').orderBy('Start','asc').get().then((snapshot)=>{
+//   snapshot.forEach((doc)=>{
+//       console.log("4. by cate start:", doc.data());
+//   });
+// })
 
 
-//3. 투두 삭제(해당 투두 id 받기)
-const deleted = TodoRef.doc('rBITGTShVkAQimuNwyq9');
-if(deleted == null){
-  console.log('no such document exist!');
-}else{
-  deleted.delete();
-  console.log('well deleted');
-}
+// //2. 투두 수정 (해당 투두 id 받기)
+// TodoRef.doc('aiE9w5JrWr35YgrMIrmr').update({
+//   Cate: 'Club',
+//   End:1607110465663,
+//   Flag: false,
+//   Start:1607110465663,
+//   ToDo:'update todo test'
+// })
 
-//투두 반환(전체) - 종료 일자 빠른 순
-      TodoRef.orderBy('End','desc').get().then((snapshot)=>{
-          snapshot.forEach((doc)=>{
-              console.log("1. entire return orderby End:", doc.data());
-          });
-      })
 
-//반환(전체) - 생성 일자 순 빠른 순(지금은 시작 일자 빠른 순임)
-      TodoRef.orderBy('Start','asc').get().then((snapshot)=>{
-        snapshot.forEach((doc)=>{
-            console.log("2. entire return orderby Start:", doc.data());
-        });
-    })
+// //3. 투두 삭제(해당 투두 id 받기)
+// const deleted = TodoRef.doc('rBITGTShVkAQimuNwyq9');
+// if(deleted == null){
+//   console.log('no such document exist!');
+// }else{
+//   deleted.delete();
+//   console.log('well deleted');
+// }
 
-      //카테고리 별 투두 반환(한 카테고리 내) - 종료 일자 빠른 순
-      TodoRef.where('Cate','==','School').orderBy('End','asc').get().then((snapshot)=>{
-        snapshot.forEach((doc)=>{
-            console.log("3. by cate End:", doc.data());
-        });
-    })
+// //투두 반환(전체) - 종료 일자 빠른 순
+//       TodoRef.orderBy('End','desc').get().then((snapshot)=>{
+//           snapshot.forEach((doc)=>{
+//               console.log("1. entire return orderby End:", doc.data());
+//           });
+//       })
 
-      //카테고리 별 투두 반환(한 카테고리 내) - 생성 일자 순
-      TodoRef.where('Cate','==','School').orderBy('Start','asc').get().then((snapshot)=>{
-        snapshot.forEach((doc)=>{
-            console.log("4. by cate start:", doc.data());
-        });
-    })
+// //투두 반환(전체) - 생성 일자 순 빠른 순(지금은 시작 일자 빠른 순임)
+//       TodoRef.orderBy('Start','asc').get().then((snapshot)=>{
+//         snapshot.forEach((doc)=>{
+//             console.log("2. entire return orderby Start:", doc.data());
+//         });
+//     })
+
+
     
-      //특정 아이템 검색 (전체, prefix search) elastic nono
-      TodoRef.where('ToDo','>=','s').where('ToDo','<=','s'+'\uf8ff').get().then((snapshot)=>{
-        snapshot.forEach((doc)=>{
-            console.log("5. search:", doc.data());
-        });
-    })
+// //특정 아이템 검색 (전체, prefix search) elastic nono
+//       TodoRef.where('ToDo','>=','s').where('ToDo','<=','s'+'\uf8ff').get().then((snapshot)=>{
+//         snapshot.forEach((doc)=>{
+//             console.log("5. search:", doc.data());
+//         });
+//     })
