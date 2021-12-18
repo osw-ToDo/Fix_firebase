@@ -2,28 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList, Button } from "react-native";
 import moment from "moment";
 import styled from "styled-components";
-import firebase from 'firebase';
-import firebase from '@react-native-firebase/firestore'; //문제 
 import { TextInput, Button } from 'react-native-paper';
 import Todo from '..Todo/'; 
-
-{/*import { initializeApp } from 'firebase/app';
-import {getFirestore, collection, getDocs } from 'firebase/firestore/lite';
-
-const firebaseConfig = {
-
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-//목록에서 검색
-async function getTasks(db) {
-  const tasksCol = collection(db, 'tasks');
-  const taskSnapshot = await getDocs(tasksCol);
-  const taskList = taskSnapshot.docs.map(doc => doc.data());
-  return taskList;
-} */}
+import { DB } from './utils/firebase';
 
 //2
 
@@ -36,7 +17,7 @@ export default function Main({ navigation }) {
   const [ loading, setLoading ] = useState(true);
   const [ todos, setTodos ] = useState([]);
 
-  const ref = firestore().collection('todos');
+  const ref = DB.collection('Todo');
 
   //새로운 todo를 firebase db 항목 추가
     async function addTodo(){
@@ -135,6 +116,25 @@ export default function Main({ navigation }) {
     </View>
   );
 };
+
+{/*import { initializeApp } from 'firebase/app';
+import {getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+
+const firebaseConfig = {
+
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+//목록에서 검색
+async function getTasks(db) {
+  const tasksCol = collection(db, 'tasks');
+  const taskSnapshot = await getDocs(tasksCol);
+  const taskList = taskSnapshot.docs.map(doc => doc.data());
+  return taskList;
+} */}
+
 
 
 const HeaderTitleView = styled(View)`
