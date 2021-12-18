@@ -20,9 +20,12 @@ export default function Main({ navigation }) {
   const doDate =(date.getFullYear()).toString()+'-'+monthDate+'-'+(date.getDate()).toString();
   console.log((date.getMonth()).toString(),monthDate);
   var markedData = {};
+  var todoData = {};
   useEffect(()=>{
+    
+    
     const signRef = DB.collection('TodaySign');
-
+    const todoRef = DB.collection('Todo');
    
     signRef.get().then((snapshot)=>{
        snapshot.forEach((doc) =>{
@@ -45,10 +48,27 @@ export default function Main({ navigation }) {
            break;
         }
         markedData[key]  =  value;
-        });
-       // console.log(markedData);
-      
-    });
+    });});
+
+    todoRef.get().then((snapshot)=>{
+      snapshot.forEach((doc) =>{
+        
+        console.log(doc.id, '=>', doc.data().Start);
+       
+        var key;
+        var value;
+        key = doc.id
+        value = doc.data();
+
+        if(doc.data().Start<=date&&doc.data().End>=date&&doc.data().End>=date){
+          todoData[key] =value;
+        }
+        console.log(todoData);
+    
+       });
+    
+   // console.log(markedData);
+});
 
   });
   
