@@ -16,6 +16,7 @@ export default function Main({ navigation }) {
   //가져오기만 하기 
   var todoData = {}; //초기화 -> 얘가 const여야 하나..? 
   var markedData = {};
+
   useEffect(()=>{
     
     const signRef = DB.collection('TodaySign');
@@ -43,6 +44,8 @@ export default function Main({ navigation }) {
         markedData[key]  =  value;
     });});
 
+   
+
 
     const todoRef = DB.collection('Todo');
 
@@ -59,13 +62,12 @@ export default function Main({ navigation }) {
         doc.data().Flag == false){
           todoData[key] =value;
         }
+        console.log("start", doc.data().Start.seconds);
        });
-       console.log("start", doc.data().Start.seconds);
-       console.log("TODODATA" ,todoData);
-});
-
-console.log("today", date.getTime());
-
+       
+       console.log("here" ,todoData);
+      });
+//console.log("today", markedData);
 });
   
   return (
@@ -96,7 +98,7 @@ console.log("today", date.getTime());
         </BodyMenuView>
       </BodyView>
     
-             <Todo_List data = {todoData}/>
+        <Todo_List data = {todoData}/>
 
       <FooterView>
         
