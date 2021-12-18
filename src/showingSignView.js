@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet,StatusBar,SafeAreaView, Text, View, Keyboard ,Image } from 'react-native';
 import { viewStyles, textStyles} from './styles';
 import { TouchableWithoutFeedback } from 'react-native';
@@ -8,7 +8,7 @@ import {images} from './images';
 import {ShowTrafficSign} from './components/J_trafficSign';
 import { IconButton} from 'react-native-paper';
 import { goBack } from './J_index';
-import {DB,getTodaySignRef} from './utils/firebase'
+import {getTodaySignRef} from './utils/firebase'
 
 //루트 없어지고
 const showSign= ({navigation, route}) => {

@@ -4,14 +4,9 @@ import moment from "moment";
 import styled from "styled-components";
 import { mainRows } from "../rows";
 import Icon from "react-native-vector-icons/Ionicons";
-import { IconButton} from 'react-native-paper';
-import {images} from './images';
-import {IconButton as IconBtn} from './components/IconButton';
-import { viewStyles } from "./styles";
-import MainStack from './navigations/MainStack';
-import { NavigationContainer } from '@react-navigation/native';
 import { DB } from "./utils/firebase";
 import { useEffect } from "react";
+import { useState } from "react";
 
 export default function Main({ navigation }) {
   const monthDate = moment().format("MM");
@@ -23,6 +18,33 @@ export default function Main({ navigation }) {
   useEffect(()=>{
     
     const todoRef = DB.collection('Todo');
+   
+    signRef.get().then((snapshot)=>{
+       snapshot.forEach((doc) =>{
+         
+        // console.log(doc.id, '=>', doc.data().TrafficSignData);
+        
+         var key;
+         var value;
+        key = doc.id
+        value = doc.data().TrafficSignData;
+        switch(value){
+          case "0" : 
+           value = { marked: true, dotColor: 'red'};
+           break;
+           case "1" : 
+           value = { marked: true, dotColor: 'orange'};
+           break;
+           case "2" : 
+          value = { marked: true, dotColor: 'green'};
+           break;
+        }
+        markedData[key]  =  value;
+    });
+  
+  });
+
+
     todoRef.get().then((snapshot)=>{
       snapshot.forEach((doc) =>{
        

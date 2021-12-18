@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StatusBar, Switch, View, SafeAreaView, Text, ScrollView, Alert, StyleSheet, RefreshControl,Button, SnapshotViewIOSBase} from 'react-native';
 import {viewStyles, textStyles, pickerSelectStyles, ToggleStyles} from './styles';
 import { images } from './images';
@@ -6,13 +6,41 @@ import RNPickerSelect from 'react-native-picker-select';
 import { IconButton } from 'react-native-paper';
 import { goBack } from './J_index';
 import { DB, createCategory } from './utils/firebase';
+import { FlatList } from 'react-native-gesture-handler';
 
 const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
 }
     
 export default function App({navigation}) {
+    var categoryDB= {};
+    var realCate={};
+    const [cateData, setcateData] = useState('');
+
+    useEffect(()=>{
+        const cateRef = DB.collection('Cate'); 
+
+        cateRef.get().then((snapshot)=>{
+            snapshot.forEach((doc) =>{
+               // console.log(doc.data());
+                var key;
+                var val;
+                key = doc.id
+                val=doc.data();
+                categoryDB[key]=val;
+               
+            });
+            console.log('hiddd');
+           // console.log(categoryDB);
+            setcateData(categoryDB);
+            //console.log("asdfk",cateData);
+          });
+
+         // console.log("외부",cateData);
+    },[]);
     
+
+    console.log("외부1",cateData);
     const press_add_ok= (new_category) =>
     {
         if(new_category){
@@ -50,23 +78,13 @@ export default function App({navigation}) {
                 {
                   text: "Submit",
                   onPress: (new_category) => press_add_ok(new_category)
+                  //new_category값 db전송 코드
                 }
               ],
               'plain-text',
             );
     }
-    function view_completed(){
-        if(isEnabled==true){
-            //Flag=='false'만
-            
-        }
-        else{
-            //전체
-        }
-    }
-    function view_category(value){
-        
-    }
+
     const [text, setText] = useState("");
     const placeholder = 'Select the Category';
     const onChangeText = (value) => {
@@ -75,13 +93,10 @@ export default function App({navigation}) {
         }
         else
             setText(value);
-            view_category(value)
     }
-    
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => 
     setIsEnabled(previousState => !previousState);
-    view_completed()
 
     const [refreshing, setRefreshing] = React.useState(false);
     const onRefresh = React.useCallback(() => {
@@ -89,50 +104,11 @@ export default function App({navigation}) {
         wait(2000).then(() => setRefreshing(false));
       }, []);
 
-      //카테고리 리스트
-      const cateRef = DB.collection('Cate');
-      cateRef.get().then((snapshot)=>{
-        snapshot.forEach((doc) =>{
-            console.log("category list: ")
-            console.log(doc.id, '=>', doc.data());});
-      });
+
+      
+      
      
-      const TodoRef = DB.collection('Todo');
-
-      //투두 반환(전체) - 종료 일자 빠른 순
-      TodoRef.orderBy('End','desc').get().then((snapshot)=>{
-          snapshot.forEach((doc)=>{
-              console.log("1. entire return orderby End:", doc.data());
-          });
-      })
-
-      //반환(전체) - 생성 일자 순 빠른 순(지금은 시작 일자 빠른 순임)
-      TodoRef.orderBy('Start','asc').get().then((snapshot)=>{
-        snapshot.forEach((doc)=>{
-            console.log("2. entire return orderby Start:", doc.data());
-        });
-    })
-
-      //카테고리 별 투두 반환(한 카테고리 내) - 종료 일자 빠른 순
-      TodoRef.where('Cate','==','School').orderBy('End','asc').get().then((snapshot)=>{
-        snapshot.forEach((doc)=>{
-            console.log("3. by cate End:", doc.data());
-        });
-    })
-
-      //카테고리 별 투두 반환(한 카테고리 내) - 생성 일자 순
-      TodoRef.where('Cate','==','School').orderBy('Start','asc').get().then((snapshot)=>{
-        snapshot.forEach((doc)=>{
-            console.log("4. by cate start:", doc.data());
-        });
-    })
-    
-      //특정 아이템 검색 (전체, prefix search) elastic nono
-      TodoRef.where('ToDo','>=','s').where('ToDo','<=','s'+'\uf8ff').get().then((snapshot)=>{
-        snapshot.forEach((doc)=>{
-            console.log("5. search:", doc.data());
-        });
-    })
+      
 
 
     return (
@@ -155,7 +131,6 @@ export default function App({navigation}) {
                     ios_backgroundColor="#808080"
                     onValueChange={toggleSwitch}
                     value={isEnabled}
-                    
                     />
                 </View>
                 </View>
@@ -175,7 +150,6 @@ export default function App({navigation}) {
                             onValueChange={value => onChangeText(value)}
                             useNativeAndroidPickerStyle={false}
                             items={[
-                                
                                 { label: 'School', value: 'School'},
                                 { label: 'Club', value: 'Club'},
                                 { label: 'Assignment', value: 'Assignment'},
@@ -189,7 +163,6 @@ export default function App({navigation}) {
                 </View>
                 <View style={CategoryStyles.line} />
                 <Text style={textStyles.main}>To-dos: </Text>
-                    
             </ScrollView>
             <View style={viewStyles.box}>
            
