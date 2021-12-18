@@ -8,7 +8,7 @@ import { Alert } from 'react-native';
 import { IconButton} from 'react-native-paper';
 import { goBack } from '../J_index';
 import { images } from '../images';
-import { viewStyles, textStyles,  iconStyles } from '../styles';
+import { viewStyles} from '../styles';
 
 const Container = styled.View`
   flex: 1;

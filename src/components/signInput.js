@@ -1,12 +1,11 @@
 
-import React ,{useRef,useContext,useState, useEffect}from 'react';
+import React ,{useRef,useContext,useState}from 'react';
 import { ProgressContext } from '../contexts';
 import { Alert } from 'react-native';
 import { createTodaySignText } from '../utils/firebase';
-import { Box, Dimensions, StyleSheet, Text, TextInput,Image,View} from 'react-native';
+import { Dimensions, StyleSheet, Text, View} from 'react-native';
 import { theme } from "../theme";
-import { images } from '../images';
-import { Input as Inputfire,SignInput } from '../components';
+import { Input as SignInput } from '../components';
 
 
 export const _handleCreateButtonPress = async () => {

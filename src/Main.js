@@ -1,83 +1,43 @@
 import React from "react";
-import { StyleSheet, Text, View, Image,TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image,TouchableOpacity, FlatList } from "react-native";
 import moment from "moment";
 import styled from "styled-components";
 import { mainRows } from "../rows";
 import Icon from "react-native-vector-icons/Ionicons";
-import { IconButton} from 'react-native-paper';
-import {images} from './images';
-import {IconButton as IconBtn} from './components/IconButton';
-import { viewStyles } from "./styles";
-import MainStack from './navigations/MainStack';
-import { NavigationContainer } from '@react-navigation/native';
 import { DB } from "./utils/firebase";
 import { useEffect } from "react";
+import { useState } from "react";
 
 export default function Main({ navigation }) {
   const monthDate = moment().format("MM");
   const date = new Date();
   const day = moment(date).add("0", "d").format("DD");
-  const doDate =(date.getFullYear()).toString()+'-'+monthDate+'-'+(date.getDate()).toString();
-  console.log((date.getMonth()).toString(),monthDate);
-  var markedData = {};
-  var todoData = {};
-
+  
+  //가져오기만 하기 
+  var todoData = {}; //초기화 -> 얘가 const여야 하나..? 
   useEffect(()=>{
     
-    
-    const signRef = DB.collection('TodaySign');
     const todoRef = DB.collection('Todo');
-   
-    signRef.get().then((snapshot)=>{
-       snapshot.forEach((doc) =>{
-         
-        // console.log(doc.id, '=>', doc.data().TrafficSignData);
-        
-         var key;
-         var value;
-        key = doc.id
-        value = doc.data().TrafficSignData;
-        switch(value){
-          case "0" : 
-           value = { marked: true, dotColor: 'red'};
-           break;
-           case "1" : 
-           value = { marked: true, dotColor: 'orange'};
-           break;
-           case "2" : 
-          value = { marked: true, dotColor: 'green'};
-           break;
-        }
-        markedData[key]  =  value;
-    });});
-
 
     todoRef.get().then((snapshot)=>{
       snapshot.forEach((doc) =>{
-        
-       // console.log(doc.id, '=>', doc.data().Start);
        
         var key;
         var value;
         key = doc.id
         value = doc.data();
-        console.log("start", doc.data().End);
 
-        if( doc.data().Start.seconds<= date.getTime()&& // 일이 시작됐고
-         doc.data().End.seconds*1000> date.getTime() // 아직 안 끝났으며
-        && doc.data().Flag == false
-        ){//&&doc.data().End.getTime()>=date.getTime()
-          todoData[key] = value;
-        //  console.log("if",doc.data());
+        if(doc.data().Start.seconds<=date.getTime()&&
+        doc.data().End.seconds*1000>date.getTime()&&
+        doc.data().Flag == false){
+          todoData[key] =value;
         }
-       // console.log(todoData,doc.data());
-      // console.log(doc.data());
        });
-       console.log("TODODATA ",todoData);
-   // console.log(markedData);
-  });
-  console.log("today", date.getTime());
-  });
+       console.log("TODODATA" ,todoData);
+});
+
+console.log("today", date.getTime());
+});
   
   return (
     <View>
@@ -106,41 +66,34 @@ export default function Main({ navigation }) {
           </TouchableOpacity>
         </BodyMenuView>
       </BodyView>
-      <BodyTxtView>
-        {mainRows.map((row, idx) => {
-          return (
-           
-        
-            <View style={{ flex: 1 }} key={idx}>
-
-            
-            <TouchableOpacity   onPress={() => navigation.navigate('toDo') }> 
-              <View style={{ padding: 15, borderBottomWidth: 1, borderColor: "black", flexDirection: "row" }}>
-                <View style={{ marginRight: 10 }}>
-                  <Icon name="square-outline" size={30} color="gray" />
-                </View>
-                <View>
-                  <Text>{row.mainRows[0].title}</Text>
-                  <Text>{row.mainRows[0].date}</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity   onPress={() => navigation.navigate('toDo') }> 
-              <View style={{ padding: 15, borderBottomWidth: 1, borderColor: "black", flexDirection: "row" }}>
-                <View style={{ marginRight: 10 }}>
-                  <Icon name="square-outline" size={30} color="gray" />
-                </View>
-                <View>
-                  <Text>{row.mainRows[1].title}</Text>
-                  <Text>{row.mainRows[1].date}</Text>
-                </View>
-              </View>
-              </TouchableOpacity>
+    
+             
+            <View style={{flex: 1,  marginTop: 22 , justifyContent: 'center'}}>
+            <FlatList
+                    data ={todoData}
+                    horizontal = {false}
+                    renderItem = {({item,index})=>{
+                      console.log({item});
+                        //console.log(`Item=${JSON.stringify(item)}, index= ${index}`)
+                        return(
+                          <TouchableOpacity   onPress={() => navigation.navigate('toDo') }>
+                          <View style={{ padding: 15, borderBottomWidth: 1, borderColor: "black", flexDirection: "row" }}>
+                          <View style={{ marginRight: 10 }}>
+                            <Icon name="square-outline" size={30} color="gray" />
+                          </View>
+                          <View>
+                           <Text>{item.ToDo}</Text>
+                           
+                          </View>
+                          
+                        </View>       
+                        </TouchableOpacity>                  
+                        );
+                    }}
+                  /> 
             </View>
-          );
-        })}
-      </BodyTxtView>
+
+
       <FooterView>
         
        <TouchableOpacity style = {FooterButtonImg1.icon}  onPress={() => navigation.navigate('makeSign',{date: doDate}) }>
