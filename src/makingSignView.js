@@ -3,7 +3,7 @@ import React ,{useRef,useContext,useState}from 'react';
 import { ProgressContext } from './contexts';
 import { Alert } from 'react-native';
 import { createTodaySignText } from './utils/firebase';
-import { StyleSheet,StatusBar,SafeAreaView, Text, View, Keyboard ,Button,BackHandler } from 'react-native';
+import { StyleSheet,StatusBar,SafeAreaView, Text, View, Keyboard ,Button,BackHandler ,ScrollView} from 'react-native';
 import { viewStyles, textStyles,  iconStyles } from './styles';
 import EventInput from './EventInput';
 import { TouchableWithoutFeedback } from 'react-native';
@@ -133,6 +133,7 @@ const makeSign= ({ navigation, route }) => {
             <IconButton icon={images.back} onPress={ () => {goBack({navigation});}}/>
           </View>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <ScrollView>
           <View style={viewStyles.content}>
 
             <Text style={textStyles.title}>Today's Sign</Text>
@@ -146,17 +147,18 @@ const makeSign= ({ navigation, route }) => {
             </View>
             {/* <View style={viewStyles.test}><J_List /></View> */}
           </View>
+          </ScrollView>
           </TouchableWithoutFeedback>
           
           <View style={viewStyles.footer}>
             
               <IconButton icon={images.done} onPress={() =>{ 
-          
               _handleCreateButtonPress({navigation , dateObj:date,TodaySignText,TrafficSignData,PicSign});
             }
              }/>
-            
+ 
           </View>
+          
 
         </SafeAreaView>
      

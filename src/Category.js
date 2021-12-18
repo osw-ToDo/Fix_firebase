@@ -81,7 +81,8 @@ export default function App({navigation}) {
             console.log("loglog")
             console.log(doc.id, '=>', doc.data());});
       });
-     
+      console.log(list);
+      
 
     return (
         <SafeAreaView style={viewStyles.container}>
@@ -122,6 +123,7 @@ export default function App({navigation}) {
                             onValueChange={value => onChangeText(value)}
                             useNativeAndroidPickerStyle={false}
                             items={[
+                                
                                 { label: 'School', value: 'School'},
                                 { label: 'Club', value: 'Club'},
                                 { label: 'Assignment', value: 'Assignment'},

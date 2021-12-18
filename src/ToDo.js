@@ -1,15 +1,32 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StatusBar, Switch, View, SafeAreaView, Text, ScrollView, StyleSheet, Alert } from 'react-native';
 import {viewStyles, textStyles,ToggleStyles } from './styles';
 import {images} from './images';
 import { theme } from './theme';
 import { IconButton as IconBtn} from 'react-native-paper';
 import { goBack } from './J_index';
+import {DB, getTodoRef } from './utils/firebase';
 
+const App =({navigation,route}) => {
 
-export default function App({navigation}) {
+    const [data,setData]=useState('');
+    const todo = route.params;
 
-    const isEnabled = false;
+    useEffect(()=>{
+        console.log('showTodo param |',todo);
+   
+        getTodoRef(todo).then(function(doc){
+          if(!doc.exists){
+            console.log('No such document!');
+   
+          } else {
+            console.log('Document data:', doc.data() );
+            setData(doc.data());
+          }
+        });
+      },[])
+    const{cate,end,start,flag} = {cate:data.Cate, end:data.End, start:data.Start, flag:data.Flag};
+    //const isEnabled = false;
     //위 코드에서 db에서 값 불러와 isEnabled에 저장
     //const [isEnabled, setIsEnabled] = useState(false);
     //const toggleSwitch = () => 
@@ -27,21 +44,21 @@ export default function App({navigation}) {
             <View>
                 <View style={taskStyles.column}>
                 <Text style={taskStyles.text}>Start-Date:</Text>
-                    <Text style={taskStyles.textbox}>database</Text>
+                    <Text style={taskStyles.textbox} value={start}></Text>
                 </View>
                 <View style={taskStyles.column}>
                 <Text style={taskStyles.text}>Due-Date:</Text>
-                    <Text style={taskStyles.textbox}>database</Text>
+                    <Text style={taskStyles.textbox} value={end}></Text>
                 </View>
                 <View style={taskStyles.column}>
                 <Text style={taskStyles.text}>Category:</Text>
-                    <Text style={taskStyles.textbox}>database</Text>
+                    <Text style={taskStyles.textbox} value={cate}></Text>
                 </View>
                 <View style={taskStyles.container}>
                 <Text style={taskStyles.text}>To-do:</Text>
                 <View style={taskStyles.containerbox}>
                 <View style={taskStyles.Input2}>
-                <Text style={taskStyles.Input}>database</Text>
+                <Text style={taskStyles.Input} value={todo}></Text>
                 </View>
                 </View>
                 </View>
@@ -52,7 +69,7 @@ export default function App({navigation}) {
                     trackColor={{ false: "#808080", true: "#2Faf53" }}
                     ios_backgroundColor="#808080"
                     //onValueChange={toggleSwitch} //수정 > todoview는 only view
-                    value={isEnabled} //db에서 값 받아오기
+                    value={flag} //db에서 값 받아오기
                     disabled={true}
                     />
                 </View>
@@ -66,7 +83,7 @@ export default function App({navigation}) {
         </SafeAreaView>
     );
 
-};
+}
 const taskStyles=StyleSheet.create({
     container: {
         margin:10,
@@ -123,3 +140,5 @@ const taskStyles=StyleSheet.create({
         backgroundColor: theme.itemBackground,
     },
 });
+
+export default App;
