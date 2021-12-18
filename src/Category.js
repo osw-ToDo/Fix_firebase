@@ -13,30 +13,34 @@ const wait = (timeout) => {
 }
     
 export default function App({navigation}) {
-    var categoryDB = {};
+    var categoryDB= {};
     var realCate={};
+    const [cateData, setcateData] = useState('');
+
     useEffect(()=>{
         const cateRef = DB.collection('Cate'); 
+
         cateRef.get().then((snapshot)=>{
             snapshot.forEach((doc) =>{
-                console.log(doc.data());
-                
+               // console.log(doc.data());
                 var key;
                 var val;
                 key = doc.id
                 val=doc.data();
                 categoryDB[key]=val;
-            
+               
             });
             console.log('hiddd');
-            console.log(categoryDB);
-            
+           // console.log(categoryDB);
+            setcateData(categoryDB);
+            //console.log("asdfk",cateData);
           });
-          
-         
-    });
-    console.log('asd',{categoryDB});
+
+         // console.log("외부",cateData);
+    },[]);
     
+
+    console.log("외부1",cateData);
     const press_add_ok= (new_category) =>
     {
         if(new_category){
