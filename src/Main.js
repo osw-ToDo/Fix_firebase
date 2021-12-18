@@ -21,6 +21,7 @@ export default function Main({ navigation }) {
   console.log((date.getMonth()).toString(),monthDate);
   var markedData = {};
   var todoData = {};
+
   useEffect(()=>{
     
     
@@ -30,7 +31,7 @@ export default function Main({ navigation }) {
     signRef.get().then((snapshot)=>{
        snapshot.forEach((doc) =>{
          
-         console.log(doc.id, '=>', doc.data().TrafficSignData);
+        // console.log(doc.id, '=>', doc.data().TrafficSignData);
         
          var key;
          var value;
@@ -50,26 +51,32 @@ export default function Main({ navigation }) {
         markedData[key]  =  value;
     });});
 
+
     todoRef.get().then((snapshot)=>{
       snapshot.forEach((doc) =>{
         
-        console.log(doc.id, '=>', doc.data().Start);
+       // console.log(doc.id, '=>', doc.data().Start);
        
         var key;
         var value;
         key = doc.id
         value = doc.data();
+        console.log("start", doc.data().End);
 
-        if(doc.data().Start<=date&&doc.data().End>=date&&doc.data().End>=date){
-          todoData[key] =value;
+        if( doc.data().Start.seconds<= date.getTime()&& // 일이 시작됐고
+         doc.data().End.seconds*1000> date.getTime() // 아직 안 끝났으며
+        && doc.data().Flag == false
+        ){//&&doc.data().End.getTime()>=date.getTime()
+          todoData[key] = value;
+        //  console.log("if",doc.data());
         }
-        console.log(todoData);
-    
+       // console.log(todoData,doc.data());
+      // console.log(doc.data());
        });
-    
+       console.log("TODODATA ",todoData);
    // console.log(markedData);
-});
-
+  });
+  console.log("today", date.getTime());
   });
   
   return (

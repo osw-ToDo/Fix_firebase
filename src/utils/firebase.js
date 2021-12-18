@@ -77,8 +77,8 @@ export const DB = firebase.firestore();
 
 export const createTodo = async ({Start, End, Cate, ToDo, Flag })=>{//, Flag Flag,
   const date = new Date();
-  const doDate = (date.getFullYear()).toString()+'-'+(date.getMonth()).toString()+'-'+(date.getDate()).toString();
-  const newTodoRef = DB.collection('Todo').doc(doDate);
+ // const doDate = (date.getFullYear()).toString()+'-'+(date.getMonth()).toString()+'-'+(date.getDate()).toString();
+  const newTodoRef = DB.collection('Todo').doc();
   const id = newTodoRef.id;
   const newTodo = {
     id,
