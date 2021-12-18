@@ -7,16 +7,41 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { DB } from "./utils/firebase";
 import { useEffect } from "react";
 import { useState } from "react";
+import { Todo_List } from "./components/J_List";
 
 export default function Main({ navigation }) {
   const monthDate = moment().format("MM");
   const date = new Date();
   const day = moment(date).add("0", "d").format("DD");
-  
+  const doDate =(date.getFullYear()).toString()+'-'+monthDate+'-'+(date.getDate()).toString();
   //가져오기만 하기 
   var todoData = {}; //초기화
   useEffect(()=>{
     
+    const signRef = DB.collection('TodaySign');
+   
+    signRef.get().then((snapshot)=>{
+       snapshot.forEach((doc) =>{
+         
+        // console.log(doc.id, '=>', doc.data().TrafficSignData);
+        
+         var key;
+         var value;
+        key = doc.id
+        value = doc.data().TrafficSignData;
+        switch(value){
+          case "0" : 
+           value = { marked: true, dotColor: 'red'};
+           break;
+           case "1" : 
+           value = { marked: true, dotColor: 'orange'};
+           break;
+           case "2" : 
+          value = { marked: true, dotColor: 'green'};
+           break;
+        }
+        markedData[key]  =  value;
+    });});
     const todoRef = DB.collection('Todo');
 
     todoRef.get().then((snapshot)=>{
@@ -41,8 +66,6 @@ console.log("today", date.getTime());
   
   return (
     <View>
-      
-
       <HeaderTitleView>
         <HeaderTitleTxt>TODAY's LIST</HeaderTitleTxt>
         <TouchableOpacity onPress={() => navigation.navigate('Profile') }>
@@ -71,31 +94,7 @@ console.log("today", date.getTime());
       </BodyView>
     
              
-            <View style={{flex: 1,  marginTop: 22 , justifyContent: 'center'}}>
-            <FlatList
-                    data ={todoData}
-                    horizontal = {false}
-                    renderItem = {({item,index})=>{
-                      console.log({item});
-                      
-                        return(
-                          <TouchableOpacity   onPress={() => navigation.navigate('toDo') }>
-                          <View style={{ padding: 15, borderBottomWidth: 1, borderColor: "black", flexDirection: "row" }}>
-                          <View style={{ marginRight: 10 }}>
-                            <Icon name="square-outline" size={30} color="gray" />
-                          </View>
-                          <View>
-                           <Text>{item.ToDo}</Text>
-                           
-                          </View>
-                          
-                        </View>       
-                        </TouchableOpacity>                  
-                        );
-                    }}
-                  /> 
-            </View>
-
+      <Todo_List data = {todoData}/>
 
       <FooterView>
         
