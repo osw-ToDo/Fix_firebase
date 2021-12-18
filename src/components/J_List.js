@@ -34,6 +34,25 @@ class J_List extends Component {
     }
 }
 
+{/*class checkbox extends Component {
+
+    render() {
+        const [isSelected, setSelection] = useState(false);
+        return (
+            <View style={styles.container}>
+                <View style={styles.checkboxContainer}>
+                    <Checkbox
+                        value={isSelected}
+                        onValueChange={setSelection}
+                        style={styles.checkbox}/>
+                    <Text style={styles.label}>todo</Text>
+                </View>
+            </View>
+            );
+        
+    }
+}
+*/}
 
 export function Todo_List({navigation,data}){
     var ListData = data;
@@ -53,21 +72,19 @@ export function Todo_List({navigation,data}){
                 horizontal = {false}
                 renderItem = {({item,index})=>{
                     const Day = new Date(item.End.seconds*1000);
-                    const [isSelected, setSelection] = useState(false);
+                    const [ toggleCheckBox, setToggleCheckBox ] = useState(false)
                     console.log(`Item=${JSON.stringify(item)}, index= ${index}`,Day.getDate())
                     return(
                         //<Text >{item.ToDo}</Text> 
                       // <Text>{item}a</Text>   
                       <TouchableOpacity onPress={() => navigation.navigate('toDo')}> 
                       <View style={{ padding:20, borderBottomWidth: 1, borderColor: "black", flexDirection: "row" }}>
-                          <View style={styles.checkboxContainer}>
-                            <Checkbox
-                            value={isSelected}
-                            onValueChange={setSelection}
-                            style={styles.checkbox} />
+                          <CheckBox 
+                          disabled={false}
+                          value={toggleCheckBox}
+                          onValueChange={(newValue) => setToggleCheckBox(newValue)} />
                           <Text>{item.ToDo} </Text>
-                          <Text>Due Date {Day.getMonth()+1}.{Day.getDate()}</Text>
-                          </View>
+                          <Text> Due Date {Day.getMonth()+1}.{Day.getDate()}</Text>
                       </View>
                       </TouchableOpacity>
                     );
@@ -80,7 +97,12 @@ export function Todo_List({navigation,data}){
 
             }
 
-                const styles = StyleSheet.create({
+            const styles = StyleSheet.create({
+                container: {
+                    flex:1,
+                    alignItems: "center",
+                    justifyContent: "center",
+                },
                 checkboxContainer: {
                     flexDirection: "row",
                     marginBottom: 20,
@@ -89,4 +111,5 @@ export function Todo_List({navigation,data}){
                     alignSelf: "center",
                 },
             })
+                
 export default J_List;
