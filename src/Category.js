@@ -14,14 +14,44 @@ const wait = (timeout) => {
 
 
 export default function App({navigation}) {
+    const [refreshing, setRefreshing] = React.useState(false);
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        wait(2000).then(() => setRefreshing(false));
+      }, []);
+    
+    
     var categoryDB= {};
     var todoData = {};
+    var todoData_2 = {};
+    var [todoData_real, settodoRealdata] = useState('');
     const [cateData, setcateData] = useState('');
+    const [todoData2, settodoData] = useState('');
+    const [todoData3, settodoData2] = useState('');
 
     useEffect(()=>{
         const cateRef = DB.collection('Cate'); 
         const todoRef = DB.collection('Todo');
-        todoRef.get().then((snapshot)=>{
+        
+        
+            todoRef.get().then((snapshot)=>{
+                snapshot.forEach((doc) =>{
+                 
+                  var key;
+                  var value;
+                  key = doc.id
+                  value = doc.data();
+          
+                  //if( 카테고리에는 전부 띄우고 (왜냐면 미완료된일만 표시 때문에 flag=true도 띄움)
+                  //doc.data().Flag == false){
+                    todoData[key] =value;
+                  //}
+                 });
+                 settodoData(todoData);
+                 console.log("TODODATA1" ,todoData);
+          });
+
+            todoRef.get().then((snapshot)=>{
             snapshot.forEach((doc) =>{
              
               var key;
@@ -29,16 +59,15 @@ export default function App({navigation}) {
               key = doc.id
               value = doc.data();
       
-              if(
-              doc.data().Flag == false){
-                todoData[key] =value;
+              if
+              (doc.data().Flag == false){
+                todoData_2[key] =value;
               }
              });
-             console.log("TODODATA" ,todoData);
+             settodoData2(todoData_2);
+             console.log("TODODATA2" ,todoData_2);
       });
-      
-      console.log("today");
-
+    
         cateRef.get().then((snapshot)=>{
             snapshot.forEach((doc) =>{
                 var key;
@@ -51,10 +80,33 @@ export default function App({navigation}) {
             setcateData(categoryDB);
           });  
     },[]);
-    
+
+    function view_com (isEnabled)  {
+        if(!isEnabled){
+            
+                ()=>settodoRealdata(todoData2);
+                console.log('fff',todoData2);
+                console.log('ddd',todoData_real);
+        }
+        else{
+      
+                settodoRealdata(todoData3);
+                console.log('change',todoData_real);
+           
+        }
+        
+    }
+    console.log('lli3',todoData2);
+    console.log('1114',todoData3);
+    console.log('lll5',cateData);
+
     var listArray = Object.values(cateData);
     var add={value: 'Add', label: '+ Add a new category'};
     listArray.push(add);
+
+    
+    
+    
     
     const press_add_ok= (new_category) =>
     {
@@ -93,7 +145,6 @@ export default function App({navigation}) {
                 {
                   text: "Submit",
                   onPress: (new_category) => press_add_ok(new_category)
-                  //new_category값 db전송 코드
                 }
               ],
               'plain-text',
@@ -113,16 +164,14 @@ export default function App({navigation}) {
     const [isEnabled, setIsEnabled] = useState(false);
     const [isEnabled2, setIsEnabled2] = useState(false);
     const toggleSwitch = () => 
-    setIsEnabled(previousState => !previousState);
+        setIsEnabled(previousState => !previousState);
+        view_com(isEnabled)
+  
     const toggleSwitch2 = () => 
-    setIsEnabled2(previousState => !previousState);
-
-    const [refreshing, setRefreshing] = React.useState(false);
-    const onRefresh = React.useCallback(() => {
-        setRefreshing(true);
-        wait(2000).then(() => setRefreshing(false));
-      }, []);
-
+        setIsEnabled2(previousState => !previousState);
+  
+    
+     
     return (
         <SafeAreaView style={viewStyles.container}>
             <StatusBar barStyle="light-content" style={textStyles.statusbar}/>
@@ -179,7 +228,8 @@ export default function App({navigation}) {
                     />
                 </View>
                 <Text style={textStyles.main2}>To-dos: </Text>
-                <Todo_List navigation ={navigation} data = {todoData}/>
+                  
+                  <Todo_List navigation ={navigation} data = {todoData_real}/>
             </ScrollView>
             <View style={viewStyles.box}>
            
@@ -187,7 +237,9 @@ export default function App({navigation}) {
             </View>
         </View>
         </SafeAreaView>
+        
     );
+    
 };
 
 const CategoryStyles = StyleSheet.create({
