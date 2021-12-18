@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StatusBar, Switch, View, SafeAreaView, Text, ScrollView, Alert, StyleSheet, RefreshControl,Button, SnapshotViewIOSBase} from 'react-native';
 import {viewStyles, textStyles, pickerSelectStyles, ToggleStyles} from './styles';
 import { images } from './images';
@@ -6,12 +6,36 @@ import RNPickerSelect from 'react-native-picker-select';
 import { IconButton } from 'react-native-paper';
 import { goBack } from './J_index';
 import { DB, createCategory } from './utils/firebase';
+import { FlatList } from 'react-native-gesture-handler';
 
 const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
 }
     
 export default function App({navigation}) {
+    var categoryDB = {};
+    var realCate={};
+    useEffect(()=>{
+        const cateRef = DB.collection('Cate'); 
+        cateRef.get().then((snapshot)=>{
+            snapshot.forEach((doc) =>{
+                console.log(doc.data());
+                
+                var key;
+                var val;
+                key = doc.id
+                val=doc.data();
+                categoryDB[key]=val;
+            
+            });
+            console.log('hiddd');
+            console.log(categoryDB);
+            
+          });
+          
+         
+    });
+    console.log('asd',{categoryDB});
     
     const press_add_ok= (new_category) =>
     {
@@ -90,14 +114,10 @@ export default function App({navigation}) {
       }, []);
 
       //카테고리 리스트
-      const cateRef = DB.collection('Cate');
-      cateRef.get().then((snapshot)=>{
-        snapshot.forEach((doc) =>{
-            console.log("category list: ")
-            console.log(doc.id, '=>', doc.data());});
-      });
+      
+      
      
-      const TodoRef = DB.collection('Todo');
+      /*const TodoRef = DB.collection('Todo');
 
       //투두 반환(전체) - 종료 일자 빠른 순
       TodoRef.orderBy('End','desc').get().then((snapshot)=>{
@@ -132,7 +152,7 @@ export default function App({navigation}) {
         snapshot.forEach((doc)=>{
             console.log("5. search:", doc.data());
         });
-    })
+    })*/
 
 
     return (
