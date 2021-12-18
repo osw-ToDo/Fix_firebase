@@ -121,7 +121,6 @@ export const createCategory = async({label,value})=>{
   };
   
   await newCateRef.set(newCate);
-  return id;
 }
 
 
