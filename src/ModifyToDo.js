@@ -9,16 +9,19 @@ import { IconButton as IconBtn} from 'react-native-paper';
 import { goBack } from './J_index';
 
 export default function ModifyToDo({navigation}) {
+
     const press_mod_ok= () =>
     {
         console.log("Update has been completed.")
         //DB업뎃 코드  
+        Alert.alert("To-Do has been updated!");
         navigation.navigate('toDo')
     }
     const press_del_ok= () =>
     {
         console.log("Delete has been completed.")
         //DB삭제 코드
+        Alert.alert("To-Do has been deleted!");
         navigation.navigate('main') 
     }
     const mod_task = () => 

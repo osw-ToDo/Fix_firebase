@@ -13,6 +13,7 @@ const wait = (timeout) => {
 }
     
 export default function App({navigation}) {
+
     var categoryDB = {};
     var realCate={};
     useEffect(()=>{
@@ -31,11 +32,12 @@ export default function App({navigation}) {
             console.log('hiddd');
             console.log(categoryDB);
             
+           
           });
           
          
     });
-    console.log('asd',{categoryDB});
+    console.log('sss',categoryDB);
     
     const press_add_ok= (new_category) =>
     {
@@ -209,6 +211,7 @@ export default function App({navigation}) {
                 </View>
                 <View style={CategoryStyles.line} />
                 <Text style={textStyles.main}>To-dos: </Text>
+                    
                     
             </ScrollView>
             <View style={viewStyles.box}>

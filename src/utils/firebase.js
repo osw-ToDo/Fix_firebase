@@ -153,8 +153,8 @@ export const createMessage = async ({ channelId, message }) => {
     });
 };
 
-export function getTodoRef({간지나게숨쉬기}){ 
-  const TodoRef = DB.collection('Todo').doc(간지나게숨쉬기);
+export function getTodoRef({todo}){ 
+  const TodoRef = DB.collection('Todo').doc(todo);
   const doc = TodoRef.get();
 
   return doc;

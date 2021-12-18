@@ -10,7 +10,7 @@ import {DB, getTodoRef } from './utils/firebase';
 const App =({navigation,route}) => {
 
     const [data,setData]=useState('');
-    const todo = route.params;
+    const todo = 'ㅇㅇ';
 
     useEffect(()=>{
         console.log('showTodo param |',todo);
