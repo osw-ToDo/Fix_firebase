@@ -1,6 +1,5 @@
 import * as firebase from 'firebase';
 import 'firebase/firestore';
-import { number, string } from 'prop-types';
 import config from '../../firebase.json';
 
 const app = firebase.initializeApp(config);

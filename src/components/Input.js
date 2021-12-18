@@ -1,7 +1,7 @@
 import React, { useState, forwardRef } from 'react';
 import styled from 'styled-components/native';
 import PropTypes from 'prop-types';
-import { inputStyles } from './signInput';
+
 const Container = styled.View`
   flex-direction: column;
   width: 100%;

@@ -1,22 +1,17 @@
 
-import React ,{useRef,useContext,useState}from 'react';
-import { ProgressContext } from './contexts';
+import React ,{useState}from 'react';
 import { Alert } from 'react-native';
 import { createTodaySignText } from './utils/firebase';
-import { StyleSheet,StatusBar,SafeAreaView, Text, View, Keyboard ,Button,BackHandler ,ScrollView} from 'react-native';
-import { viewStyles, textStyles,  iconStyles } from './styles';
-import EventInput from './EventInput';
+import { StyleSheet,StatusBar,SafeAreaView, Text, View, Keyboard ,ScrollView} from 'react-native';
+import { viewStyles, textStyles } from './styles';
 import { TouchableWithoutFeedback } from 'react-native';
 import {Input} from './components/signInput';
 import {images} from './images';
 // import {IconButton} from './components/IconButton';
 import TrafficSign from './components/J_trafficSign';
-import J_List from './components/J_List';
-import { NavigationContainer } from '@react-navigation/native';
 import { IconButton} from 'react-native-paper';
 import { goBack } from './J_index';
 import RadioButton from './components/J_radioButton';
-import { DB,getTodaySignRef } from './utils/firebase';
 
 const PROP = [
 	{

@@ -4,12 +4,6 @@ import moment from "moment";
 import styled from "styled-components";
 import { mainRows } from "../rows";
 import Icon from "react-native-vector-icons/Ionicons";
-import { IconButton} from 'react-native-paper';
-import {images} from './images';
-import {IconButton as IconBtn} from './components/IconButton';
-import { viewStyles } from "./styles";
-import MainStack from './navigations/MainStack';
-import { NavigationContainer } from '@react-navigation/native';
 import { DB } from "./utils/firebase";
 import { useEffect } from "react";
 

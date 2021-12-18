@@ -14,8 +14,7 @@ import Weekly from "./Weekly";
 
 import { Profile } from './screens';
 
-import { StyleSheet,StatusBar,SafeAreaView, Text, View, Keyboard ,Button,BackHandler } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { StyleSheet,StatusBar, View, BackHandler } from 'react-native';
 import { ThemeContext } from 'styled-components/native';
 import React, { useContext } from 'react';
 

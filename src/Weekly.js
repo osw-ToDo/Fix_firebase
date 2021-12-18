@@ -2,11 +2,8 @@ import React from "react";
 import { StyleSheet, Text, View, Image,SafeAreaView, TouchableOpacity } from "react-native";
 import moment from "moment";
 import styled from "styled-components";
-import { viewStyles } from './styles';
-import Icon from "react-native-vector-icons/Ionicons";
 import { goBack } from './J_index';
 import { IconButton as IconBtn} from 'react-native-paper';
-import { IconButton } from "./components/IconButton";
 import { images } from "./images";
 
 export default function Weekly({ navigation, route }) {
