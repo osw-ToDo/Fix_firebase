@@ -229,7 +229,7 @@ export default function App({navigation}) {
                 </View>
                 <Text style={textStyles.main2}>To-dos: </Text>
                   
-                  <Todo_List navigation ={navigation} data = {todoData_real}/>
+                  <Todo_List navigation ={navigation} data = {todoData2}/>
             </ScrollView>
             <View style={viewStyles.box}>
            
