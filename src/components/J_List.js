@@ -57,7 +57,7 @@ class J_List extends Component {
 export function Todo_List({navigation,data}){
     var ListData = data;
     const listArray = Object.values(ListData);
-    
+    const [ toggleCheckBox, setToggleCheckBox ] = useState(false)
     //const [listArray,setList] = useState('');
     console.log("list : ",Object.values(ListData));
 
@@ -72,17 +72,17 @@ export function Todo_List({navigation,data}){
                 horizontal = {false}
                 renderItem = {({item,index})=>{
                     const Day = new Date(item.End.seconds*1000);
-                    const [ toggleCheckBox, setToggleCheckBox ] = useState(false)
+                  
                     console.log(`Item=${JSON.stringify(item)}, index= ${index}`,Day.getDate())
                     return(
                         //<Text >{item.ToDo}</Text> 
                       // <Text>{item}a</Text>   
                       <TouchableOpacity onPress={() => navigation.navigate('toDo')}> 
                       <View style={{ padding:20, borderBottomWidth: 1, borderColor: "black", flexDirection: "row" }}>
-                          <CheckBox 
+                          {/* <Checkbox 
                           disabled={false}
                           value={toggleCheckBox}
-                          onValueChange={(newValue) => setToggleCheckBox(newValue)} />
+                          onValueChange={(newValue) => setToggleCheckBox(newValue)} /> */}
                           <Text styles={styles.todo}>{item.ToDo} </Text>
                           <Text styles={styles.duedate}> Due Date {Day.getMonth()+1}.{Day.getDate()}</Text>
                       </View>
@@ -95,9 +95,9 @@ export function Todo_List({navigation,data}){
 
 
 
-            }
+    }
 
-            const styles = StyleSheet.create({
+     const styles = StyleSheet.create({
                 container: {
                     flex:1,
                     alignItems: "center",
