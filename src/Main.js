@@ -14,7 +14,7 @@ export default function Main({ navigation }) {
   const day = moment(date).add("0", "d").format("DD");
   
   //가져오기만 하기 
-  var todoData = {}; //초기화 -> 얘가 const여야 하나..? 
+  var todoData = {}; //초기화
   useEffect(()=>{
     
     const todoRef = DB.collection('Todo');
@@ -50,10 +50,13 @@ console.log("today", date.getTime());
         <HeaderImg style={{ marign: 100 }} source={require("../assets/images/mainSetting.png")} />
         </TouchableOpacity>
       </HeaderTitleView>
+
       <BodyView>
+      <View style ={BodySign1.main}>
         <BodySignDateImg source={require("../assets/images/mainSign1.png")} />
-        <BodySignMonth>{monthDate}</BodySignMonth>
-        <BodySignDate>{day}</BodySignDate>
+        <Text style ={BodySign1.date}>{monthDate}</Text>
+        <Text style ={BodySign1.day}>{day}</Text>
+        </View>
         <BodyMenuView>
           <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => navigation.navigate('montly',{markedData}) }>
           <Image style = {BodyMenuImg1.M}  source={require("../assets/images/Mbutton.png")}/>
@@ -74,7 +77,7 @@ console.log("today", date.getTime());
                     horizontal = {false}
                     renderItem = {({item,index})=>{
                       console.log({item});
-                        //console.log(`Item=${JSON.stringify(item)}, index= ${index}`)
+                      
                         return(
                           <TouchableOpacity   onPress={() => navigation.navigate('toDo') }>
                           <View style={{ padding: 15, borderBottomWidth: 1, borderColor: "black", flexDirection: "row" }}>
@@ -168,10 +171,10 @@ const BodySign1 = StyleSheet.create({
   {position: 'absolute',
   top:40,
   bottom:0,
-  left:45,
+  left:55,
   right:0,
   fontSize: 50,
-  paddingLeft:30
+  paddingLeft:20,
   }
 
 })
@@ -181,49 +184,12 @@ const BodySignDateImg = styled(Image)`
   height: 150px;
 `;
 
-const BodySignMonth = styled(Text)`
-  position: absolute
-  top:85
-  bottom:0
-  left:30
-  right:0
-  font-size: 50px;
-  justify-content: center;
-`;
-
-const BodySignDate = styled(Text)`
- position: absolute
-  top:100
-  bottom:0
-  left:85
-  right:0
-  font-size: 50px;
-  justify-content: center;
-`;
-
-const BodyMenuImg = styled(Image)`
-  width: 150px;
-  height: 200px;
-`;
 
 const FooterView = styled(View)`
   flex: 1;
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-`;
-
-const FooterPlusImg = styled(Image)`
-  width: 35px;
-  height: 35px;
-  margin: 7px;
-`;
-
-const FooterButtonImg = styled(Image)`
-  width: 35px;
-  height: 35px;
-  margin: 7px;
- 
 `;
 
 const FooterButtonImg1 = StyleSheet.create({
@@ -291,31 +257,6 @@ const BodyMenuImg1 = StyleSheet.create({
 const BodyMenuView = styled(View)`
   width: 150px;
   height: 200px;
-`;
-
-const BodyMMenuImg = styled(View)`
-  position: absolute;
-  top: 195px;
-  right: 78px;
-  z-index: 1;
-  font-weight: 700;
-  object-fit: cover;
-`;
-
-const BodyWMenuImg = styled(View)`
-  position: absolute;
-  top: 255px;
-  right: 78px;
-  z-index: 1;
-  font-weight: 700;
-`;
-
-const BodyCMenuImg = styled(View)`
-  position: absolute;
-  top: 315px;
-  right: 78px;
-  z-index: 1;
-  font-weight: 700;
 `;
 
 const styles = StyleSheet.create({});
