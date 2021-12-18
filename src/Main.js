@@ -19,34 +19,6 @@ export default function Main({ navigation }) {
 
   useEffect(()=>{
     
-    const signRef = DB.collection('TodaySign');
-   
-    signRef.get().then((snapshot)=>{
-       snapshot.forEach((doc) =>{
-         
-        // console.log(doc.id, '=>', doc.data().TrafficSignData);
-        
-         var key;
-         var value;
-        key = doc.id
-        value = doc.data().TrafficSignData;
-        switch(value){
-          case "0" : 
-           value = { marked: true, dotColor: 'red'};
-           break;
-           case "1" : 
-           value = { marked: true, dotColor: 'orange'};
-           break;
-           case "2" : 
-          value = { marked: true, dotColor: 'green'};
-           break;
-        }
-        markedData[key]  =  value;
-    });});
-
-   
-
-
     const todoRef = DB.collection('Todo');
 
     todoRef.get().then((snapshot)=>{
@@ -165,11 +137,21 @@ const BodySign1 = StyleSheet.create({
   },
   date: 
   {position: 'absolute',
+  top:40,
+  bottom:0,
+  left:12,
+  right:0,
+  fontSize: 50,
   paddingLeft:10,
  
   },
   day: 
   {position: 'absolute',
+  top:40,
+  bottom:0,
+  left:45,
+  right:0,
+  fontSize: 50,
   paddingLeft:30
   }
 
