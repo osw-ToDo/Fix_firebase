@@ -13,10 +13,24 @@ import { createTodo } from './utils/firebase';
 export default function CreateToDo({navigation}) {
     const press_add_ok= () =>
     {
-        console.log("The addition has been completed.")
+        
+        if(!startDay||!endDay||!cate||!toDo){
+          Alert.alert(
+            "CAUTION",
+            "Enter a non-space value!",
+            [
+                {
+                    text:"OK",
+                }
+            ]
+        );
+        }
+        else{
         _handleCreateToDoPress({navigation,startDay,endDay,cate,toDo,Flag:isEnabled});//DB삽입 코드  
         Alert.alert("Add a new To-Do!");
+        console.log("The addition has been completed.")
         goBack({navigation})
+      }
     }
     const add_task = () => 
     Alert.alert(                   
