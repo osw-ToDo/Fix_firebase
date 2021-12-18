@@ -51,9 +51,11 @@ console.log("today", date.getTime());
         </TouchableOpacity>
       </HeaderTitleView>
       <BodyView>
+        <BodySign>
         <BodySignDateImg source={require("../assets/images/mainSign1.png")} />
         <BodySignMonth>{monthDate}</BodySignMonth>
         <BodySignDate>{day}</BodySignDate>
+        </BodySign>
         <BodyMenuView>
           <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => navigation.navigate('montly',{markedData}) }>
           <Image style = {BodyMenuImg1.M}  source={require("../assets/images/Mbutton.png")}/>
@@ -72,21 +74,17 @@ console.log("today", date.getTime());
             <FlatList
                     data ={todoData}
                     horizontal = {false}
-                    renderItem = {({item,index})=>{
+                    renderItem = {({item})=>{
                       console.log({item});
                         //console.log(`Item=${JSON.stringify(item)}, index= ${index}`)
                         return(
                           <TouchableOpacity   onPress={() => navigation.navigate('toDo') }>
-                          <View style={{ padding: 15, borderBottomWidth: 1, borderColor: "black", flexDirection: "row" }}>
-                          <View style={{ marginRight: 10 }}>
-                            <Icon name="square-outline" size={30} color="gray" />
-                          </View>
+                      
                           <View>
-                           <Text>{item.ToDo}</Text>
                            
                           </View>
                           
-                        </View>       
+
                         </TouchableOpacity>                  
                         );
                     }}
@@ -144,29 +142,22 @@ const BodyTxtView = styled(View)`
   justify-content: flex-start;
 `;
 
+const BodySign = styled(View)`
+  position: relative,
+  flex: 1,
+`;
+
 const BodySignDateImg = styled(Image)`
   width: 150px;
   height: 150px;
 `;
 
 const BodySignMonth = styled(Text)`
-  position: absolute
-  top:85
-  bottom:0
-  left:30
-  right:0
-  font-size: 50px;
-  justify-content: center;
+
 `;
 
 const BodySignDate = styled(Text)`
- position: absolute
-  top:100
-  bottom:0
-  left:85
-  right:0
-  font-size: 50px;
-  justify-content: center;
+ 
 `;
 
 const BodyMenuImg = styled(Image)`
