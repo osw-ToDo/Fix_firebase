@@ -1,12 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList, Button } from "react-native";
 import moment from "moment";
 import styled from "styled-components";
-import "firebase/firestore";
-import { FlatList, TextInput } from "react-native-gesture-handler";
-import { List } from 'react-native-paper';
+import firebase from 'firebase';
+import firebase from '@react-native-firebase/firestore'; //문제 
+import { TextInput, Button } from 'react-native-paper';
+import Todo from '..Todo/'; 
 
-export function Main({ navigation }) {
+{/*import { initializeApp } from 'firebase/app';
+import {getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+
+const firebaseConfig = {
+
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+//목록에서 검색
+async function getTasks(db) {
+  const tasksCol = collection(db, 'tasks');
+  const taskSnapshot = await getDocs(tasksCol);
+  const taskList = taskSnapshot.docs.map(doc => doc.data());
+  return taskList;
+} */}
+
+//2
+
+export default function Main({ navigation }) {
   const monthDate = moment().format("MM");
   const date = new Date();
   const day = moment(date).add("0", "d").format("DD");
@@ -17,21 +38,26 @@ export function Main({ navigation }) {
 
   const ref = firestore().collection('todos');
 
+  //새로운 todo를 firebase db 항목 추가
     async function addTodo(){
         await ref.add({
             title: todo,
+            duedate: 2021-12-20,
             complete: false,
         });
-    }
+        setTodos('');
 
+    }
+    //실시간 수정 
     useEffect(()=> {
         return ref.onSnapshot((querySnapshot) => {
             const list = [];
             querySnapshot.forEach(doc => {
-                const { title, complete } = doc.date();
+                const { title, duedate, complete } = doc.data();
                 list.push({
                     id: doc.id,
                     title,
+                    duedate,
                     complete,
                 });
             });
@@ -75,7 +101,7 @@ export function Main({ navigation }) {
           <Image style = {BodyMenuImg1.C} source={require("../assets/images/Cbutton.png")}/>
           </TouchableOpacity>
         </BodyMenuView>
-    </BodyView>*/
+    </BodyView>
 
       {/*수정*/}
 
@@ -83,14 +109,15 @@ export function Main({ navigation }) {
     
             <TouchableOpacity   onPress={() => navigation.navigate('toDo') }> 
             <FlatList
-            style={{flex: 1}}
-            data={todos}
-            keyExtractor={(item)=> item.id}
-            renderItem={({ item })=> <Todo {...item} />}
+              style={{flex: 1}}
+              data={todos}
+              keyExtractor={(item)=> item.id}
+              renderItem={({ item })=> <Todo {...item} />}
             />
 
             <TextInput label={'New Todo'} value={todo} onChangeText={setTodo} />
-            <Button onPress={() => addTodo()}>Add TODO</Button>
+            {/*addTodo 생성 버튼*/}
+            <Button onPress={() => addTodo()}>Add TODO</Button> 
             </TouchableOpacity>
           
       </BodyTxtView>

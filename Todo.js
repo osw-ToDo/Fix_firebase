@@ -1,6 +1,7 @@
 import React from "react";
 import firestore from '@react-native-firebase/firestore';
 import { List } from 'react-native-paper';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 function Todo({ id, title, complete }) {
     async function toggleComplete() {
@@ -8,6 +9,7 @@ function Todo({ id, title, complete }) {
         .colletion('todos')
         .doc(id)
         .update({
+            duedate: !finish,
             complete: !complete,
         });
     }
@@ -15,6 +17,7 @@ function Todo({ id, title, complete }) {
     return (
         <List.Item
             title={title}
+            duedate={duedate}
             onPress={()=>toggleComplete()}
             left={props => (
                 <List.Icon {...props} icon={complete ? 'check' : 'cancel'} />
@@ -24,3 +27,5 @@ function Todo({ id, title, complete }) {
 }
 
 export default React.memo(Todo);
+
+//duedate 
