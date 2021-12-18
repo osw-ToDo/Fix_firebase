@@ -57,7 +57,7 @@ export function Todo_List({navigation,data}){
                     return(
                         //<Text >{item.ToDo}</Text> 
                       // <Text>{item}a</Text>   
-                      <TouchableOpacity onPress={() => console.log(`Item=${JSON.stringify(item)}, index= ${index}`)}> 
+                      <TouchableOpacity onPress={() => navigation.navigate('toDo')}> 
                       <View style={{ padding:20, borderBottomWidth: 1, borderColor: "black", flexDirection: "row" }}>
                           <Text>{item.ToDo} </Text>
                           <Text>Due Date {Day.getMonth()+1}.{Day.getDate()}</Text>
