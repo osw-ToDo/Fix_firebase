@@ -64,14 +64,14 @@ export const updateUserPhoto = async photoUrl => {
   return { name: user.displayName, email: user.email, photoUrl: user.photoURL };
 };
 
-export const updateTodo = 간지나게숨쉬기 => {
+/*export const updateTodo = 간지나게숨쉬기 => {
   const user = Auth.currentUser;
   const storageUrl = photoUrl.startsWith('https')
     ? photoUrl
     : await uploadImage(photoUrl);
   await user.updateProfile({ photoURL: storageUrl });
   return { name: user.displayName, email: user.email, photoUrl: user.photoURL };
-};
+};*/
 
 export const DB = firebase.firestore();
 
