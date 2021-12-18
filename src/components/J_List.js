@@ -1,5 +1,5 @@
 import React, {Component,useState,useEffect} from 'react';
-import {Image,FlatList,View,Text,TouchableOpacity} from 'react-native';
+import {Image,FlatList,View,Text,TouchableOpacity, Checkbox, StyleSheet} from 'react-native';
 import picListData from '../J_picListData';
 import { PicButton } from './IconButton';
 
@@ -38,6 +38,7 @@ class J_List extends Component {
 export function Todo_List({navigation,data}){
     var ListData = data;
     const listArray = Object.values(ListData);
+    
     //const [listArray,setList] = useState('');
     console.log("list : ",Object.values(ListData));
 
@@ -52,15 +53,21 @@ export function Todo_List({navigation,data}){
                 horizontal = {false}
                 renderItem = {({item,index})=>{
                     const Day = new Date(item.End.seconds*1000);
-
+                    const [isSelected, setSelection] = useState(false);
                     console.log(`Item=${JSON.stringify(item)}, index= ${index}`,Day.getDate())
                     return(
                         //<Text >{item.ToDo}</Text> 
                       // <Text>{item}a</Text>   
                       <TouchableOpacity onPress={() => navigation.navigate('toDo')}> 
                       <View style={{ padding:20, borderBottomWidth: 1, borderColor: "black", flexDirection: "row" }}>
+                          <View style={styles.checkboxContainer}>
+                            <Checkbox
+                            value={isSelected}
+                            onValueChange={setSelection}
+                            style={styles.checkbox} />
                           <Text>{item.ToDo} </Text>
                           <Text>Due Date {Day.getMonth()+1}.{Day.getDate()}</Text>
+                          </View>
                       </View>
                       </TouchableOpacity>
                     );
@@ -69,5 +76,17 @@ export function Todo_List({navigation,data}){
        </View>
     );
 
+
+
             }
+
+                const styles = StyleSheet.create({
+                checkboxContainer: {
+                    flexDirection: "row",
+                    marginBottom: 20,
+                },
+                checkbox: {
+                    alignSelf: "center",
+                },
+            })
 export default J_List;
