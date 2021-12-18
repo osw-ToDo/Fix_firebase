@@ -95,8 +95,8 @@ console.log("today", date.getTime());
         </BodyMenuView>
       </BodyView>
     
-             
-      <Todo_List navigation ={navigation} data = {todoData}/>
+      <Todo_List navigation ={navigation} data = {todoData}/>    
+      {/* <Todo_List navigation ={navigation} data = {todoData}/> */}
 
       <FooterView>
         
