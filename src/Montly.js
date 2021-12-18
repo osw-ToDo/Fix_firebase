@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component,useState } from 'react'
 import {StatusBar, View, ToastAndroid} from 'react-native';
 import{Montlystyles,viewStyles,textStyles,iconStyles} from './styles';
 import {Calendar,LocaleConfig} from 'react-native-calendars';
@@ -9,6 +9,7 @@ import { IconButton} from 'react-native-paper';
 import { goBack } from './J_index';
 import { useNavigation } from '@react-navigation/native';
 import {DB,getTodaySignRef} from './utils/firebase'
+import { useEffect } from 'react';
 
 LocaleConfig.locales['ko'] = {
   monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
@@ -19,13 +20,47 @@ LocaleConfig.locales['ko'] = {
 };
 LocaleConfig.defaultLocale = 'ko';
 
+ //var markedData = {};
+
 class Montly extends Component {
-  
-  
+
 
   render() {
-    
     const navigation = this.props.navigation 
+    const markedData = this.props.route.params.markedData;
+    //const markedData = this.props.markedData
+    // const signRef = DB.collection('TodaySign');
+
+    // signRef.get().then((snapshot)=>{
+    //    snapshot.forEach((doc) =>{
+         
+    //      console.log(doc.id, '=>', doc.data().TrafficSignData);
+      
+    //     this.key = doc.id
+    //     this.value = doc.data().TrafficSignData;
+    //     switch(this.value){
+    //       case "0" : 
+    //        this.value = { marked: true, dotColor: 'red'};
+    //        break;
+    //        case "1" : 
+    //        this.value = { marked: true, dotColor: 'orange'};
+    //        break;
+    //        case "2" : 
+    //        this.value = { marked: true, dotColor: 'green'};
+    //        break;
+    //     }
+    //     markedData[this.key]  =  this.value;
+    //     });
+      
+    // });
+   
+
+   
+     //console.log(JSON.stringify(markedData));
+
+    
+
+    console.log("render",markedData);
    
      return (
      <><View style={viewStyles.header}>
@@ -45,7 +80,8 @@ class Montly extends Component {
                  ToastAndroid.SHORT,
                  ToastAndroid.CENTER
                );
-               const dayObj = day
+            
+             const dayObj = day
              //  const date =day.year+'-'+day.month+'-'+dayObj.day;
              const date = day.dateString;
              
@@ -66,11 +102,7 @@ class Montly extends Component {
              disableAllTouchEventsForDisabledDays={true}
              enableSwipeMonths={true}
              markingType={'custom'}
-             markedDates={{
-               '2021-12-17': { marked: true },
-               '2021-12-18': { marked: true, dotColor: 'red', activeOpacity: 0 },
-               '2021-12-19': { makred: true, dotColor: 'orange', activeOpacity: 0 }
-             }}
+             markedDates={markedData}
              theme={{
                arrowColor: 'black',
                todayTextColor: 'red',

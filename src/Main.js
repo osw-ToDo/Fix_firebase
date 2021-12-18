@@ -10,6 +10,8 @@ import {IconButton as IconBtn} from './components/IconButton';
 import { viewStyles } from "./styles";
 import MainStack from './navigations/MainStack';
 import { NavigationContainer } from '@react-navigation/native';
+import { DB } from "./utils/firebase";
+import { useEffect } from "react";
 
 export default function Main({ navigation }) {
   const monthDate = moment().format("MM");
@@ -17,6 +19,39 @@ export default function Main({ navigation }) {
   const day = moment(date).add("0", "d").format("DD");
   const doDate =(date.getFullYear()).toString()+'-'+monthDate+'-'+(date.getDate()).toString();
   console.log((date.getMonth()).toString(),monthDate);
+  var markedData = {};
+  useEffect(()=>{
+    const signRef = DB.collection('TodaySign');
+
+   
+    signRef.get().then((snapshot)=>{
+       snapshot.forEach((doc) =>{
+         
+         console.log(doc.id, '=>', doc.data().TrafficSignData);
+        
+         var key;
+         var value;
+        key = doc.id
+        value = doc.data().TrafficSignData;
+        switch(value){
+          case "0" : 
+           value = { marked: true, dotColor: 'red'};
+           break;
+           case "1" : 
+           value = { marked: true, dotColor: 'orange'};
+           break;
+           case "2" : 
+          value = { marked: true, dotColor: 'green'};
+           break;
+        }
+        markedData[key]  =  value;
+        });
+       // console.log(markedData);
+      
+    });
+
+  });
+  
   return (
     <View>
       
@@ -33,7 +68,7 @@ export default function Main({ navigation }) {
         <BodySignMonth>{monthDate}</BodySignMonth>
         <BodySignDate>{day}</BodySignDate>
         <BodyMenuView>
-          <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => navigation.navigate('montly') }>
+          <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => navigation.navigate('montly',{markedData}) }>
           <Image style = {BodyMenuImg1.M}  source={require("../assets/images/Mbutton.png")}/>
           </TouchableOpacity>
           <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => navigation.navigate('weekly') }>
