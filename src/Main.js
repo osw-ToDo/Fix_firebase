@@ -156,6 +156,7 @@ const BodySign = styled(View)`
 const BodySign1 = StyleSheet.create({
   main : 
   {position: 'relative',
+  left:15,
   flex: 1,
   },
   date: 

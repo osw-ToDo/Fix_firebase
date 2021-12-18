@@ -83,8 +83,8 @@ export function Todo_List({navigation,data}){
                           disabled={false}
                           value={toggleCheckBox}
                           onValueChange={(newValue) => setToggleCheckBox(newValue)} />
-                          <Text>{item.ToDo} </Text>
-                          <Text> Due Date {Day.getMonth()+1}.{Day.getDate()}</Text>
+                          <Text styles={styles.todo}>{item.ToDo} </Text>
+                          <Text styles={styles.duedate}> Due Date {Day.getMonth()+1}.{Day.getDate()}</Text>
                       </View>
                       </TouchableOpacity>
                     );
@@ -109,6 +109,13 @@ export function Todo_List({navigation,data}){
                 },
                 checkbox: {
                     alignSelf: "center",
+                },
+
+                todo: {
+                    fontSize: 10,
+                },
+                duedate: {
+                    fontSize: 10,
                 },
             })
                 
