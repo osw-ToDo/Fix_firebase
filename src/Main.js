@@ -18,30 +18,6 @@ export default function Main({ navigation }) {
   var todoData = {}; //초기화
   useEffect(()=>{
     
-    const signRef = DB.collection('TodaySign');
-   
-    signRef.get().then((snapshot)=>{
-       snapshot.forEach((doc) =>{
-         
-        // console.log(doc.id, '=>', doc.data().TrafficSignData);
-        
-         var key;
-         var value;
-        key = doc.id
-        value = doc.data().TrafficSignData;
-        switch(value){
-          case "0" : 
-           value = { marked: true, dotColor: 'red'};
-           break;
-           case "1" : 
-           value = { marked: true, dotColor: 'orange'};
-           break;
-           case "2" : 
-          value = { marked: true, dotColor: 'green'};
-           break;
-        }
-        markedData[key]  =  value;
-    });});
     const todoRef = DB.collection('Todo');
 
     todoRef.get().then((snapshot)=>{
