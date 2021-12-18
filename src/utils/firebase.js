@@ -64,6 +64,15 @@ export const updateUserPhoto = async photoUrl => {
   return { name: user.displayName, email: user.email, photoUrl: user.photoURL };
 };
 
+export const updateTodo = 간지나게숨쉬기 => {
+  const user = Auth.currentUser;
+  const storageUrl = photoUrl.startsWith('https')
+    ? photoUrl
+    : await uploadImage(photoUrl);
+  await user.updateProfile({ photoURL: storageUrl });
+  return { name: user.displayName, email: user.email, photoUrl: user.photoURL };
+};
+
 export const DB = firebase.firestore();
 
 export const createTodo = async ({Start, End, Cate, ToDo, Flag })=>{//, Flag Flag,
@@ -144,7 +153,13 @@ export const createMessage = async ({ channelId, message }) => {
     });
 };
 
+export function getTodoRef({간지나게숨쉬기}){ 
+  const TodoRef = DB.collection('Todo').doc(간지나게숨쉬기);
+  const doc = TodoRef.get();
 
+  return doc;
+}
+  
 export function getTodaySign(){
   const date = new Date();
   const doDate =(date.getFullYear()).toString()+'-'+(date.getMonth()).toString()+'-'+(date.getDate()).toString();
@@ -163,7 +178,6 @@ export function getTodaySign(){
 
 
 }
-
 
 
 export function getTodaySignRef({date}){
