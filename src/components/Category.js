@@ -1,11 +1,32 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { View, StyleSheet} from 'react-native'
 import RNPickerSelect from 'react-native-picker-select';
 import { theme } from '../theme';
+import { DB } from '../utils/firebase';
 
 
 export default function Category({set}) {
+    var categoryDB= {};
+    const [cateData, setcateData] = useState('');
+
+    useEffect(()=>{
+        const cateRef = DB.collection('Cate'); 
+
+        cateRef.get().then((snapshot)=>{
+            snapshot.forEach((doc) =>{
+                var key;
+                var val;
+                key = doc.id
+                val=doc.data();
+                categoryDB[key]=val;
+               
+            });
+            setcateData(categoryDB);
+          });  
+    },[]);
     
+    var listArray = Object.values(cateData);
+
     const [text, setText] = useState("");
     const placeholder = 'Select the Category';
     const onChangeText = (value) => {
@@ -25,13 +46,7 @@ export default function Category({set}) {
                 onValueChange={value => onChangeText(value)}
                 onClose={set(text)}
                 useNativeAndroidPickerStyle={false}
-                items={[
-                    { label: 'School', value: 'School'},
-                    { label: 'Club', value: 'Club'},
-                    { label: 'Assignment', value: 'Assignment'},
-                    { label: 'Extra', value: 'Extra'},
-                    
-                ]}
+                items={listArray}
                 style={pickerSelectStyles}
             />
 

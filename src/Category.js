@@ -6,15 +6,13 @@ import RNPickerSelect from 'react-native-picker-select';
 import { IconButton } from 'react-native-paper';
 import { goBack } from './J_index';
 import { DB, createCategory } from './utils/firebase';
-import { FlatList } from 'react-native-gesture-handler';
 
 const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
 }
-    
+
 export default function App({navigation}) {
     var categoryDB= {};
-    var realCate={};
     const [cateData, setcateData] = useState('');
 
     useEffect(()=>{
@@ -22,7 +20,6 @@ export default function App({navigation}) {
 
         cateRef.get().then((snapshot)=>{
             snapshot.forEach((doc) =>{
-               // console.log(doc.data());
                 var key;
                 var val;
                 key = doc.id
@@ -30,17 +27,14 @@ export default function App({navigation}) {
                 categoryDB[key]=val;
                
             });
-            console.log('hiddd');
-           // console.log(categoryDB);
             setcateData(categoryDB);
-            //console.log("asdfk",cateData);
-          });
-
-         // console.log("외부",cateData);
+          });  
     },[]);
     
-
-    console.log("외부1",cateData);
+    var listArray = Object.values(cateData);
+    var add={value: 'Add', label: '+ Add a new category'};
+    listArray.push(add);
+    
     const press_add_ok= (new_category) =>
     {
         if(new_category){
@@ -94,22 +88,19 @@ export default function App({navigation}) {
         else
             setText(value);
     }
+   
     const [isEnabled, setIsEnabled] = useState(false);
+    const [isEnabled2, setIsEnabled2] = useState(false);
     const toggleSwitch = () => 
     setIsEnabled(previousState => !previousState);
+    const toggleSwitch2 = () => 
+    setIsEnabled2(previousState => !previousState);
 
     const [refreshing, setRefreshing] = React.useState(false);
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
         wait(2000).then(() => setRefreshing(false));
       }, []);
-
-
-      
-      
-     
-      
-
 
     return (
         <SafeAreaView style={viewStyles.container}>
@@ -149,20 +140,28 @@ export default function App({navigation}) {
                             value={text}
                             onValueChange={value => onChangeText(value)}
                             useNativeAndroidPickerStyle={false}
-                            items={[
-                                { label: 'School', value: 'School'},
-                                { label: 'Club', value: 'Club'},
-                                { label: 'Assignment', value: 'Assignment'},
-                                { label: 'Extra', value: 'Extra'},
+                            items={listArray}
+                            /*{[
+                                
                                 { label: '+ Add Category', value: 'Add' },
-                            ]}
+                            ]}*/
                             style={pickerSelectStyles}
                         />
                     </View>
                     </View>
                 </View>
                 <View style={CategoryStyles.line} />
-                <Text style={textStyles.main}>To-dos: </Text>
+                <Text style={CategoryStyles.line2}>end-date</Text>
+                <View style={CategoryStyles.toggle2}>
+                <Switch
+                    trackColor={{ false: "#808080", true: "#2Faf53" }}
+                    ios_backgroundColor="#808080"
+                    onValueChange={toggleSwitch2}
+                    value={isEnabled2}
+                    />
+                </View>
+                <Text style={textStyles.main2}>To-dos: </Text>
+               
             </ScrollView>
             <View style={viewStyles.box}>
            
@@ -172,6 +171,7 @@ export default function App({navigation}) {
         </SafeAreaView>
     );
 };
+
 const CategoryStyles = StyleSheet.create({
     
     container: {
@@ -217,9 +217,18 @@ const CategoryStyles = StyleSheet.create({
     box:{
         marginLeft:50,
 
+    },
+    toggle2:{
+        marginLeft:270,
+        marginTop:3,
+    },
+    line2:{
+        marginLeft:270,
+        
     }
 
 });
+
 
 
 const _handleCreateCatePress = async ({navigation ,new_category}) => {
