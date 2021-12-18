@@ -5,7 +5,7 @@ import { Alert } from 'react-native';
 import { createTodaySignText } from '../utils/firebase';
 import { Dimensions, StyleSheet, Text, View} from 'react-native';
 import { theme } from "../theme";
-import { Input as SignInput } from '../components';
+import { SignInput } from '../components';
 
 
 export const _handleCreateButtonPress = async () => {
@@ -45,7 +45,6 @@ export const Input= ({navigation,setText,Day}) => {//TodaySignText,setTodaySignT
      </View>
       <SignInput
           ref={descriptionRef}
-        
           value={TodaySignText}
           onChangeText={text => setTodaySignText(text)}
           onSubmitEditing={() => {
