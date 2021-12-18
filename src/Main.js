@@ -6,6 +6,7 @@ import { mainRows } from "../rows";
 import Icon from "react-native-vector-icons/Ionicons";
 import { DB } from "./utils/firebase";
 import { useEffect } from "react";
+import { useState } from "react";
 
 export default function Main({ navigation }) {
   const monthDate = moment().format("MM");
@@ -43,7 +44,9 @@ export default function Main({ navigation }) {
            break;
         }
         markedData[key]  =  value;
-    });});
+    });
+  
+  });
 
 
     todoRef.get().then((snapshot)=>{
@@ -72,6 +75,8 @@ export default function Main({ navigation }) {
   });
   console.log("today", date.getTime());
   });
+
+  console.log("TODODATA 외부 ",{todoData});
   
   return (
     <View>
