@@ -7,46 +7,16 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { DB } from "./utils/firebase";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Todo_List } from "./components/J_List";
+
 export default function Main({ navigation }) {
   const monthDate = moment().format("MM");
   const date = new Date();
   const day = moment(date).add("0", "d").format("DD");
-  const doDate =(date.getFullYear()).toString()+'-'+monthDate+'-'+(date.getDate()).toString();
+  
   //가져오기만 하기 
   var todoData = {}; //초기화 -> 얘가 const여야 하나..? 
-  var markedData = {};
-
   useEffect(()=>{
     
-    const signRef = DB.collection('TodaySign');
-   
-    signRef.get().then((snapshot)=>{
-       snapshot.forEach((doc) =>{
-         
-        // console.log(doc.id, '=>', doc.data().TrafficSignData);
-        
-         var key;
-         var value;
-        key = doc.id
-        value = doc.data().TrafficSignData;
-        switch(value){
-          case "0" : 
-           value = { marked: true, dotColor: 'red'};
-           break;
-           case "1" : 
-           value = { marked: true, dotColor: 'orange'};
-           break;
-           case "2" : 
-          value = { marked: true, dotColor: 'green'};
-           break;
-        }
-        markedData[key]  =  value;
-    });});
-
-   
-
-
     const todoRef = DB.collection('Todo');
 
     todoRef.get().then((snapshot)=>{
@@ -62,12 +32,11 @@ export default function Main({ navigation }) {
         doc.data().Flag == false){
           todoData[key] =value;
         }
-        console.log("start", doc.data().Start.seconds);
        });
-       
-       console.log("here" ,todoData);
-      });
-//console.log("today", markedData);
+       console.log("TODODATA" ,todoData);
+});
+
+console.log("today", date.getTime());
 });
   
   return (
@@ -82,12 +51,9 @@ export default function Main({ navigation }) {
         </TouchableOpacity>
       </HeaderTitleView>
       <BodyView>
-        <View style = {BodySign1.main}>
         <BodySignDateImg source={require("../assets/images/mainSign1.png")} />
-        <Text style = {BodySign1.date}>{monthDate}</Text>
-        <Text style = {BodySign1.day}>{day}</Text>
-   
-        </View>
+        <BodySignMonth>{monthDate}</BodySignMonth>
+        <BodySignDate>{day}</BodySignDate>
         <BodyMenuView>
           <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => navigation.navigate('montly',{markedData}) }>
           <Image style = {BodyMenuImg1.M}  source={require("../assets/images/Mbutton.png")}/>
@@ -101,7 +67,32 @@ export default function Main({ navigation }) {
         </BodyMenuView>
       </BodyView>
     
-        <Todo_List data = {todoData}/>
+             
+            <View style={{flex: 1,  marginTop: 22 , justifyContent: 'center'}}>
+            <FlatList
+                    data ={todoData}
+                    horizontal = {false}
+                    renderItem = {({item,index})=>{
+                      console.log({item});
+                        //console.log(`Item=${JSON.stringify(item)}, index= ${index}`)
+                        return(
+                          <TouchableOpacity   onPress={() => navigation.navigate('toDo') }>
+                          <View style={{ padding: 15, borderBottomWidth: 1, borderColor: "black", flexDirection: "row" }}>
+                          <View style={{ marginRight: 10 }}>
+                            <Icon name="square-outline" size={30} color="gray" />
+                          </View>
+                          <View>
+                           <Text>{item.ToDo}</Text>
+                           
+                          </View>
+                          
+                        </View>       
+                        </TouchableOpacity>                  
+                        );
+                    }}
+                  /> 
+            </View>
+
 
       <FooterView>
         
@@ -153,40 +144,30 @@ const BodyTxtView = styled(View)`
   justify-content: flex-start;
 `;
 
-const BodySign = styled(View)`
-  position: relative,
-  flex: 1,
-`;
-
-const BodySign1 = StyleSheet.create({
-  main : 
-  {position: 'relative',
-  flex: 1,
-  },
-  date: 
-  {position: 'absolute',
-  paddingLeft:10,
- 
-  },
-  day: 
-  {position: 'absolute',
-  paddingLeft:30
-  }
-
-})
-
 const BodySignDateImg = styled(Image)`
   width: 150px;
   height: 150px;
 `;
 
-// const BodySignMonth = styled(Text)`
+const BodySignMonth = styled(Text)`
+  position: absolute
+  top:85
+  bottom:0
+  left:30
+  right:0
+  font-size: 50px;
+  justify-content: center;
+`;
 
-// `;
-
-// const BodySignDate = styled(Text)`
- 
-// `;
+const BodySignDate = styled(Text)`
+ position: absolute
+  top:100
+  bottom:0
+  left:85
+  right:0
+  font-size: 50px;
+  justify-content: center;
+`;
 
 const BodyMenuImg = styled(Image)`
   width: 150px;
