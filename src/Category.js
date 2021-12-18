@@ -100,47 +100,11 @@ export default function App({navigation}) {
         wait(2000).then(() => setRefreshing(false));
       }, []);
 
-      //카테고리 리스트
+
       
       
      
-      /*const TodoRef = DB.collection('Todo');
-
-      //투두 반환(전체) - 종료 일자 빠른 순
-      TodoRef.orderBy('End','desc').get().then((snapshot)=>{
-          snapshot.forEach((doc)=>{
-              console.log("1. entire return orderby End:", doc.data());
-          });
-      })
-
-      //반환(전체) - 생성 일자 순 빠른 순(지금은 시작 일자 빠른 순임)
-      TodoRef.orderBy('Start','asc').get().then((snapshot)=>{
-        snapshot.forEach((doc)=>{
-            console.log("2. entire return orderby Start:", doc.data());
-        });
-    })
-
-      //카테고리 별 투두 반환(한 카테고리 내) - 종료 일자 빠른 순
-      TodoRef.where('Cate','==','School').orderBy('End','asc').get().then((snapshot)=>{
-        snapshot.forEach((doc)=>{
-            console.log("3. by cate End:", doc.data());
-        });
-    })
-
-      //카테고리 별 투두 반환(한 카테고리 내) - 생성 일자 순
-      TodoRef.where('Cate','==','School').orderBy('Start','asc').get().then((snapshot)=>{
-        snapshot.forEach((doc)=>{
-            console.log("4. by cate start:", doc.data());
-        });
-    })
-    
-      //특정 아이템 검색 (전체, prefix search) elastic nono
-      TodoRef.where('ToDo','>=','s').where('ToDo','<=','s'+'\uf8ff').get().then((snapshot)=>{
-        snapshot.forEach((doc)=>{
-            console.log("5. search:", doc.data());
-        });
-    })*/
-
+      
 
 
     return (
