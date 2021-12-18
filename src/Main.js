@@ -82,9 +82,11 @@ export default function Main({ navigation }) {
         </TouchableOpacity>
       </HeaderTitleView>
       <BodyView>
+        <BodySign>
         <BodySignDateImg source={require("../assets/images/mainSign1.png")} />
         <BodySignMonth>{monthDate}</BodySignMonth>
         <BodySignDate>{day}</BodySignDate>
+        </BodySign>
         <BodyMenuView>
           <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => navigation.navigate('montly',{markedData}) }>
           <Image style = {BodyMenuImg1.M}  source={require("../assets/images/Mbutton.png")}/>
@@ -150,29 +152,22 @@ const BodyTxtView = styled(View)`
   justify-content: flex-start;
 `;
 
+const BodySign = styled(View)`
+  position: relative,
+  flex: 1,
+`;
+
 const BodySignDateImg = styled(Image)`
   width: 150px;
   height: 150px;
 `;
 
 const BodySignMonth = styled(Text)`
-  position: absolute
-  top:85
-  bottom:0
-  left:30
-  right:0
-  font-size: 50px;
-  justify-content: center;
+
 `;
 
 const BodySignDate = styled(Text)`
- position: absolute
-  top:100
-  bottom:0
-  left:85
-  right:0
-  font-size: 50px;
-  justify-content: center;
+ 
 `;
 
 const BodyMenuImg = styled(Image)`
