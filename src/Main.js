@@ -18,32 +18,6 @@ export default function Main({ navigation }) {
   useEffect(()=>{
     
     const todoRef = DB.collection('Todo');
-   
-    signRef.get().then((snapshot)=>{
-       snapshot.forEach((doc) =>{
-         
-        // console.log(doc.id, '=>', doc.data().TrafficSignData);
-        
-         var key;
-         var value;
-        key = doc.id
-        value = doc.data().TrafficSignData;
-        switch(value){
-          case "0" : 
-           value = { marked: true, dotColor: 'red'};
-           break;
-           case "1" : 
-           value = { marked: true, dotColor: 'orange'};
-           break;
-           case "2" : 
-          value = { marked: true, dotColor: 'green'};
-           break;
-        }
-        markedData[key]  =  value;
-    });
-  
-  });
-
 
     todoRef.get().then((snapshot)=>{
       snapshot.forEach((doc) =>{
