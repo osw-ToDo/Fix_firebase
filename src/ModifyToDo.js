@@ -8,7 +8,7 @@ import TodoInput from './components/TodoInput';
 import { IconButton as IconBtn} from 'react-native-paper';
 import { goBack } from './J_index';
 import { _handleUpdateToDoPress } from './ToDo';
-import { deleteTodo } from './utils/firebase';
+import { deletedTodo } from './utils/firebase';
 export default function ModifyToDo({navigation,route}) {
 
   const data_temp = route.params.data;
@@ -168,7 +168,8 @@ export default function ModifyToDo({navigation,route}) {
 export const _handleDeleteToDoPress = async ({id}) => {
 
   try {
-    const deleted = await deleteTodo({id})
+    const deleted = await deletedTodo({id});
+   
     
   } catch (e) {
     Alert.alert('deletion Error', e.message);
