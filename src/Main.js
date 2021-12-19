@@ -170,7 +170,7 @@ const BodySign1 = StyleSheet.create({
   },
   date: 
   {position: 'absolute',
-  top:40,
+  top:45,
   bottom:0,
   left:12,
   right:0,
@@ -180,7 +180,7 @@ const BodySign1 = StyleSheet.create({
   },
   day: 
   {position: 'absolute',
-  top:40,
+  top:45,
   bottom:0,
   left:55,
   right:0,
