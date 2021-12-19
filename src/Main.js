@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Todo_List } from "./components/J_List";
 
-export default function Main({ navigation }) {
+export default function Main({ navigation,route }) {
   const monthDate = moment().format("MM");
   const date = new Date();
   const day = moment(date).add("0", "d").format("DD");
@@ -23,7 +23,7 @@ export default function Main({ navigation }) {
     
     const signRef = DB.collection('TodaySign');
    
-    signRef.get().then((markedData)=>{
+    signRef.get().then((snapshot)=>{
        snapshot.forEach((doc) =>{
          
         //console.log(doc.id, '=>', doc.data().TrafficSignData);
@@ -45,7 +45,7 @@ export default function Main({ navigation }) {
         markedData[key]  =  value;
       });
       setTomark(markedData);
-     //  console.log(marked_data);
+     console.log(marked_data);
     });
 
     const todoRef = DB.collection('Todo');
@@ -69,7 +69,7 @@ export default function Main({ navigation }) {
 
        setTodo(todoData);
       //  console.log("TODODATA" ,todoData);
-},[]);
+});
 
 //console.log("today", date.getTime());
 },[]);//todoData,markedData
