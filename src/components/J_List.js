@@ -54,7 +54,7 @@ class J_List extends Component {
 }
 */}
 
-const onCheck = (items, i) => {
+onCheck = {items, i}
     let item = this.state.listArray
     item[i].checked = item[i].checked ? ! item[i].checked : true
     this.setState({listArray:item})
