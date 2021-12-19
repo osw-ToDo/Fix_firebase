@@ -8,6 +8,7 @@ import TodoInput from './components/TodoInput';
 import { IconButton as IconBtn} from 'react-native-paper';
 import { goBack } from './J_index';
 import { _handleUpdateToDoPress } from './ToDo';
+import { deleteTodo } from './utils/firebase';
 export default function ModifyToDo({navigation,route}) {
 
   const data_temp = route.params.data;
@@ -56,7 +57,7 @@ export default function ModifyToDo({navigation,route}) {
     const press_del_ok= () =>
     {
         console.log("Delete has been completed.")
-        //DB삭제 코드
+        _handleDeleteToDoPress({id:data_temp.id});
         Alert.alert("To-Do has been deleted!");
         navigation.navigate('main') 
     }
@@ -163,4 +164,13 @@ export default function ModifyToDo({navigation,route}) {
             </View>
         </SafeAreaView>
     );
+};
+export const _handleDeleteToDoPress = async ({id}) => {
+
+  try {
+    const deleted = await deleteTodo({id})
+    
+  } catch (e) {
+    Alert.alert('deletion Error', e.message);
+  }
 };
