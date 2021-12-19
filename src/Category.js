@@ -22,9 +22,7 @@ export default function App({navigation}) {
     
     var categoryDB= {};
     var todoData = {}; // 전부
-    var todoData_2 = {}; // 미완료
-    var todoData_3 ={}; // cate 종료
-    var todoData_4 ={}; // cate 시작
+
     
     var uncom_start='uncom_start';
     var all_start='all_start';
@@ -33,14 +31,11 @@ export default function App({navigation}) {
     var todo='';
     var temp='';
     var temp2='';
-    
-    const [todoData_real, settodoRealdata] = useState('');
+    var stopLoop='';
+    var cate1='';
     const [cateData, setcateData] = useState('');
+    const [loopData, setloopData] = useState('');
     const [todoData2, settodoData] = useState(''); // 전부
-    const [todoData3, settodoData2] = useState(''); // 미완료
-    const [todoData4, settodoData3] = useState(''); //카테별 종료
-    const [todoData5, settodoData4] = useState(''); //카테별 시작
-    
 
     useEffect(()=>{
         const cateRef = DB.collection('Cate'); 
@@ -62,9 +57,10 @@ export default function App({navigation}) {
                         }
                       }else
                         todoData[key] =val;
-              
+                    
                      });
                      settodoData(todoData);
+                     
                      console.log("TODODATA1" ,todoData);
               });
                  break;
@@ -86,9 +82,10 @@ export default function App({navigation}) {
                       }else
                         if(doc.data().Flag==false)
                             todoData[key] =val;
-                      
+ 
                      });
                      settodoData(todoData);
+                     stopLoop='2';
               });
                 break;
 
@@ -108,9 +105,10 @@ export default function App({navigation}) {
                       }else
                         if(doc.data().Flag==false)
                             todoData[key] =val;
-                    
+ 
                     });
                     settodoData(todoData);
+                    stopLoop='3';
                 })
                 break;
 
@@ -129,9 +127,10 @@ export default function App({navigation}) {
                         }
                       }else
                         todoData[key] =val;
-                    
+ 
                     });
                     settodoData(todoData);
+                    stopLoop='4';
                 })
                  break;
          }
@@ -144,9 +143,10 @@ export default function App({navigation}) {
                 key = doc.id
                 val=doc.data();
                 categoryDB[key]=val;
-               
+            
             });
             setcateData(categoryDB);
+            cate1='1';
           });  
         
     },[]);//todoData2
