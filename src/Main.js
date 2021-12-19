@@ -59,8 +59,8 @@ export default function Main({ navigation }) {
         value = doc.data();
 
         if(doc.data().Start.seconds<=date.getTime()&&
-        doc.data().End.seconds*1000>date.getTime()&&
-        doc.data().Flag == false){
+        doc.data().End.seconds*1000>date.getTime()
+       ){// &&doc.data().Flag == false
           todoData[key] =value;
         }
 
@@ -69,7 +69,7 @@ export default function Main({ navigation }) {
 
        setTodo(todoData);
       //  console.log("TODODATA" ,todoData);
-});
+},[]);
 
 //console.log("today", date.getTime());
 },[]);//todoData,markedData

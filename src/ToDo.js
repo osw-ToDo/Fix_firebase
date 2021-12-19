@@ -9,7 +9,7 @@ import { DB, getTodoRef ,updateToDo} from './utils/firebase';
 import { _handleCreateToDoPress } from './CreateToDo';
 
 
-export const _handleUpdateToDoPress = async ({navigation,id,startDay,endDay,toDo,cate,Flag}) => {
+export const _handleUpdateToDoPress = async ({id,startDay,endDay,toDo,cate,Flag}) => {
 
     try {
      
