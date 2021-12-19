@@ -102,6 +102,9 @@ const makeSign= ({ navigation, route }) => {
 
   // },[]);
 
+  function calTrafficSign(){
+
+  }
 
 
   const SetText = (text) => {

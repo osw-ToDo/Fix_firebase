@@ -49,7 +49,7 @@ export default function ModifyToDo({navigation,route}) {
         console.log("Update has been completed.")
         //DB업뎃 코드  
      
-        _handleUpdateToDoPress({id:data_temp.id,startDay: startDay,endDay:endDay, cate:cate,toDo:toDo,Flag:isEnabled});
+         _handleUpdateToDoPress({id:data_temp.id,startDay: startDay,endDay:endDay, cate:cate,toDo:toDo,Flag:isEnabled});
           Alert.alert("To-Do has been updated!");
           navigation.replace('main'); 
       
