@@ -60,32 +60,64 @@ class J_List extends Component {
 //     this.setState({listArray:item})
 // }
 
+
+export const CheckObject = ({flag,item}) => {
+
+    const [isSelected, setSelection] = useState(flag);
+
+    return (
+          <CheckBox
+            value={isSelected}
+            onValueChange={setSelection}
+            onPress={_handleUpdateToDoPress({id: item.id,startDay:item.Start,endDay:item.End,cate:item.Cate,toDo:item.ToDo,Flag:!isSelected})}
+          />
+    );
+  };
+
 export function Todo_List({navigation,data}){
     var ListData = data;
-    const listArray = Object.values(ListData);
+    var listArray = Object.values(ListData);
+    var flag_temp ;
+    const [ toggleCheckBox, setToggleCheckBox ] = useState(false);
+    const [ checkedList, setCheckedList ] = useState([]);
+    useEffect(()=>{
+       // setToggleCheckBox()
+      // console.log("array",listArray);
 
-    const [ toggleCheckBox, setToggleCheckBox ] = useState(false)
-    
-
-    // useEffect(()=>{
-    //     console.log(listArray.Flag);
-    //  setToggleCheckBox(listArray.Flag);
-    //     }
-    // ,[]);
+      setCheckedList(listArray.map((value,index)=>{
+           return value.Flag;
+          }
+      ));
+    //  console.log("check",checkedList);
+        }
+    ,[]);
     //const [listArray,setList] = useState('');
    // console.log("list : ",Object.values(ListData));
 
     // useEffect(()=>{
     //     setList(Object.values(ListData));
-    const toggleSwitch = ({item}) => {
-        console.log('flag |',toggleCheckBox);
-        setToggleCheckBox(previousState => !previousState);
+    const toggleSwitch = ({item,index}) => {
+        //console.log('flag |',toggleCheckBox);
         //const startDay = new Date(start);
-        console.log('flag |',toggleCheckBox);
-     //  _handleUpdateToDoPress({navigation,id:data_temp.id,startDay:data_temp.Start,endDay:data_temp.End, cate:cate,toDo:todo,Flag:isEnabled})
-       // _handleUpdateToDoPress({id: item.id,startDay:item.start,endDay:item.End,cate:item.Cate,toDo:item.ToDo,Flag:toggleCheckBox})
-    }
+       // setToggleCheckBox(toggleCheckBox);
+
+      const newlist = listArray.map((value,i)=>{
+        console.log(i,value.Flag);
+        //  if(i==index)
+        //     return !value.Flag;
     
+          return !value.Flag;
+       })
+      // setCheckedList(newlist);
+      console.log("check2____________________",checkedList);
+      // listArray[index].Flag = !listArray[index].Flag;
+      
+     //  _handleUpdateToDoPress({navigation,id:data_temp.id,startDay:data_temp.Start,endDay:data_temp.End, cate:cate,toDo:todo,Flag:isEnabled})
+        _handleUpdateToDoPress({id: item.id,startDay:item.Start,endDay:item.End,cate:item.Cate,toDo:item.ToDo,Flag: listArray[index].Flag})
+   
+    }
+   // var flag_temp =item.Flag;
+  
     // });
     return (
        <View style={{flex: 1,  marginTop: 0, justifyContent: 'center'}}>
@@ -94,18 +126,16 @@ export function Todo_List({navigation,data}){
                 horizontal = {false}
                 renderItem = {({item,index})=>{
                     const Day = new Date(item.End.seconds*1000);
+                    var checked = listArray[index].Flag;
                     //toggleSwitch(item);
-                    console.log('flag |',toggleCheckBox);
-                    console.log(`Item=${JSON.stringify(item)}, index= ${index}`,Day.getDate())
-                    return(
-                        //<Text >{item.ToDo}</Text> 
-                      // <Text>{item}a</Text>   
+                   // console.log('flag |',toggleCheckBox);
+
+                 //   console.log(`Item=${JSON.stringify(item)}, index= ${index}`,Day.getDate())
+                    return(  
                       <TouchableOpacity onPress={() => navigation.navigate('toDo',{item})}> 
                       <View style={{ padding:20, borderBottomWidth: 1, borderColor: "black", flexDirection: "row" }}>
-                          <CheckBox 
-                            
-                            checked={toggleCheckBox}
-                            onPress={()=>toggleSwitch(item)} />
+                          
+                            <CheckObject flag={checked} item = {item}></CheckObject>
                           <Text styles={styles.todo}>{item.ToDo} </Text>
                           <Text styles={styles.duedate}> Due Date {Day.getMonth()+1}.{Day.getDate()}</Text>
                       </View>
@@ -131,14 +161,16 @@ export function Todo_List({navigation,data}){
                     marginBottom: 20,
                 },
                 checkbox: {
-                    alignSelf: "center",
+                   // alignSelf: "center",
                 },
                 //화면에 리스트 뜨면 다시 style 설정! 
                 todo: {
                     fontSize: 10,
+                    alignSelf: "center",
                 },
                 duedate: {
                     fontSize: 10,
+                    alignSelf: "center",
                 },
             })
                 
