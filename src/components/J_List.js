@@ -3,7 +3,7 @@ import {Image,FlatList,View,Text,TouchableOpacity, CheckBox, StyleSheet } from '
 import picListData from '../J_picListData';
 import { PicButton } from './IconButton';
 import { _handleUpdateToDoPress } from '../ToDo';
-import DraggableFlatList from 'react-native-draggable-flatlist'
+//import DraggableFlatList from 'react-native-draggable-flatlist'
 class FlatListItem extends Component{
     render() {
         return(
