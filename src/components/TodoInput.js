@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 import { theme } from '../theme';
 
-const Input = ({set,value, onChangeText, onSubmitEditing}) => {
+const Input = ({set,value, onChangeText, onSubmitEditing,init}) => {
 
     const [toDoText,setToDoText] = useState('');
+    useEffect(()=>{
+        if(typeof init != "undefined" ){
+            setToDoText(init);
+        }
+        console.log(init,"--------------------------------------")
+      
+    
+    },[init]);
+    
 
     return(
         <TextInput style={inputStyle.textInput}
