@@ -121,7 +121,7 @@ export default function App({navigation}) {
                     var key;
                     var val;
                     key = doc.id
-                    val=doc.data();
+                    val = doc.data();
 
                     if(text){
                         if(doc.data().Cate==text){
@@ -132,7 +132,6 @@ export default function App({navigation}) {
                     
                     });
                     settodoData(todoData);
-                    settodoList('cateStart');
                 })
                  break;
          }
