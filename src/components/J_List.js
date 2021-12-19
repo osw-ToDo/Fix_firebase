@@ -1,5 +1,5 @@
 import React, {Component,useState,useEffect} from 'react';
-import {Image,FlatList,View,Text,TouchableOpacity, Checkbox, StyleSheet} from 'react-native';
+import {Image,FlatList,View,Text,TouchableOpacity, CheckBox, StyleSheet } from 'react-native';
 import picListData from '../J_picListData';
 import { PicButton } from './IconButton';
 
@@ -54,16 +54,25 @@ class J_List extends Component {
 }
 */}
 
+const onCheck = (items, i) => {
+    let item = this.state.listArray
+    item[i].checked = item[i].checked ? ! item[i].checked : true
+    this.setState({listArray:item})
+}
+
 export function Todo_List({navigation,data}){
     var ListData = data;
     const listArray = Object.values(ListData);
+
+    const [ toggleCheckBox, setToggleCheckBox ] = useState(false)
     
     //const [listArray,setList] = useState('');
     console.log("list : ",Object.values(ListData));
 
     // useEffect(()=>{
     //     setList(Object.values(ListData));
-
+    
+    
     // });
     return (
        <View style={{flex: 1,  marginTop: 22 , justifyContent: 'center'}}>
@@ -72,7 +81,7 @@ export function Todo_List({navigation,data}){
                 horizontal = {false}
                 renderItem = {({item,index})=>{
                     const Day = new Date(item.End.seconds*1000);
-                    const [ toggleCheckBox, setToggleCheckBox ] = useState(false)
+                    
                     console.log(`Item=${JSON.stringify(item)}, index= ${index}`,Day.getDate())
                     return(
                         //<Text >{item.ToDo}</Text> 
@@ -80,9 +89,8 @@ export function Todo_List({navigation,data}){
                       <TouchableOpacity onPress={() => navigation.navigate('toDo')}> 
                       <View style={{ padding:20, borderBottomWidth: 1, borderColor: "black", flexDirection: "row" }}>
                           <CheckBox 
-                          disabled={false}
-                          value={toggleCheckBox}
-                          onValueChange={(newValue) => setToggleCheckBox(newValue)} />
+                          checked={item.checked}
+                          onPress={()=>this.onCheck(item,index)} />
                           <Text styles={styles.todo}>{item.ToDo} </Text>
                           <Text styles={styles.duedate}> Due Date {Day.getMonth()+1}.{Day.getDate()}</Text>
                       </View>
@@ -110,7 +118,7 @@ export function Todo_List({navigation,data}){
                 checkbox: {
                     alignSelf: "center",
                 },
-
+                //화면에 리스트 뜨면 다시 style 설정! 
                 todo: {
                     fontSize: 10,
                 },
