@@ -17,6 +17,8 @@ export default function Main({ navigation }) {
   //가져오기만 하기 
   var markedData = {};
   var todoData = {}; //초기화
+  const [todo_data,setTodo] = useState('');
+  const [marked_data,setTomark] = useState('');
   useEffect(()=>{
     
     const signRef = DB.collection('TodaySign');
@@ -24,8 +26,7 @@ export default function Main({ navigation }) {
     signRef.get().then((snapshot)=>{
        snapshot.forEach((doc) =>{
          
-        // console.log(doc.id, '=>', doc.data().TrafficSignData);
-        
+        //console.log(doc.id, '=>', doc.data().TrafficSignData);
          var key;
          var value;
         key = doc.id
@@ -42,7 +43,10 @@ export default function Main({ navigation }) {
            break;
         }
         markedData[key]  =  value;
-    });});
+      });
+      setTomark(markedData);
+     //  console.log(marked_data);
+    });
 
     const todoRef = DB.collection('Todo');
 
@@ -59,12 +63,17 @@ export default function Main({ navigation }) {
         doc.data().Flag == false){
           todoData[key] =value;
         }
+
+        
        });
-       console.log("TODODATA" ,todoData);
+
+       setTodo(todoData);
+      //  console.log("TODODATA" ,todoData);
 });
 
-console.log("today", date.getTime());
-});
+//console.log("today", date.getTime());
+},[]);
+//console.log("here",marked_data);
   
   return (
     <View>
@@ -83,7 +92,7 @@ console.log("today", date.getTime());
         <Text style ={BodySign1.day}>{day}</Text>
         </View>
         <BodyMenuView>
-          <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => navigation.navigate('montly',{markedData}) }>
+          <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => navigation.navigate('montly',{marked_data})}>
           <Image style = {BodyMenuImg1.M}  source={require("../assets/images/Mbutton.png")}/>
           </TouchableOpacity>
           <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => navigation.navigate('weekly') }>
@@ -95,7 +104,7 @@ console.log("today", date.getTime());
         </BodyMenuView>
       </BodyView>
     
-      <Todo_List navigation ={navigation} data = {todoData}/>    
+      <Todo_List navigation ={navigation} data = {todo_data}/>    
       {/* <Todo_List navigation ={navigation} data = {todoData}/> */}
 
       <FooterView>
