@@ -13,7 +13,7 @@ export const _handleUpdateToDoPress = async ({id,startDay,endDay,toDo,cate,Flag}
 
     try {
      
-     const newdata = updateToDo({id, cate,start:startDay,end:endDay,todo:toDo,flag:!Flag});
+     const newdata = await updateToDo({id, cate,start:startDay,end:endDay,todo:toDo,flag:!Flag});
       //navigation.replace('showSign', { navigation, id: id, text : TodaySignText, tSign : TrafficSignData, pSign :PicSign});
       // navigation.replace('makeSign', { id, TodaySignText });
       // Alert.alert('sign success',e.message);

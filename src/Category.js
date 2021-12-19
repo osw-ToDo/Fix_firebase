@@ -36,19 +36,21 @@ export default function App({navigation}) {
     const [cateData, setcateData] = useState('');
     const [loopData, setloopData] = useState('');
     const [todoData2, settodoData] = useState(''); // 전부
-
+    const [isEnabled, setIsEnabled] = useState(false);
+    const [isEnabled2, setIsEnabled2] = useState(false);
+    var key;
+    var val;
+    
     useEffect(()=>{
         const cateRef = DB.collection('Cate'); 
         const todoRef = DB.collection('Todo');
-        
-        
+       
          switch (todo) {
              case 'all_start':
                 todoRef.orderBy('Start','asc').get().then((snapshot)=>{
                     snapshot.forEach((doc)=>{
                   
-                      var key;
-                      var val;
+                      
                       key = doc.id
                       val = doc.data();
                       if(text){
@@ -70,8 +72,7 @@ export default function App({navigation}) {
                 todoRef.orderBy('Start','asc').get().then((snapshot)=>{
                     snapshot.forEach((doc)=>{
                      
-                      var key;
-                      var val;
+                      
                       key = doc.id
                       val = doc.data();
 
@@ -93,8 +94,7 @@ export default function App({navigation}) {
               //카테별 (종료일짜순)
                 todoRef.orderBy('End','asc').get().then((snapshot)=>{
                     snapshot.forEach((doc)=>{
-                    var key;
-                    var val;
+                   ;
                     key = doc.id
                     val=doc.data();
 
@@ -116,8 +116,7 @@ export default function App({navigation}) {
                 //카테별 (시작일자순)
                 todoRef.orderBy('End','asc').get().then((snapshot)=>{
                     snapshot.forEach((doc)=>{
-                    var key;
-                    var val;
+                  
                     key = doc.id
                     val = doc.data();
 
@@ -138,8 +137,7 @@ export default function App({navigation}) {
     
         cateRef.get().then((snapshot)=>{
             snapshot.forEach((doc) =>{
-                var key;
-                var val;
+                
                 key = doc.id
                 val=doc.data();
                 categoryDB[key]=val;
@@ -149,13 +147,13 @@ export default function App({navigation}) {
             cate1='1';
           });  
         
-    },[]);//todoData2
+    },[loopData,isEnabled,isEnabled2]);//todoData2
 
     var listArray = Object.values(cateData);
     var add={value: 'Add', label: '+ Add a new category'};
     listArray.push(add);
 
-    
+   
     const press_add_ok= (new_category) =>
     {
         if(new_category){
@@ -181,6 +179,8 @@ export default function App({navigation}) {
         }
     function add_category()  {
 
+        console.log("add category");
+       
         Alert.prompt(
               "Enter category",
               "Enter your own new category",
@@ -196,21 +196,22 @@ export default function App({navigation}) {
                 }
               ],
               'plain-text',
-            );
+        );
     }
 
+   
     const [text, setText] = useState("");
     const placeholder = 'Select the Category';
     const onChangeText = (value) => {
         if (value == 'Add') {
-            add_category()
+            console.log("add");
+            add_category();
         }
         else
             setText(value);
     }
    
-    const [isEnabled, setIsEnabled] = useState(false);
-    const [isEnabled2, setIsEnabled2] = useState(false);
+   
     const toggleSwitch = () => 
         setIsEnabled(previousState => !previousState);
        
@@ -249,6 +250,8 @@ export default function App({navigation}) {
             <ScrollView 
               refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
             > 
+
+            
                 <View style={CategoryStyles.container}>
                 <Text style={CategoryStyles.text2}>Only Uncompleted To-dos:</Text>
                 <View style={CategoryStyles.box}>
@@ -256,7 +259,7 @@ export default function App({navigation}) {
                     <Switch
                     trackColor={{ false: "#808080", true: "#2Faf53" }}
                     ios_backgroundColor="#808080"
-                    onValueChange={toggleSwitch}
+                    onValueChange={toggleSwitch }
                     value={isEnabled}
                     />
                 </View>
@@ -274,7 +277,8 @@ export default function App({navigation}) {
                             }}
                             fixAndroidTouchableBug={true}
                             value={text}
-                            onValueChange={value => onChangeText(value)}
+                            onValueChange={value => {onChangeText(value);
+                                setloopData(value);}}
                             useNativeAndroidPickerStyle={false}
                             items={listArray}
                             
