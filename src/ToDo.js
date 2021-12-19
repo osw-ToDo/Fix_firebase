@@ -22,7 +22,8 @@ export const _handleUpdateToDoPress = async ({id,startDay,endDay,toDo,cate,Flag}
      return newdata;
      
     } catch (e) {
-      Alert.alert('Creation Error', e.message);
+     // Alert.alert('Creation Error', e.message);
+      Alert.alert("fill out the required field");
     }
   };
   
@@ -37,29 +38,21 @@ const App =({navigation,route}) => {
     const [flag,setFlag] = useState('');
     const data_temp = route.params.item;
     const [isEnabled, setIsEnabled] = useState(false);
+   
     const toggleSwitch = () => {
     setIsEnabled(previousState => !previousState);
     //const startDay = new Date(start);
     console.log('flag |',isEnabled);
-   _handleUpdateToDoPress({navigation,id:data_temp.id,startDay:data_temp.Start,endDay:data_temp.End, cate:cate,toDo:todo,Flag:isEnabled})
     
+    _handleUpdateToDoPress({navigation,id:data_temp.id,startDay:data_temp.Start,endDay:data_temp.End, cate:cate,toDo:todo,Flag:isEnabled});
+    var flag = isEnabled;
+    setData(({...data,flag}));
+    console.log("new data",data);
     }
 
    
     useEffect(()=>{
-        // console.log('showTodo param |',todo);
-   
-        // getTodoRef(todo).then(function(doc){
-        //   if(!doc.exists){
-        //     console.log('No such document!');
-   
-        //   } else {
-        //     console.log('Document data:', doc.data() );
-        //     setData(doc.data());
-        //   }'
-  //  });
-        
-        
+      
         setData(data_temp);
         console.log("Todo Data",data);
 
@@ -74,10 +67,10 @@ const App =({navigation,route}) => {
         setIsEnabled(flag);
       
         }
-    },[]);
+    },[flag]);
     
 
-    console.log("cate",cate,flag,start);
+    console.log("cate :",cate,flag,start);
   
    // const{cate,end,start,flag} = {cate:data.Cate, end:endDate, start:startDate, flag:data.Flag.toString()};
 
@@ -136,7 +129,7 @@ const App =({navigation,route}) => {
             </View>
             </ScrollView>
             <View style={viewStyles.box}>
-            <IconBtn icon={images.edit}  onPress={() => navigation.navigate('modifyToDo',) }/>
+            <IconBtn icon={images.edit}  onPress={() => navigation.navigate('modifyToDo',{data}) }/>
             </View>
             </View>
         </SafeAreaView>

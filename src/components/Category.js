@@ -5,11 +5,20 @@ import { theme } from '../theme';
 import { DB } from '../utils/firebase';
 
 
-export default function Category({set}) {
+export default function Category({set,init}) {
     var categoryDB= {};
     const [cateData, setcateData] = useState('');
+    var placeholder = 'Select the Category';
+    const [text, setText] = useState("");
+    
+    
 
     useEffect(()=>{
+        if(typeof init != "undefined" ){
+            setText(init);
+        }
+        console.log(init,"--------------------------------------")
+      
         const cateRef = DB.collection('Cate'); 
 
         cateRef.get().then((snapshot)=>{
@@ -23,12 +32,11 @@ export default function Category({set}) {
             });
             setcateData(categoryDB);
           });  
-    },[]);
+    },[init]);
     
     var listArray = Object.values(cateData);
 
-    const [text, setText] = useState("");
-    const placeholder = 'Select the Category';
+    
     const onChangeText = (value) => {
             setText(value);
     }
