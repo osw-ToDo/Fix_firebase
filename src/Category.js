@@ -149,7 +149,7 @@ export default function App({navigation}) {
             setcateData(categoryDB);
           });  
         
-    },[]);
+    },[]);//todoData2
 
     var listArray = Object.values(cateData);
     var add={value: 'Add', label: '+ Add a new category'};
