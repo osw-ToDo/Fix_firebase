@@ -24,7 +24,7 @@ class Montly extends Component {
 
   render() {
     const navigation = this.props.navigation 
-    const markedData = this.props.route.params.markedData;
+    const markedData = this.props.route.params.marked_data;
     //const markedData = this.props.markedData
     // const signRef = DB.collection('TodaySign');
 

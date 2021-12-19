@@ -23,6 +23,9 @@ The people who developed this app.
 
 
 ## Track Our Schedule
+we hava a error for using firebase, and if you want to check the schedule berfore that error, plz check out the repository below
+https://github.com/osw-ToDo/Todo_Client
+
 If you want to check our development schedule, please refer to the notice below.
 
 Team 5. : 

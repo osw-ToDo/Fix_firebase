@@ -5,27 +5,80 @@ import {images} from './images';
 import { theme } from './theme';
 import { IconButton as IconBtn} from 'react-native-paper';
 import { goBack } from './J_index';
-import {DB, getTodoRef } from './utils/firebase';
+import { DB, getTodoRef ,updateToDo} from './utils/firebase';
+import { _handleCreateToDoPress } from './CreateToDo';
+
+
+export const _handleUpdateToDoPress = async ({navigation,id,startDay,endDay,toDo,cate,Flag}) => {
+
+    try {
+      console.log(startDay);
+      updateToDo({id, cate,start:startDay,end:endDay,todo:toDo,flag:!Flag})
+      //navigation.replace('showSign', { navigation, id: id, text : TodaySignText, tSign : TrafficSignData, pSign :PicSign});
+      // navigation.replace('makeSign', { id, TodaySignText });
+      // Alert.alert('sign success',e.message);
+     // console.log("update flag=>",Flag);
+    } catch (e) {
+      Alert.alert('Creation Error', e.message);
+    }
+  };
+  
 
 const App =({navigation,route}) => {
 
     const [data,setData]=useState('');
-    const todo = 'ㅇㅇ';
+    const [todo,setToDo] =useState(''); 
+    const [start,setStart] = useState('');
+    const [cate,setCate] = useState('');
+    const [end,setEnd] = useState('');
+    const [flag,setFlag] = useState('');
+    const data_temp = route.params.item;
+    const [isEnabled, setIsEnabled] = useState(false);
+    const toggleSwitch = () => {
+    setIsEnabled(previousState => !previousState);
+    //const startDay = new Date(start);
+    console.log('flag |',isEnabled);
+    _handleUpdateToDoPress({navigation,id:data_temp.id,startDay:data_temp.Start,endDay:data_temp.End, cate:cate,toDo:todo,Flag:isEnabled})
+    }
 
+   
     useEffect(()=>{
-        console.log('showTodo param |',todo);
+        // console.log('showTodo param |',todo);
    
-        getTodoRef(todo).then(function(doc){
-          if(!doc.exists){
-            console.log('No such document!');
+        // getTodoRef(todo).then(function(doc){
+        //   if(!doc.exists){
+        //     console.log('No such document!');
    
-          } else {
-            console.log('Document data:', doc.data() );
-            setData(doc.data());
-          }
-        });
-      },[])
-    const{cate,end,start,flag} = {cate:data.Cate, end:data.End, start:data.Start, flag:data.Flag};
+        //   } else {
+        //     console.log('Document data:', doc.data() );
+        //     setData(doc.data());
+        //   }'
+  //  });
+        
+        
+        setData(data_temp);
+        console.log("Todo Data",data);
+
+        if(typeof data != "undefined" ){
+        const startDate = new Date(data_temp.Start.seconds*1000);
+        const endDate = new Date(data_temp.End.seconds*1000);
+        setStart(startDate.toDateString());
+        setEnd(endDate.toDateString());
+        setCate(data_temp.Cate);
+        setFlag(data_temp.Flag);
+        setToDo(data_temp.ToDo);
+        setIsEnabled(flag);
+      
+        }
+    },[]);
+    
+
+    console.log("cate",cate,flag,start);
+  
+   // const{cate,end,start,flag} = {cate:data.Cate, end:endDate, start:startDate, flag:data.Flag.toString()};
+
+   
+    
     //const isEnabled = false;
     //위 코드에서 db에서 값 불러와 isEnabled에 저장
     //const [isEnabled, setIsEnabled] = useState(false);
@@ -44,21 +97,21 @@ const App =({navigation,route}) => {
             <View>
                 <View style={taskStyles.column}>
                 <Text style={taskStyles.text}>Start-Date:</Text>
-                    <Text style={taskStyles.textbox} value={start}></Text>
+                    <Text style={taskStyles.textbox}>{start}</Text>
                 </View>
                 <View style={taskStyles.column}>
                 <Text style={taskStyles.text}>Due-Date:</Text>
-                    <Text style={taskStyles.textbox} value={end}></Text>
+                    <Text style={taskStyles.textbox}>{end}</Text>
                 </View>
                 <View style={taskStyles.column}>
                 <Text style={taskStyles.text}>Category:</Text>
-                    <Text style={taskStyles.textbox} value={cate}></Text>
+                    <Text style={taskStyles.textbox} >{cate}</Text>
                 </View>
                 <View style={taskStyles.container}>
                 <Text style={taskStyles.text}>To-do:</Text>
                 <View style={taskStyles.containerbox}>
                 <View style={taskStyles.Input2}>
-                <Text style={taskStyles.Input} value={todo}></Text>
+                <Text style={taskStyles.Input} >{todo}</Text>
                 </View>
                 </View>
                 </View>
@@ -69,8 +122,10 @@ const App =({navigation,route}) => {
                     trackColor={{ false: "#808080", true: "#2Faf53" }}
                     ios_backgroundColor="#808080"
                     //onValueChange={toggleSwitch} //수정 > todoview는 only view
-                    value={flag} //db에서 값 받아오기
-                    disabled={true}
+                
+                    disabled={false}
+                    onValueChange={toggleSwitch}
+                    value={isEnabled}
                     />
                 </View>
                 </View>

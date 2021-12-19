@@ -121,7 +121,7 @@ export default function CreateToDo({navigation}) {
 };
 
 
-const _handleCreateToDoPress = async ({navigation ,startDay,endDay,toDo,cate,Flag}) => {
+export const _handleCreateToDoPress = async ({navigation ,startDay,endDay,toDo,cate,Flag}) => {
 
     try {
         

@@ -191,7 +191,7 @@ export function getTodaySignRef({date}){
 }
 
 
-// const TodoRef = DB.collection('Todo')    
+ const TodoRef = DB.collection('Todo')    
 
 // //0. 모든 카테고리 불러오기
 // TodoRef.get().then((snapshot)=>{
@@ -231,6 +231,28 @@ export function getTodaySignRef({date}){
 //   ToDo:'update todo test'
 // })
 
+export function updateToDo({id,cate,end,start,todo,flag }){
+  console.log("1flag=>",flag, id);
+  TodoRef.doc(id).update({
+  Cate: cate,
+  End:end,
+  Flag: flag,
+  Start:start,
+  ToDo: todo,
+  })
+
+
+TodoRef.doc(id).get().then(function(doc){
+  if(!doc.exists){
+    console.log('No such document!');
+  } else {
+    console.log('doc Document data:', doc.data() );
+   return doc.data()
+  }
+});
+
+
+}
 
 // //3. 투두 삭제(해당 투두 id 받기)
 // const deleted = TodoRef.doc('rBITGTShVkAQimuNwyq9');

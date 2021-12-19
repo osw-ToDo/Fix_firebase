@@ -67,7 +67,7 @@ export function Todo_List({navigation,data}){
     const [ toggleCheckBox, setToggleCheckBox ] = useState(false)
     
     //const [listArray,setList] = useState('');
-    console.log("list : ",Object.values(ListData));
+   // console.log("list : ",Object.values(ListData));
 
     // useEffect(()=>{
     //     setList(Object.values(ListData));
@@ -75,7 +75,7 @@ export function Todo_List({navigation,data}){
     
     // });
     return (
-       <View style={{flex: 1,  marginTop: 22 , justifyContent: 'center'}}>
+       <View style={{flex: 1,  marginTop: 0, justifyContent: 'center'}}>
            <FlatList
                 data ={listArray}
                 horizontal = {false}
@@ -86,7 +86,7 @@ export function Todo_List({navigation,data}){
                     return(
                         //<Text >{item.ToDo}</Text> 
                       // <Text>{item}a</Text>   
-                      <TouchableOpacity onPress={() => navigation.navigate('toDo')}> 
+                      <TouchableOpacity onPress={() => navigation.navigate('toDo',{item})}> 
                       <View style={{ padding:20, borderBottomWidth: 1, borderColor: "black", flexDirection: "row" }}>
                           <CheckBox 
                           checked={item.checked}
