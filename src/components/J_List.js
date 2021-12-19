@@ -1,5 +1,6 @@
 import React, {Component,useState,useEffect} from 'react';
-import {Image,FlatList,View,Text,TouchableOpacity, CheckBox, StyleSheet } from 'react-native';
+import {Image,FlatList,View,Text,TouchableOpacity,  StyleSheet } from 'react-native';
+import CheckBox from '@react-native-community/checkbox';
 import picListData from '../J_picListData';
 import { PicButton } from './IconButton';
 import { _handleUpdateToDoPress } from '../ToDo';
@@ -64,14 +65,22 @@ class J_List extends Component {
 
 export const CheckObject = ({flag,item}) => {
 
-    const [isSelected, setSelection] = useState(flag);
+    const [toggleCheckBox, setToggleCheckBox] = useState(flag);
 
+    const [isSelected, setSelection] = useState(flag);
+    const obj = {id: item.id,startDay:item.Start,endDay:item.End,cate:item.Cate,toDo:item.ToDo,Flag:!toggleCheckBox}
     return (
+        //   <CheckBox
+        //     value={isSelected}
+        //     onValueChange={setSelection}
+        //     onPress={_handleUpdateToDoPress({id: item.id,startDay:item.Start,endDay:item.End,cate:item.Cate,toDo:item.ToDo,Flag:!isSelected})}
+        //   />
           <CheckBox
-            value={isSelected}
-            onValueChange={setSelection}
-            onPress={_handleUpdateToDoPress({id: item.id,startDay:item.Start,endDay:item.End,cate:item.Cate,toDo:item.ToDo,Flag:!isSelected})}
-          />
+          disabled={false}
+          value = {toggleCheckBox}
+          onValueChange={setToggleCheckBox}
+          onPress={_handleUpdateToDoPress(obj)}
+        />
     );
   };
 
