@@ -48,7 +48,4 @@ export const theme = {
   listDescription: colors.grey_1,
   listIcon: colors.black,
 
-  // GiftedChat
-  sendButtonActivate: colors.blue,
-  sendButtonInactivate: colors.grey_1,
 };
