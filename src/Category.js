@@ -20,70 +20,123 @@ export default function App({navigation}) {
         wait(2000).then(() => setRefreshing(false));
       }, []);
     
-    
     var categoryDB= {};
-    var todoData = {};
-    var todoData_2 = {};
+    var todoData = {}; // 전부
+    var todoData_2 = {}; // 미완료
+    var todoData_3 ={}; // cate 종료
+    var todoData_4 ={}; // cate 시작
+    
+    var uncom_start='uncom_start';
+    var all_start='all_start';
+    var uncom_end='uncom_end';
+    var all_end='all_end';
+    var todo='';
+    var temp='';
+    var temp2='';
+    
     const [todoData_real, settodoRealdata] = useState('');
     const [cateData, setcateData] = useState('');
-    const [todoData2, settodoData] = useState('');
-    const [todoData3, settodoData2] = useState('');
+    const [todoData2, settodoData] = useState(''); // 전부
+    const [todoData3, settodoData2] = useState(''); // 미완료
+    const [todoData4, settodoData3] = useState(''); //카테별 종료
+    const [todoData5, settodoData4] = useState(''); //카테별 시작
+    
 
     useEffect(()=>{
         const cateRef = DB.collection('Cate'); 
         const todoRef = DB.collection('Todo');
         
-            function view_all() {
-            todoRef.get().then((snapshot)=>{
-                snapshot.forEach((doc) =>{
-                 
-                  var key;
-                  var value;
-                  key = doc.id
-                  value = doc.data();
-          
-                  //if( 카테고리에는 전부 띄우고 (왜냐면 미완료된일만 표시 때문에 flag=true도 띄움)
-                  //doc.data().Flag == false){
-                    todoData[key] =value;
-                  //}
-                 });
-                 settodoData(todoData);
-                 console.log("TODODATA1" ,todoData);
-          });}
-          function view_uncom(){
-            // 미완료된 일
-            todoRef.get().then((snapshot)=>{
-            snapshot.forEach((doc) =>{
-             
-              var key;
-              var value;
-              key = doc.id
-              value = doc.data();
-      
-              if
-              (doc.data().Flag == false){
-                todoData_2[key] =value;
-              }
-             });
-             settodoData2(todoData_2);
-             console.log("TODODATA23" ,todoData_2);
-      });}
-        function view_cate(cate_2){
-        todoRef.where('Cate','==','School').orderBy('End','asc').get().then((snapshot)=>{
-            snapshot.forEach((doc)=>{
-                console.log("3. by cate End:", doc.data());
-
-                var cate=cate_2;
-                var key;
-                var value;
-                key = doc.id
-                value = doc.data();
-                //if(doc.data().Cate==cate_2)
-
-
-            });
-        })
         
+         switch (todo) {
+             case 'all_start':
+                todoRef.orderBy('Start','asc').get().then((snapshot)=>{
+                    snapshot.forEach((doc)=>{
+                  
+                      var key;
+                      var val;
+                      key = doc.id
+                      val = doc.data();
+                      if(text){
+                        if(doc.data().Cate==text){
+                            todoData[key]=val;
+                        }
+                      }else
+                        todoData[key] =val;
+              
+                     });
+                     settodoData(todoData);
+                     console.log("TODODATA1" ,todoData);
+              });
+                 break;
+
+            case 'uncom_start':
+                // 미완료된 일
+                todoRef.orderBy('Start','asc').get().then((snapshot)=>{
+                    snapshot.forEach((doc)=>{
+                     
+                      var key;
+                      var val;
+                      key = doc.id
+                      val = doc.data();
+
+                      if(text){
+                        if(doc.data().Cate==text&&doc.data().Flag==false){
+                            todoData[key]=val;
+                        }
+                      }else
+                        if(doc.data().Flag==false)
+                            todoData[key] =val;
+                      
+                     });
+                     settodoData(todoData);
+              });
+                break;
+
+            case 'uncom_end':
+              //카테별 (종료일짜순)
+                todoRef.orderBy('End','asc').get().then((snapshot)=>{
+                    snapshot.forEach((doc)=>{
+                    var key;
+                    var val;
+                    key = doc.id
+                    val=doc.data();
+
+                    if(text){
+                        if(doc.data().Cate==text&&doc.data().Flag==false){
+                            todoData[key]=val;
+                        }
+                      }else
+                        if(doc.data().Flag==false)
+                            todoData[key] =val;
+                    
+                    });
+                    settodoData(todoData);
+                })
+                break;
+
+            case 'all_end':
+                //카테별 (시작일자순)
+                todoRef.orderBy('End','asc').get().then((snapshot)=>{
+                    snapshot.forEach((doc)=>{
+                    var key;
+                    var val;
+                    key = doc.id
+                    val = doc.data();
+
+                    if(text){
+                        if(doc.data().Cate==text){
+                            todoData[key]=val;
+                        }
+                      }else
+                        todoData[key] =val;
+                    
+                    });
+                    settodoData(todoData);
+                })
+                 break;
+         }
+            
+    
         cateRef.get().then((snapshot)=>{
             snapshot.forEach((doc) =>{
                 var key;
@@ -95,26 +148,13 @@ export default function App({navigation}) {
             });
             setcateData(categoryDB);
           });  
-        }
-    },[]);
-
-    function view_com (isEnabled)  {
-        if(!isEnabled){
-            view_all()
-                
-        }
-        else{
-            view_uncom()
-        }
         
-    }
-    console.log('lli3',todoData2);
-    console.log('1114',todoData3);
-    console.log('lll5',cateData);
+    },[]);
 
     var listArray = Object.values(cateData);
     var add={value: 'Add', label: '+ Add a new category'};
     listArray.push(add);
+
     
     const press_add_ok= (new_category) =>
     {
@@ -173,12 +213,30 @@ export default function App({navigation}) {
     const [isEnabled2, setIsEnabled2] = useState(false);
     const toggleSwitch = () => 
         setIsEnabled(previousState => !previousState);
-        //view_com(isEnabled)
-  
+       
+        console.log('hii',todoData2);
     const toggleSwitch2 = () => 
         setIsEnabled2(previousState => !previousState);
-  
     
+        
+  //트루-팔스(미완료, 시작) , 팔스-팔스(모두, 시작), 트루-트루(미완료, 종료), 팔스-트루(모두, 종료)
+
+    if(isEnabled==true){
+        temp='1';
+    }else temp='2';
+
+    if(isEnabled2==true){
+        temp2='3';
+    }else temp2='4';
+
+    if(temp=='1'&&temp2=='4')
+         todo=uncom_start;
+    else if(temp=='2'&&temp2=='4') 
+        todo=all_start;
+    else if(temp=='1'&&temp2=='3')
+        todo=uncom_end;
+    else if(temp=='2'&&temp2=='3')
+        todo=all_end;
      
     return (
         <SafeAreaView style={viewStyles.container}>
@@ -236,7 +294,6 @@ export default function App({navigation}) {
                     />
                 </View>
                 <Text style={textStyles.main2}>To-dos: </Text>
-                  
                   <Todo_List navigation ={navigation} data = {todoData2}/>
             </ScrollView>
             <View style={viewStyles.box}>
