@@ -1,6 +1,7 @@
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 import config from '../../firebase.json';
+import { _handleDeleteToDoPress } from '../ModifyToDo';
 
 const app = firebase.initializeApp(config);
 
@@ -124,9 +125,6 @@ export const createCategory = async({label,value})=>{
 }
 
 
-
-
-
 export const createChannel = async ({ title, description }) => {
   const newChannelRef = DB.collection('channels').doc();
   const id = newChannelRef.id;
@@ -173,8 +171,6 @@ export function getTodaySign(){
      return doc.data()
     }
   });
-
-
 }
 
 
@@ -191,7 +187,7 @@ export function getTodaySignRef({date}){
 }
 
 
- const TodoRef = DB.collection('Todo')    
+const TodoRef = DB.collection('Todo')    
 
 // //0. 모든 카테고리 불러오기
 // TodoRef.get().then((snapshot)=>{
@@ -230,7 +226,6 @@ export function getTodaySignRef({date}){
 //   Start:1607110465663,
 //   ToDo:'update todo test'
 // })
-
 export function updateToDo({id,cate,end,start,todo,flag }){
   console.log("1flag=>",flag, id);
   TodoRef.doc(id).update({
@@ -252,7 +247,18 @@ export function updateToDo({id,cate,end,start,todo,flag }){
   }
   });
 
+}
 
+//3. 투두 삭제(해당 투두 id 받기)
+
+export function deletedTodo({id}){
+  const deleted = TodoRef.doc(id)
+   if(deleted == null){
+     console.log('no such document exist!');
+   }else{
+    deleted.delete();
+     console.log('well deleted');
+   }
 }
 
 // //3. 투두 삭제(해당 투두 id 받기)
