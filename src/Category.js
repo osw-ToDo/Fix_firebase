@@ -68,21 +68,6 @@ export default function App({navigation}) {
              settodoData2(todoData_2);
              console.log("TODODATA23" ,todoData_2);
       });}
-        function view_cate(cate_2)
-        todoRef.where('Cate','==','School').orderBy('End','asc').get().then((snapshot)=>{
-            snapshot.forEach((doc)=>{
-                console.log("3. by cate End:", doc.data());
-
-                var cate=cate_2;
-                var key;
-                var value;
-                key = doc.id
-                value = doc.data();
-                //if(doc.data().Cate==cate_2)
-
-
-            });
-        })
         
         cateRef.get().then((snapshot)=>{
             snapshot.forEach((doc) =>{
@@ -172,7 +157,7 @@ export default function App({navigation}) {
     const [isEnabled2, setIsEnabled2] = useState(false);
     const toggleSwitch = () => 
         setIsEnabled(previousState => !previousState);
-        view_com(isEnabled)
+        //view_com(isEnabled)
   
     const toggleSwitch2 = () => 
         setIsEnabled2(previousState => !previousState);
