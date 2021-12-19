@@ -120,7 +120,7 @@ const App =({navigation,route}) => {
                     ios_backgroundColor="#808080"
                     //onValueChange={toggleSwitch} //수정 > todoview는 only view
                 
-                    disabled={false}
+                    disabled={true}
                     onValueChange={toggleSwitch}
                     value={isEnabled}
                     />

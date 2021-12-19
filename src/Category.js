@@ -12,7 +12,6 @@ const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
 }
 
-
 export default function App({navigation}) {
     const [refreshing, setRefreshing] = React.useState(false);
     const onRefresh = React.useCallback(() => {
@@ -23,7 +22,6 @@ export default function App({navigation}) {
     var categoryDB= {};
     var todoData = {}; // 전부
 
-    
     var uncom_start='uncom_start';
     var all_start='all_start';
     var uncom_end='uncom_end';
@@ -33,18 +31,19 @@ export default function App({navigation}) {
     var temp2='';
     var stopLoop='';
     var cate1='';
-    const [cateData, setcateData] = useState('');
+
     const [loopData, setloopData] = useState('');
+    const [cateData, setcateData] = useState('');
     const [todoData2, settodoData] = useState(''); // 전부
     const [isEnabled, setIsEnabled] = useState(false);
     const [isEnabled2, setIsEnabled2] = useState(false);
     var key;
     var val;
-    
     useEffect(()=>{
         const cateRef = DB.collection('Cate'); 
         const todoRef = DB.collection('Todo');
-       
+        
+        
          switch (todo) {
              case 'all_start':
                 todoRef.orderBy('Start','asc').get().then((snapshot)=>{
@@ -59,6 +58,7 @@ export default function App({navigation}) {
                         }
                       }else
                         todoData[key] =val;
+                       
                     
                      });
                      settodoData(todoData);
@@ -72,21 +72,23 @@ export default function App({navigation}) {
                 todoRef.orderBy('Start','asc').get().then((snapshot)=>{
                     snapshot.forEach((doc)=>{
                      
-                      
+                     
                       key = doc.id
                       val = doc.data();
 
                       if(text){
                         if(doc.data().Cate==text&&doc.data().Flag==false){
                             todoData[key]=val;
+                           
                         }
                       }else
                         if(doc.data().Flag==false)
                             todoData[key] =val;
- 
+                           
                      });
                      settodoData(todoData);
                      stopLoop='2';
+                     
               });
                 break;
 
@@ -94,21 +96,23 @@ export default function App({navigation}) {
               //카테별 (종료일짜순)
                 todoRef.orderBy('End','asc').get().then((snapshot)=>{
                     snapshot.forEach((doc)=>{
-                   ;
+                  
                     key = doc.id
                     val=doc.data();
 
                     if(text){
                         if(doc.data().Cate==text&&doc.data().Flag==false){
                             todoData[key]=val;
+                            
                         }
                       }else
                         if(doc.data().Flag==false)
                             todoData[key] =val;
- 
+                           
                     });
                     settodoData(todoData);
                     stopLoop='3';
+                   
                 })
                 break;
 
@@ -116,20 +120,23 @@ export default function App({navigation}) {
                 //카테별 (시작일자순)
                 todoRef.orderBy('End','asc').get().then((snapshot)=>{
                     snapshot.forEach((doc)=>{
-                  
+                   
                     key = doc.id
                     val = doc.data();
 
                     if(text){
                         if(doc.data().Cate==text){
                             todoData[key]=val;
+                            
                         }
                       }else
                         todoData[key] =val;
+                        
  
                     });
                     settodoData(todoData);
                     stopLoop='4';
+                    
                 })
                  break;
          }
@@ -137,23 +144,24 @@ export default function App({navigation}) {
     
         cateRef.get().then((snapshot)=>{
             snapshot.forEach((doc) =>{
-                
+             
                 key = doc.id
                 val=doc.data();
                 categoryDB[key]=val;
-            
+                
             });
             setcateData(categoryDB);
             cate1='1';
           });  
         
     },[loopData,isEnabled,isEnabled2]);//todoData2
+   
 
     var listArray = Object.values(cateData);
     var add={value: 'Add', label: '+ Add a new category'};
     listArray.push(add);
 
-   
+    
     const press_add_ok= (new_category) =>
     {
         if(new_category){
@@ -179,8 +187,6 @@ export default function App({navigation}) {
         }
     function add_category()  {
 
-        console.log("add category");
-       
         Alert.prompt(
               "Enter category",
               "Enter your own new category",
@@ -196,21 +202,18 @@ export default function App({navigation}) {
                 }
               ],
               'plain-text',
-        );
+            );
     }
 
-   
     const [text, setText] = useState("");
     const placeholder = 'Select the Category';
     const onChangeText = (value) => {
         if (value == 'Add') {
-            console.log("add");
-            add_category();
+            add_category()
         }
         else
             setText(value);
     }
-   
    
     const toggleSwitch = () => 
         setIsEnabled(previousState => !previousState);
@@ -250,8 +253,6 @@ export default function App({navigation}) {
             <ScrollView 
               refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
             > 
-
-            
                 <View style={CategoryStyles.container}>
                 <Text style={CategoryStyles.text2}>Only Uncompleted To-dos:</Text>
                 <View style={CategoryStyles.box}>
@@ -259,7 +260,7 @@ export default function App({navigation}) {
                     <Switch
                     trackColor={{ false: "#808080", true: "#2Faf53" }}
                     ios_backgroundColor="#808080"
-                    onValueChange={toggleSwitch }
+                    onValueChange={toggleSwitch}
                     value={isEnabled}
                     />
                 </View>
@@ -278,7 +279,7 @@ export default function App({navigation}) {
                             fixAndroidTouchableBug={true}
                             value={text}
                             onValueChange={value => {onChangeText(value);
-                                setloopData(value);}}
+                                setloopData(value);}}                            
                             useNativeAndroidPickerStyle={false}
                             items={listArray}
                             
@@ -288,8 +289,10 @@ export default function App({navigation}) {
                     </View>
                 </View>
                 <View style={CategoryStyles.line} />
-                <Text style={CategoryStyles.line2}>end-date</Text>
-                <View style={CategoryStyles.toggle2}>
+                <View style={CategoryStyles.container}>
+                <Text style={CategoryStyles.text2}>Sort by DEAD-LINE:</Text>
+                <View style={CategoryStyles.box2}>
+                <View style={ToggleStyles.container2}>
                 <Switch
                     trackColor={{ false: "#808080", true: "#2Faf53" }}
                     ios_backgroundColor="#808080"
@@ -297,8 +300,12 @@ export default function App({navigation}) {
                     value={isEnabled2}
                     />
                 </View>
-                <Text style={textStyles.main2}>To-dos: </Text>
-                  <Todo_List navigation ={navigation} data = {todoData2}/>
+                </View>
+                </View>
+                <View style={CategoryStyles.line2} />
+                <Text style={textStyles.main2}>TO-DOs: </Text>
+                 <Text style={CategoryStyles.list}> <Todo_List navigation ={navigation} data = {todoData2}/>
+                 </Text>
             </ScrollView>
             <View style={viewStyles.box}>
            
@@ -335,10 +342,21 @@ const CategoryStyles = StyleSheet.create({
         alignContent:'center',
         
     },
+    line2: {
+        borderColor: 'black',
+        borderBottomWidth: 1,
+        width: 310,
+        margin:10,
+        marginBottom:10,
+        marginLeft:15,
+        marginTop:10,
+        alignContent:'center',
+        
+    },
     text: {
         fontSize:17,
         fontWeight: '500',
-        color: '#000000',
+        color: '#9b111e',
         alignItems: 'flex-start',
         marginTop:7,
         marginLeft: 20,
@@ -347,7 +365,7 @@ const CategoryStyles = StyleSheet.create({
     text2: {
         fontSize:17,
         fontWeight: '500',
-        color: '#000000',
+        color: '#9b111e',
         alignItems: 'flex-start',
         marginTop:5,
         marginLeft: 20,
@@ -357,14 +375,14 @@ const CategoryStyles = StyleSheet.create({
         marginLeft:50,
 
     },
-    toggle2:{
-        marginLeft:270,
-        marginTop:3,
+    box2:{
+        marginLeft:100,
     },
-    line2:{
-        marginLeft:270,
+    list: {
+        marginLeft: 10,
+        width: 310,
         
-    }
+    },
 
 });
 
