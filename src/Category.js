@@ -68,7 +68,7 @@ export default function App({navigation}) {
              settodoData2(todoData_2);
              console.log("TODODATA23" ,todoData_2);
       });}
-        function view_cate(cate_2)
+        function view_cate(cate_2){
         todoRef.where('Cate','==','School').orderBy('End','asc').get().then((snapshot)=>{
             snapshot.forEach((doc)=>{
                 console.log("3. by cate End:", doc.data());
@@ -95,6 +95,7 @@ export default function App({navigation}) {
             });
             setcateData(categoryDB);
           });  
+        }
     },[]);
 
     function view_com (isEnabled)  {

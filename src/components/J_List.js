@@ -2,7 +2,7 @@ import React, {Component,useState,useEffect} from 'react';
 import {Image,FlatList,View,Text,TouchableOpacity, CheckBox, StyleSheet } from 'react-native';
 import picListData from '../J_picListData';
 import { PicButton } from './IconButton';
-
+import { _handleUpdateToDoPress } from '../ToDo';
 class FlatListItem extends Component{
     render() {
         return(
@@ -66,12 +66,25 @@ export function Todo_List({navigation,data}){
 
     const [ toggleCheckBox, setToggleCheckBox ] = useState(false)
     
+
+    // useEffect(()=>{
+    //     console.log(listArray.Flag);
+    //  setToggleCheckBox(listArray.Flag);
+    //     }
+    // ,[]);
     //const [listArray,setList] = useState('');
    // console.log("list : ",Object.values(ListData));
 
     // useEffect(()=>{
     //     setList(Object.values(ListData));
-    
+    const toggleSwitch = ({item}) => {
+        console.log('flag |',toggleCheckBox);
+        setToggleCheckBox(previousState => !previousState);
+        //const startDay = new Date(start);
+        console.log('flag |',toggleCheckBox);
+     //  _handleUpdateToDoPress({navigation,id:data_temp.id,startDay:data_temp.Start,endDay:data_temp.End, cate:cate,toDo:todo,Flag:isEnabled})
+       // _handleUpdateToDoPress({id: item.id,startDay:item.start,endDay:item.End,cate:item.Cate,toDo:item.ToDo,Flag:toggleCheckBox})
+    }
     
     // });
     return (
@@ -81,7 +94,8 @@ export function Todo_List({navigation,data}){
                 horizontal = {false}
                 renderItem = {({item,index})=>{
                     const Day = new Date(item.End.seconds*1000);
-                    
+                    //toggleSwitch(item);
+                    console.log('flag |',toggleCheckBox);
                     console.log(`Item=${JSON.stringify(item)}, index= ${index}`,Day.getDate())
                     return(
                         //<Text >{item.ToDo}</Text> 
@@ -89,8 +103,9 @@ export function Todo_List({navigation,data}){
                       <TouchableOpacity onPress={() => navigation.navigate('toDo',{item})}> 
                       <View style={{ padding:20, borderBottomWidth: 1, borderColor: "black", flexDirection: "row" }}>
                           <CheckBox 
-                          checked={item.checked}
-                          onPress={()=>this.onCheck(item,index)} />
+                            
+                            checked={toggleCheckBox}
+                            onPress={()=>toggleSwitch(item)} />
                           <Text styles={styles.todo}>{item.ToDo} </Text>
                           <Text styles={styles.duedate}> Due Date {Day.getMonth()+1}.{Day.getDate()}</Text>
                       </View>
