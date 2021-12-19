@@ -72,7 +72,7 @@ export default function Main({ navigation }) {
 });
 
 //console.log("today", date.getTime());
-},[todoData,markedData]);
+},[]);//todoData,markedData
 //console.log("here",marked_data);
   
   return (

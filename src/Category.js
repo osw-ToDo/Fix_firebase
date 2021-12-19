@@ -24,7 +24,7 @@ export default function App({navigation}) {
     var categoryDB= {};
     var todoData = {};
     var todoData_2 = {};
-    var [todoData_real, settodoRealdata] = useState('');
+    const [todoData_real, settodoRealdata] = useState('');
     const [cateData, setcateData] = useState('');
     const [todoData2, settodoData] = useState('');
     const [todoData3, settodoData2] = useState('');
@@ -33,7 +33,7 @@ export default function App({navigation}) {
         const cateRef = DB.collection('Cate'); 
         const todoRef = DB.collection('Todo');
         
-        
+            function view_all() {
             todoRef.get().then((snapshot)=>{
                 snapshot.forEach((doc) =>{
                  
@@ -49,8 +49,9 @@ export default function App({navigation}) {
                  });
                  settodoData(todoData);
                  console.log("TODODATA1" ,todoData);
-          });
-
+          });}
+          function view_uncom(){
+            // 미완료된 일
             todoRef.get().then((snapshot)=>{
             snapshot.forEach((doc) =>{
              
@@ -65,9 +66,24 @@ export default function App({navigation}) {
               }
              });
              settodoData2(todoData_2);
-             console.log("TODODATA2" ,todoData_2);
-      });
-    
+             console.log("TODODATA23" ,todoData_2);
+      });}
+        function view_cate(cate_2)
+        todoRef.where('Cate','==','School').orderBy('End','asc').get().then((snapshot)=>{
+            snapshot.forEach((doc)=>{
+                console.log("3. by cate End:", doc.data());
+
+                var cate=cate_2;
+                var key;
+                var value;
+                key = doc.id
+                value = doc.data();
+                //if(doc.data().Cate==cate_2)
+
+
+            });
+        })
+        
         cateRef.get().then((snapshot)=>{
             snapshot.forEach((doc) =>{
                 var key;
@@ -83,16 +99,11 @@ export default function App({navigation}) {
 
     function view_com (isEnabled)  {
         if(!isEnabled){
-            
-                ()=>settodoRealdata(todoData2);
-                console.log('fff',todoData2);
-                console.log('ddd',todoData_real);
+            view_all()
+                
         }
         else{
-      
-                settodoRealdata(todoData3);
-                console.log('change',todoData_real);
-           
+            view_uncom()
         }
         
     }
@@ -103,10 +114,6 @@ export default function App({navigation}) {
     var listArray = Object.values(cateData);
     var add={value: 'Add', label: '+ Add a new category'};
     listArray.push(add);
-
-    
-    
-    
     
     const press_add_ok= (new_category) =>
     {
