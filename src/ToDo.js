@@ -43,11 +43,13 @@ const App =({navigation,route}) => {
     setIsEnabled(previousState => !previousState);
     //const startDay = new Date(start);
     console.log('flag |',isEnabled);
+    //route.params.dataLoading(data);
     
     _handleUpdateToDoPress({navigation,id:data_temp.id,startDay:data_temp.Start,endDay:data_temp.End, cate:cate,toDo:todo,Flag:isEnabled});
     var flag = isEnabled;
     setData(({...data,flag}));
     console.log("new data",data);
+    
     }
 
    
@@ -71,7 +73,7 @@ const App =({navigation,route}) => {
     
 
     console.log("cate :",cate,flag,start);
-  
+   // console.log("route",route.params);
    // const{cate,end,start,flag} = {cate:data.Cate, end:endDate, start:startDate, flag:data.Flag.toString()};
 
    
@@ -86,7 +88,10 @@ const App =({navigation,route}) => {
         <SafeAreaView style={viewStyles.container}>
             <StatusBar barStyle="light-content" style={textStyles.statusbar}/>
             <View style={viewStyles.header}>
-            <IconBtn icon={images.back} onPress={ () => {goBack({navigation});}}/>
+            <IconBtn icon={images.back} onPress={ () => {
+                // route.params.dataLoading(data);
+               //  console.log(route.params);
+                goBack({navigation});}}/>
           </View>
             <Text style={textStyles.title}>My To-do List</Text>
             <View style={viewStyles.card}>

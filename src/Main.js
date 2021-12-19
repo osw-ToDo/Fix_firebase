@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Image,TouchableOpacity, FlatList } from "react-native";
+import { StyleSheet, Text, View, Image,TouchableOpacity, FlatList,Alert } from "react-native";
 import moment from "moment";
 import styled from "styled-components";
 import { mainRows } from "../rows";
@@ -19,8 +19,12 @@ export default function Main({ navigation,route }) {
   var todoData = {}; //초기화
   const [todo_data,setTodo] = useState('');
   const [marked_data,setTomark] = useState('');
+  const [loopData, setloopData] = useState('');
+
+
   useEffect(()=>{
     
+   
     const signRef = DB.collection('TodaySign');
    
     signRef.get().then((snapshot)=>{
@@ -72,7 +76,7 @@ export default function Main({ navigation,route }) {
 });
 
 //console.log("today", date.getTime());
-},[]);//todoData,markedData
+},[loopData]);//todoData,markedData
 //console.log("here",marked_data);
   
   return (
@@ -92,28 +96,28 @@ export default function Main({ navigation,route }) {
         <Text style ={BodySign1.day}>{day}</Text>
         </View>
         <BodyMenuView>
-          <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => navigation.navigate('montly',{marked_data})}>
+          <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => {navigation.navigate('montly',{marked_data});setloopData('montly')}}>
           <Image style = {BodyMenuImg1.M}  source={require("../assets/images/Mbutton.png")}/>
           </TouchableOpacity>
-          <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => navigation.navigate('weekly') }>
+          <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => {navigation.navigate('weekly') }}>
           <Image style = {BodyMenuImg1.W} source={require("../assets/images/Wbutton.png")}/>
           </TouchableOpacity>
-          <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => navigation.navigate('category') }>
+          <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => {navigation.navigate('category');setloopData('category');}}>
           <Image style = {BodyMenuImg1.C} source={require("../assets/images/Cbutton.png")}/>
           </TouchableOpacity>
         </BodyMenuView>
       </BodyView>
     
-      <Todo_List navigation ={navigation} data = {todo_data}/>    
+      <Todo_List navigation ={navigation} data = {todo_data} dataLoading={setloopData}/>    
       {/* <Todo_List navigation ={navigation} data = {todoData}/> */}
 
       <FooterView>
         
-       <TouchableOpacity style = {FooterButtonImg1.icon}  onPress={() => navigation.navigate('makeSign',{date: doDate}) }>
+       <TouchableOpacity style = {FooterButtonImg1.icon}  onPress={() =>{ navigation.navigate('makeSign',{date: doDate}); setloopData('makeSign');} }>
           <Image style = {FooterButtonImg1.icon} source={require("../assets/images/mainButton.png")}/>
         </TouchableOpacity>
 
-        <TouchableOpacity style = {FooterButtonImg1.icon}  onPress={() => navigation.navigate('creatToDo') }>
+        <TouchableOpacity style = {FooterButtonImg1.icon}  onPress={() => {navigation.navigate('creatToDo'); setloopData('createToDo'); }}>
           <Image style = {FooterButtonImg1.icon} source={require("../assets/images/mainPlus.png")}/>
         </TouchableOpacity>
        

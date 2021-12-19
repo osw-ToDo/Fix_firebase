@@ -75,10 +75,15 @@ export const CheckObject = ({flag,item}) => {
     );
   };
 
-export function Todo_List({navigation,data}){
+export function Todo_List({navigation,data,dataLoading}){
     var ListData = data;
     var listArray = Object.values(ListData);
     const [listdata, setlistData] = useState(listArray);
+
+    if(typeof dataLoading != "undefined" ){
+        dataLoading('List');
+    }
+
     return (
        <View style={{flex: 1,  marginTop: 0, justifyContent: 'center'}}>
            
