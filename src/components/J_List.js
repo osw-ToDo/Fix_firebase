@@ -102,11 +102,13 @@ export function Todo_List({navigation,data}){
                  //   console.log(`Item=${JSON.stringify(item)}, index= ${index}`,Day.getDate())
                     return(  
                       <TouchableOpacity onPress={() => navigation.navigate('toDo',{item})}> 
-                      <View style={{ padding:20, borderBottomWidth: 1, borderColor: "black", flexDirection: "row" }}>
+                      <View style={{paddingTop:3,paddingBottom:3}}>
+                      <View style={{ backgroundColor:'#e9bd15', borderRadius:10, padding:20,  width: 310,  flexDirection: "row" }}>
                           
                             <CheckObject flag={checked} item = {item}></CheckObject>
                           <Text styles={styles.todo}>{item.ToDo} </Text>
                           <Text styles={styles.duedate}> Due Date {Day.getMonth()+1}.{Day.getDate()}</Text>
+                      </View>
                       </View>
                       </TouchableOpacity>
                     );
@@ -135,6 +137,7 @@ export function Todo_List({navigation,data}){
                 //화면에 리스트 뜨면 다시 style 설정! 
                 todo: {
                     fontSize: 10,
+                    fontWeight: '500',
                     alignSelf: "center",
                 },
                 duedate: {

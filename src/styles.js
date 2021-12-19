@@ -87,14 +87,20 @@ export const textStyles = StyleSheet.create({
         alignItems: 'flex-start',
         marginTop:20,
         marginLeft: 20,
+        marginRight: 100,
+        marginBottom: 10,
+        width: 10,
     },
     main2: {
-        fontSize:17,
-        fontWeight: '500',
-        color: theme.main,
-        alignItems: 'flex-start',
-        marginTop:0,
+        fontSize:18,
+        fontWeight: '800',
+        color: '#9b111e',
+        alignItems: 'flex-end',
+        marginTop: 10,
         marginLeft: 20,
+        marginBottom: 10,
+        //backgroundColor: 'yellow',
+        
     },
     
 });
