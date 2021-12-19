@@ -242,14 +242,15 @@ export function updateToDo({id,cate,end,start,todo,flag }){
   })
 
 
-TodoRef.doc(id).get().then(function(doc){
+  TodoRef.doc(id).get().then(function(doc){
   if(!doc.exists){
     console.log('No such document!');
   } else {
     console.log('doc Document data:', doc.data() );
-   return doc.data()
+    const data =doc.data();
+    return data
   }
-});
+  });
 
 
 }

@@ -54,11 +54,11 @@ class J_List extends Component {
 }
 */}
 
-onCheck = {items, i}
-    let item = this.state.listArray
-    item[i].checked = item[i].checked ? ! item[i].checked : true
-    this.setState({listArray:item})
-}
+// onCheck = {items, i}
+//     let item = this.state.listArray
+//     item[i].checked = item[i].checked ? ! item[i].checked : true
+//     this.setState({listArray:item})
+// }
 
 export function Todo_List({navigation,data}){
     var ListData = data;

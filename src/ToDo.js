@@ -12,12 +12,15 @@ import { _handleCreateToDoPress } from './CreateToDo';
 export const _handleUpdateToDoPress = async ({navigation,id,startDay,endDay,toDo,cate,Flag}) => {
 
     try {
-      console.log(startDay);
-      updateToDo({id, cate,start:startDay,end:endDay,todo:toDo,flag:!Flag})
+     
+     const newdata = updateToDo({id, cate,start:startDay,end:endDay,todo:toDo,flag:!Flag});
       //navigation.replace('showSign', { navigation, id: id, text : TodaySignText, tSign : TrafficSignData, pSign :PicSign});
       // navigation.replace('makeSign', { id, TodaySignText });
       // Alert.alert('sign success',e.message);
-     // console.log("update flag=>",Flag);
+     console.log("new data",newdata);
+        
+     return newdata;
+     
     } catch (e) {
       Alert.alert('Creation Error', e.message);
     }
@@ -38,7 +41,8 @@ const App =({navigation,route}) => {
     setIsEnabled(previousState => !previousState);
     //const startDay = new Date(start);
     console.log('flag |',isEnabled);
-    _handleUpdateToDoPress({navigation,id:data_temp.id,startDay:data_temp.Start,endDay:data_temp.End, cate:cate,toDo:todo,Flag:isEnabled})
+   _handleUpdateToDoPress({navigation,id:data_temp.id,startDay:data_temp.Start,endDay:data_temp.End, cate:cate,toDo:todo,Flag:isEnabled})
+    
     }
 
    
@@ -132,7 +136,7 @@ const App =({navigation,route}) => {
             </View>
             </ScrollView>
             <View style={viewStyles.box}>
-            <IconBtn icon={images.edit}  onPress={() => navigation.navigate('modifyToDo') }/>
+            <IconBtn icon={images.edit}  onPress={() => navigation.navigate('modifyToDo',) }/>
             </View>
             </View>
         </SafeAreaView>

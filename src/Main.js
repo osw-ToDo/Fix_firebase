@@ -23,7 +23,7 @@ export default function Main({ navigation }) {
     
     const signRef = DB.collection('TodaySign');
    
-    signRef.get().then((snapshot)=>{
+    signRef.get().then((markedData)=>{
        snapshot.forEach((doc) =>{
          
         //console.log(doc.id, '=>', doc.data().TrafficSignData);
@@ -72,7 +72,7 @@ export default function Main({ navigation }) {
 });
 
 //console.log("today", date.getTime());
-},[]);
+},[todoData,markedData]);
 //console.log("here",marked_data);
   
   return (

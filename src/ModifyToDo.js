@@ -8,7 +8,7 @@ import TodoInput from './components/TodoInput';
 import { IconButton as IconBtn} from 'react-native-paper';
 import { goBack } from './J_index';
 
-export default function ModifyToDo({navigation}) {
+export default function ModifyToDo({navigation,route}) {
 
     const press_mod_ok= () =>
     {
