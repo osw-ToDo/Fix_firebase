@@ -173,7 +173,7 @@ export default function App({navigation}) {
     const [isEnabled2, setIsEnabled2] = useState(false);
     const toggleSwitch = () => 
         setIsEnabled(previousState => !previousState);
-        view_com(isEnabled)
+        //view_com(isEnabled)
   
     const toggleSwitch2 = () => 
         setIsEnabled2(previousState => !previousState);
