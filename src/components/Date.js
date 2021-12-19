@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState,useEffect} from 'react'
 import { View, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import {theme} from '../theme';
@@ -31,9 +31,25 @@ String.prototype.zf = function(len){return "0".string(len - this.length) + this;
 Number.prototype.zf = function(len){return this.toString().zf(len);};
 
 
-export default function Day({set}) {
-            const placeholder = "Select the Date";
+export default function Day({set,init}) {
+            var placeholder = "Select the Date";
 
+            if(typeof init != "undefined" ){
+                placeholder = init.toString();
+               // set(init);
+            }
+        
+
+            // useEffect(()=>{
+            //     if(typeof init != "undefined" ){
+            //         set(init);
+            //     }
+            //     console.log(init,"--------------------------------------")
+              
+            
+            // },[init]);
+            
+        
             const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
             const [text, onChangeText] = useState("");
             

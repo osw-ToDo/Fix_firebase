@@ -3,6 +3,7 @@ import {Image,FlatList,View,Text,TouchableOpacity, CheckBox, StyleSheet } from '
 import picListData from '../J_picListData';
 import { PicButton } from './IconButton';
 import { _handleUpdateToDoPress } from '../ToDo';
+import DraggableFlatList from 'react-native-draggable-flatlist'
 class FlatListItem extends Component{
     render() {
         return(
@@ -77,59 +78,18 @@ export const CheckObject = ({flag,item}) => {
 export function Todo_List({navigation,data}){
     var ListData = data;
     var listArray = Object.values(ListData);
-    var flag_temp ;
-    const [ toggleCheckBox, setToggleCheckBox ] = useState(false);
-    const [ checkedList, setCheckedList ] = useState([]);
-    useEffect(()=>{
-       // setToggleCheckBox()
-      // console.log("array",listArray);
-
-      setCheckedList(listArray.map((value,index)=>{
-           return value.Flag;
-          }
-      ));
-    //  console.log("check",checkedList);
-        }
-    ,[]);
-    //const [listArray,setList] = useState('');
-   // console.log("list : ",Object.values(ListData));
-
-    // useEffect(()=>{
-    //     setList(Object.values(ListData));
-    const toggleSwitch = ({item,index}) => {
-        //console.log('flag |',toggleCheckBox);
-        //const startDay = new Date(start);
-       // setToggleCheckBox(toggleCheckBox);
-
-      const newlist = listArray.map((value,i)=>{
-        console.log(i,value.Flag);
-        //  if(i==index)
-        //     return !value.Flag;
-    
-          return !value.Flag;
-       })
-      // setCheckedList(newlist);
-      console.log("check2____________________",checkedList);
-      // listArray[index].Flag = !listArray[index].Flag;
-      
-     //  _handleUpdateToDoPress({navigation,id:data_temp.id,startDay:data_temp.Start,endDay:data_temp.End, cate:cate,toDo:todo,Flag:isEnabled})
-        _handleUpdateToDoPress({id: item.id,startDay:item.Start,endDay:item.End,cate:item.Cate,toDo:item.ToDo,Flag: listArray[index].Flag})
-   
-    }
-   // var flag_temp =item.Flag;
-  
-    // });
+    const [listdata, setlistData] = useState(listArray);
     return (
        <View style={{flex: 1,  marginTop: 0, justifyContent: 'center'}}>
+           
+         
            <FlatList
                 data ={listArray}
                 horizontal = {false}
                 renderItem = {({item,index})=>{
                     const Day = new Date(item.End.seconds*1000);
                     var checked = listArray[index].Flag;
-                    //toggleSwitch(item);
-                   // console.log('flag |',toggleCheckBox);
-
+                    
                  //   console.log(`Item=${JSON.stringify(item)}, index= ${index}`,Day.getDate())
                     return(  
                       <TouchableOpacity onPress={() => navigation.navigate('toDo',{item})}> 
