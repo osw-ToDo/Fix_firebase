@@ -8,3 +8,8 @@ export const mainRows = [
     ],
   },
 ];
+
+int main (){
+
+  return 0;
+}

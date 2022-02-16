@@ -1,84 +1,16 @@
 import React from "react";
-import { StyleSheet, Text, View, Image,TouchableOpacity, FlatList,Alert } from "react-native";
-import moment from "moment";
+import { StyleSheet, Text, View, Image,TouchableOpacity } from "react-native";
 import styled from "styled-components";
 import { mainRows } from "../rows";
 import Icon from "react-native-vector-icons/Ionicons";
-import { DB } from "./utils/firebase";
-import { useEffect } from "react";
-import { useState } from "react";
-import { Todo_List } from "./components/J_List";
+import { IconButton} from 'react-native-paper';
+import {images} from './images';
+import {IconButton as IconBtn} from './components/IconButton';
+import { viewStyles } from "./styles";
+import MainStack from './navigations/MainStack';
+import { NavigationContainer } from '@react-navigation/native';
 
-export default function Main({ navigation,route }) {
-  const monthDate = moment().format("MM");
-  const date = new Date();
-  const day = moment(date).add("0", "d").format("DD");
-  const doDate =(date.getFullYear()).toString()+'-'+monthDate+'-'+(date.getDate()).toString();
-  //가져오기만 하기 
-  var markedData = {};
-  var todoData = {}; //초기화
-  const [todo_data,setTodo] = useState('');
-  const [marked_data,setTomark] = useState('');
-  const [loopData, setloopData] = useState('');
-
-
-  useEffect(()=>{
-    
-   
-    const signRef = DB.collection('TodaySign');
-   
-    signRef.get().then((snapshot)=>{
-       snapshot.forEach((doc) =>{
-         
-        //console.log(doc.id, '=>', doc.data().TrafficSignData);
-         var key;
-         var value;
-        key = doc.id
-        value = doc.data().TrafficSignData;
-        switch(value){
-          case "0" : 
-           value = { marked: true, dotColor: 'red'};
-           break;
-           case "1" : 
-           value = { marked: true, dotColor: 'orange'};
-           break;
-           case "2" : 
-          value = { marked: true, dotColor: 'green'};
-           break;
-        }
-        markedData[key]  =  value;
-      });
-      setTomark(markedData);
-     console.log(marked_data);
-    });
-
-    const todoRef = DB.collection('Todo');
-
-    todoRef.get().then((snapshot)=>{
-      snapshot.forEach((doc) =>{
-       
-        var key;
-        var value;
-        key = doc.id
-        value = doc.data();
-
-        if(doc.data().Start.seconds<=date.getTime()&&
-        doc.data().End.seconds*1000>date.getTime()
-       ){// &&doc.data().Flag == false
-          todoData[key] =value;
-        }
-
-        
-       });
-
-       setTodo(todoData);
-      //  console.log("TODODATA" ,todoData);
-});
-
-//console.log("today", date.getTime());
-},[loopData]);//todoData,markedData
-//console.log("here",marked_data);
-  
+export default function Main({ navigation }) {
   return (
     <View>
       <HeaderTitleView>
@@ -88,36 +20,61 @@ export default function Main({ navigation,route }) {
         <HeaderImg style={{ marign: 100 }} source={require("../assets/images/mainSetting.png")} />
         </TouchableOpacity>
       </HeaderTitleView>
-
       <BodyView>
-      <View style ={BodySign1.main}>
-        <BodySignDateImg source={require("../assets/images/mainSign1.png")} />
-        <Text style ={BodySign1.date}>{monthDate}</Text>
-        <Text style ={BodySign1.day}>{day}</Text>
-        </View>
+        <BodySignDateImg source={require("../assets/images/mainSign.png")} />
         <BodyMenuView>
-          <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => {navigation.navigate('montly',{marked_data});setloopData('montly')}}>
+          <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => navigation.navigate('montly') }>
           <Image style = {BodyMenuImg1.M}  source={require("../assets/images/Mbutton.png")}/>
           </TouchableOpacity>
-          <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => {navigation.navigate('weekly') }}>
+          <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => navigation.navigate('weekly') }>
           <Image style = {BodyMenuImg1.W} source={require("../assets/images/Wbutton.png")}/>
           </TouchableOpacity>
-          <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => {navigation.navigate('category');setloopData('category');}}>
+          <TouchableOpacity style = {BodyMenuImg1.shadow} onPress={() => navigation.navigate('category') }>
           <Image style = {BodyMenuImg1.C} source={require("../assets/images/Cbutton.png")}/>
           </TouchableOpacity>
         </BodyMenuView>
       </BodyView>
-    
-      <Todo_List navigation ={navigation} data = {todo_data} dataLoading={setloopData}/>    
-      {/* <Todo_List navigation ={navigation} data = {todoData}/> */}
-
-      <FooterView>
+      <BodyTxtView>
+        {mainRows.map((row, idx) => {
+          return (
+           
         
-       <TouchableOpacity style = {FooterButtonImg1.icon}  onPress={() =>{ navigation.navigate('makeSign',{date: doDate}); setloopData('makeSign');} }>
+            <View style={{ flex: 1 }} key={idx}>
+
+            
+            <TouchableOpacity   onPress={() => navigation.navigate('toDo') }> 
+              <View style={{ padding: 15, borderBottomWidth: 1, borderColor: "black", flexDirection: "row" }}>
+                <View style={{ marginRight: 10 }}>
+                  <Icon name="square-outline" size={30} color="gray" />
+                </View>
+                <View>
+                  <Text>{row.mainRows[0].title}</Text>
+                  <Text>{row.mainRows[0].date}</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity   onPress={() => navigation.navigate('toDo') }> 
+              <View style={{ padding: 15, borderBottomWidth: 1, borderColor: "black", flexDirection: "row" }}>
+                <View style={{ marginRight: 10 }}>
+                  <Icon name="square-outline" size={30} color="gray" />
+                </View>
+                <View>
+                  <Text>{row.mainRows[1].title}</Text>
+                  <Text>{row.mainRows[1].date}</Text>
+                </View>
+              </View>
+              </TouchableOpacity>
+            </View>
+          );
+        })}
+      </BodyTxtView>
+      <FooterView>
+       <TouchableOpacity style = {FooterButtonImg1.icon}  onPress={() => navigation.navigate('showSign') }>
           <Image style = {FooterButtonImg1.icon} source={require("../assets/images/mainButton.png")}/>
         </TouchableOpacity>
 
-        <TouchableOpacity style = {FooterButtonImg1.icon}  onPress={() => {navigation.navigate('creatToDo'); setloopData('createToDo'); }}>
+        <TouchableOpacity style = {FooterButtonImg1.icon}  onPress={() => navigation.navigate('creatToDo') }>
           <Image style = {FooterButtonImg1.icon} source={require("../assets/images/mainPlus.png")}/>
         </TouchableOpacity>
        
@@ -161,50 +118,34 @@ const BodyTxtView = styled(View)`
   justify-content: flex-start;
 `;
 
-const BodySign = styled(View)`
-  position: relative,
-  flex: 1,
-`;
-
-const BodySign1 = StyleSheet.create({
-  main : 
-  {position: 'relative',
-  left:15,
-  flex: 1,
-  },
-  date: 
-  {position: 'absolute',
-  top:45,
-  bottom:0,
-  left:12,
-  right:0,
-  fontSize: 50,
-  paddingLeft:10,
- 
-  },
-  day: 
-  {position: 'absolute',
-  top:45,
-  bottom:0,
-  left:55,
-  right:0,
-  fontSize: 50,
-  paddingLeft:20,
-  }
-
-})
-
 const BodySignDateImg = styled(Image)`
   width: 150px;
   height: 150px;
 `;
 
+const BodyMenuImg = styled(Image)`
+  width: 150px;
+  height: 200px;
+`;
 
 const FooterView = styled(View)`
   flex: 1;
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+`;
+
+const FooterPlusImg = styled(Image)`
+  width: 35px;
+  height: 35px;
+  margin: 7px;
+`;
+
+const FooterButtonImg = styled(Image)`
+  width: 35px;
+  height: 35px;
+  margin: 7px;
+ 
 `;
 
 const FooterButtonImg1 = StyleSheet.create({
@@ -272,6 +213,31 @@ const BodyMenuImg1 = StyleSheet.create({
 const BodyMenuView = styled(View)`
   width: 150px;
   height: 200px;
+`;
+
+const BodyMMenuImg = styled(View)`
+  position: absolute;
+  top: 195px;
+  right: 78px;
+  z-index: 1;
+  font-weight: 700;
+  object-fit: cover;
+`;
+
+const BodyWMenuImg = styled(View)`
+  position: absolute;
+  top: 255px;
+  right: 78px;
+  z-index: 1;
+  font-weight: 700;
+`;
+
+const BodyCMenuImg = styled(View)`
+  position: absolute;
+  top: 315px;
+  right: 78px;
+  z-index: 1;
+  font-weight: 700;
 `;
 
 const styles = StyleSheet.create({});
